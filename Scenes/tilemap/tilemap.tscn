@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7g61xnpllj2"]
+
+[ext_resource type="PackedScene" uid="uid://bq77lf7rorj6a" path="res://Assets/tileset/just_block.glb" id="1_xu6nt"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="just_block" parent="." instance=ExtResource("1_xu6nt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3)

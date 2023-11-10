@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="Finished_game_2"
+run/main_scene="res://Scenes/lvls/test_lvl.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
