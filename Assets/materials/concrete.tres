@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://rnvc7tyo0mra"]
+
+[ext_resource type="Texture2D" uid="uid://c1dl0on5uutwb" path="res://Assets/textures/brick_yellow.PNG" id="1_cmagi"]
+
+[resource]
+albedo_texture = ExtResource("1_cmagi")
+roughness = 0.81
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(-0.895, 0.37, 0.34)
+texture_filter = 1

@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b7uggldjjpbp1"]
+
+[ext_resource type="Texture2D" uid="uid://50bl2jxuheka" path="res://Assets/textures/brick_gray.PNG" id="1_bhwid"]
+
+[resource]
+albedo_texture = ExtResource("1_bhwid")
+roughness = 0.81
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(-0.895, 0.37, 0.34)
+texture_filter = 1

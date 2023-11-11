@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c3bbn88pojt0b"]
+
+[ext_resource type="Texture2D" uid="uid://ctdtbgkm70mi7" path="res://Assets/textures/steel.PNG" id="1_14y7g"]
+
+[resource]
+albedo_texture = ExtResource("1_14y7g")
+metallic = 0.36
+metallic_specular = 0.55
+roughness = 0.68
+clearcoat_enabled = true
+clearcoat = 0.3
+clearcoat_roughness = 1.0
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv2_scale = Vector3(-0.895, 0.37, 0.34)
+texture_filter = 1
