@@ -74,6 +74,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2302, 1, 6.28958)
 [node name="npc3" parent="." instance=ExtResource("3_l2tsa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.11907, 1, 11.9783)
 
+[connection signal="pause_end" from="test_player" to="npc" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc2" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc3" method="_on_test_player_pause_end"]
+[connection signal="pause_start" from="test_player" to="npc" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc2" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc3" method="_on_test_player_pause_start"]
 [connection signal="rewind_end" from="test_player" to="npc" method="_on_test_player_rewind_end"]
 [connection signal="rewind_end" from="test_player" to="npc2" method="_on_test_player_rewind_end"]
 [connection signal="rewind_end" from="test_player" to="npc3" method="_on_test_player_rewind_end"]
