@@ -113,7 +113,10 @@ func _on_target_shot(target) -> void:
 		if HEALTH == 0:
 			_is_dead = true
 			return
-	
+
+
+func shoot(target: CharacterBody3D) -> void:
+	pass
 
 
 func _on_test_player_pause_start():
