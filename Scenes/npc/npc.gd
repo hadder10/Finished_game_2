@@ -35,6 +35,8 @@ func _do_action(delta) -> void:
 	return
 
 func _undo_action(delta) -> void:
+	if _cur_action == len(_action_array):
+		_cur_action -= 1
 	var cur_action_node = _action_array[_cur_action - 1]
 	if cur_action_node.next.action == "MOVE":
 		if position == cur_action_node.global_position:
@@ -71,7 +73,7 @@ func _process(delta):
 			_undo_action(delta)
 		_frame_counter -= 1
 	else:
-		if not _is_dead and _cur_action < len(_action_array) - 1:
+		if not _is_dead and _cur_action < len(_action_array):
 			_do_action(delta)
 	
 		_frame_counter += 1

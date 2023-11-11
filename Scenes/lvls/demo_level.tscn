@@ -32,26 +32,47 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184107, 1.48588, -0.04154
 transform = Transform3D(1, 0, 0, 0, 0.942851, 0.333215, 0, -0.333215, 0.942851, 0, 13.4288, 0)
 
 [node name="NPC" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("5_daegp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43959, -7.95996)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -7.96)
 FIRST_ACTION_NODE = NodePath("../npc_path_node_START")
 SPEED = 3.0
 
-[node name="npc_path_node_START" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
+[node name="npc_path_node_START" parent="." instance=ExtResource("6_p6jbp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8.033)
-next = NodePath("../npc_path_node")
-
-[node name="npc_path_node" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0915, 1.5, -16)
-next = NodePath("../npc_path_node2")
-
-[node name="npc_path_node2" parent="." instance=ExtResource("6_p6jbp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.44292, 1.5, -15.7228)
 next = NodePath("")
+
+[node name="npc_path_node" parent="." instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0915, 1.5, -16)
+next = NodePath("")
+
+[node name="npc_path_node_2" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.506, 0.911605, 19.5224)
+next = NodePath("../npc_path_node_3")
+
+[node name="npc_path_node_3" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20738, 1.5, 19.21)
+next = NodePath("../npc_path_node_END")
+
+[node name="npc_path_node_END" parent="." instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.7981, 1.5, -22.7843)
+
+[node name="NPC_2" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("5_daegp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -16)
+FIRST_ACTION_NODE = NodePath("../npc_2_path_node_START")
+
+[node name="npc_2_path_node_START" parent="." instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231, 1.5, -16.681)
+
+[node name="npc_2_path_node_1" parent="." instance=ExtResource("6_p6jbp")]
+
+[node name="npc_2_path_node_3" parent="." instance=ExtResource("6_p6jbp")]
 
 [connection signal="rewind_end" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_rewind_end"]
 [connection signal="rewind_end" from="test_player" to="NPC" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="NPC_2" method="_on_test_player_rewind_end"]
 [connection signal="rewind_start" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_rewind_start"]
 [connection signal="rewind_start" from="test_player" to="NPC" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="NPC_2" method="_on_test_player_rewind_start"]
 [connection signal="shot" from="test_player" to="NPC" method="_on_test_player_shot"]
+[connection signal="shot" from="test_player" to="NPC_2" method="_on_test_player_shot"]
 
 [editable path="HUD"]
