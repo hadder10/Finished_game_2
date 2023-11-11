@@ -1,0 +1,129 @@
+extends CharacterBody3D
+
+
+signal rewind_start
+signal rewind_end
+signal shot(npc)
+
+@export var SPEED = 5.0
+@export var JUMP_VELOCITY = 4.5
+
+
+@export var MOUSE_SENSETIVITY : float = 0.5
+@export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
+@export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
+@export var CAMERA_CONTROLLER : Node3D 
+
+@onready var ray = $camera_controller/RayCast3D
+
+var _mouse_input : bool = false
+var _mouse_rotation : Vector3
+var _rotation_input : float
+var _tilt_input : float
+var _player_rotation : Vector3
+var _camera_rotation : Vector3
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+var _rewinding : bool = false
+var _frame_counter : int = 0
+var _player_positions_array : Array
+var _player_rotations_array : Array
+
+
+func _input(event):
+	if event.is_action_pressed("exit"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if event.is_action_pressed("return") and Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if event.is_action_pressed("rewind"):
+		_rewinding = true
+		rewind_start.emit()
+	if event.is_action_released("rewind"):
+		_rewinding = false
+		rewind_end.emit()
+	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		if ray.is_colliding():
+			print("shooting")
+			var target = ray.get_collider()
+			print(target)
+			if target.is_in_group("NPC"):
+				shot.emit(target)
+
+
+func _unhandled_input(event):
+	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	if _mouse_input:
+		_rotation_input = -event.relative.x * MOUSE_SENSETIVITY
+		_tilt_input = -event.relative.y * MOUSE_SENSETIVITY
+
+
+func _update_camera(delta):
+	if _rewinding and _frame_counter > 0:
+		_mouse_rotation = _player_rotations_array.back()
+		_player_rotation = Vector3(0.0, _mouse_rotation.y, 0.0)
+		_camera_rotation = Vector3(_mouse_rotation.x, 0.0, 0.0)
+		
+		CAMERA_CONTROLLER.transform.basis = Basis.from_euler(_camera_rotation)
+		CAMERA_CONTROLLER.rotation.z = 0.0
+		
+		global_transform.basis = Basis.from_euler(_player_rotation)
+		
+		_player_rotations_array.pop_back()
+		
+	else:
+		_mouse_rotation.x += _tilt_input * delta
+		_mouse_rotation.x = clamp(_mouse_rotation.x, TILT_LOWER_LIMIT, TILT_UPPER_LIMIT)
+		_mouse_rotation.y += _rotation_input * delta
+		
+		_player_rotation = Vector3(0.0, _mouse_rotation.y, 0.0)
+		_camera_rotation = Vector3(_mouse_rotation.x, 0.0, 0.0)
+		
+		CAMERA_CONTROLLER.transform.basis = Basis.from_euler(_camera_rotation)
+		CAMERA_CONTROLLER.rotation.z = 0.0
+		
+		global_transform.basis = Basis.from_euler(_player_rotation)
+		
+		_rotation_input = 0.0
+		_tilt_input = 0.0
+		
+		_player_rotations_array.append(_mouse_rotation)
+
+
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func _physics_process(delta):
+	_update_camera(delta)
+	
+	if _rewinding and _frame_counter > 0:
+		position = _player_positions_array.back()
+		_player_positions_array.pop_back()
+		_frame_counter -= 1
+		
+	else:
+		# Add the gravity.
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		
+		# Handle Jump.
+		# if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		# 	velocity.y = JUMP_VELOCITY
+		
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with custom gameplay actions.
+		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if direction:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.z = move_toward(velocity.z, 0, SPEED)
+		
+		move_and_slide()
+		
+		_frame_counter += 1
+		_player_positions_array.append(position)
