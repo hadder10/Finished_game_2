@@ -22,7 +22,9 @@ var _rewinding : bool = false
 
 func _do_action(delta) -> void:
 	var cur_action_node = _action_array[_cur_action]
-	if cur_action_node.action == "MOVE":
+	if cur_action_node.action == "STAND":
+		pass
+	elif cur_action_node.action == "MOVE":
 		if position == cur_action_node.global_position:
 			_cur_action += 1
 			return
