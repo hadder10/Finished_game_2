@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://dflruof1yvtcu"]
 
 [ext_resource type="MeshLibrary" uid="uid://v6fpygqcysof" path="res://Assets/tileset/new_block.tres" id="1_1dsb4"]
-[ext_resource type="Script" path="res://Scenes/ui/countdown_test.gd" id="1_xt8q6"]
+[ext_resource type="Script" path="res://Scenes/ui/countdown_test.gd" id="1_qoo3l"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_83noy"]
-[ext_resource type="PackedScene" uid="uid://l66esyv1u63" path="res://Scenes/ui/HUD.tscn" id="2_ide7n"]
+[ext_resource type="PackedScene" uid="uid://cv3mvej088q48" path="res://Scenes/ui/HUD.tscn" id="3_qsr5k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0oxhd"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -22,13 +22,12 @@ glow_enabled = true
 
 [node name="Node3D" type="Node3D"]
 
-[node name="countdown" type="Node" parent="." node_paths=PackedStringArray("countdownBar", "countdownLabel")]
-script = ExtResource("1_xt8q6")
+[node name="countdown" type="Node" parent="." node_paths=PackedStringArray("countdownBar")]
+script = ExtResource("1_qoo3l")
 countdownBar = NodePath("../HUD/TimeLimitBar/TextureProgressBar")
-countdownLabel = NodePath("../HUD/TimeLimitBar/TimerLabel")
-timeLimit = 30.0
+timeLimit = 20.0
 
-[node name="HUD" parent="." instance=ExtResource("2_ide7n")]
+[node name="HUD" parent="." instance=ExtResource("3_qsr5k")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_16blm")
