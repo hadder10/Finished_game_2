@@ -1,23 +1,19 @@
 shader_type canvas_item;
 
-uniform vec2 size = vec2(32.0, 28.0);
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
-void fragment() {
-        vec2 norm_size = size * SCREEN_PIXEL_SIZE;
-        bool half = mod(SCREEN_UV.y / 2.0, norm_size.y) / norm_size.y < 0.5;
-        vec2 uv = SCREEN_UV + vec2(norm_size.x * 0.5 * float(half), 0.0);
-        vec2 center_uv = floor(uv / norm_size) * norm_size;
-        vec2 norm_uv = mod(uv, norm_size) / norm_size;
-        center_uv += mix(vec2(0.0, 0.0),
-                         mix(mix(vec2(norm_size.x, -norm_size.y),
-                                 vec2(0.0, -norm_size.y),
-                                 float(norm_uv.x < 0.5)),
-                             mix(vec2(0.0, -norm_size.y),
-                                 vec2(-norm_size.x, -norm_size.y),
-                                 float(norm_uv.x < 0.5)),
-                             float(half)),
-                         float(norm_uv.y < 0.3333333) * float(norm_uv.y / 0.3333333 < (abs(norm_uv.x - 0.5) * 2.0)));
+const vec2 pixel_size = vec2(4.0,4.0);
+const vec3 palette = vec3(16,16,16);
 
-        COLOR = textureLod(screen_texture, center_uv, 0.0);
+void fragment() {
+	vec2 final_screen_res = (1.0/SCREEN_PIXEL_SIZE)/pixel_size;
+	vec2 lookup_uv = floor(SCREEN_UV*final_screen_res)/final_screen_res;
+	vec3 old_color = texture(screen_texture, lookup_uv).xyz;
+	vec4 new_color = vec4((floor(old_color*palette) + vec3(float(old_color.r>0.5/palette.r), float(old_color.g>0.5/palette.g), float(old_color.b>0.5/palette.b)))/palette, 0.0);
+    vec2 place = mod(SCREEN_UV/SCREEN_PIXEL_SIZE, pixel_size) / pixel_size;
+	vec4 newest_color = vec4(0.0,0.0,0.0,0.0);
+	newest_color[int(floor(place.x * 3.5))] = new_color[int(floor(place.x*3.5))];
+	
+	COLOR.xyz = new_color.xyz/1.4 + newest_color.xyz/5.0;
+	
 }
