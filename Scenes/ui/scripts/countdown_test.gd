@@ -1,6 +1,8 @@
 extends Node
 
 @export var player : CharacterBody3D
+@export var rewind_widget : Control
+@export var crosshair : Control
 @export var countdownBar : TextureProgressBar
 @export var countdownLabel : Label
 @export var timeLimit : float
@@ -8,7 +10,6 @@ extends Node
 var rewind : bool = false
 var fast_forward : bool = false
 var pause : bool = false
-
 
 var countdown
 var pause_countdown
@@ -22,7 +23,7 @@ func format_seconds(seconds):
 	var mins_string = "%0*d" % [2, minutes]
 	var secs_string = "%0*d" % [2, seconds]
 	var mils_string = "%0*d" % [2, millis]
-		
+
 	return mins_string + ":" + secs_string + "." + mils_string
 
 
@@ -33,10 +34,18 @@ func _ready():
 		countdownBar.value = 0
 	if countdownLabel:
 		countdownLabel.text = format_seconds(timeLimit)
+	
+	rewind_widget.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if pause:
+		if not rewind_widget.visible:
+			rewind_widget.visible = true
+		
+		if crosshair.visible:
+			crosshair.visible = false
+		
 		if pause_countdown == -1:
 			pause_countdown = countdown
 		if countdown > 0 and rewind:
@@ -50,6 +59,12 @@ func _process(delta):
 		else:
 			pass
 	else:
+		if rewind_widget.visible:
+			rewind_widget.visible = false
+		
+		if not crosshair.visible:
+			crosshair.visible = true
+		
 		if pause_countdown != -1:
 			pause_countdown = -1
 		if countdown < timeLimit:

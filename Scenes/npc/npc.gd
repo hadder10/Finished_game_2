@@ -8,6 +8,7 @@ extends CharacterBody3D
 @export var DEAD_MATERIAL : StandardMaterial3D = StandardMaterial3D.new()
 
 @onready var mesh = $CollisionShape3D/MeshInstance3D
+@onready var voice = $PainSound
 
 signal target_shot(target)
 
@@ -104,13 +105,15 @@ func _process(delta):
 		_frame_counter += 1
 
 
-func _on_target_shot(target):
+func _on_target_shot(target) -> void:
 	if target == self and !_is_dead:
 		_event_array.append([_frame_counter, 1])
 		_cur_event += 1
 		HEALTH -= 1
 		if HEALTH == 0:
 			_is_dead = true
+			return
+	
 
 
 func _on_test_player_pause_start():
@@ -139,9 +142,10 @@ func _on_test_player_fast_forward_end():
 
 func _on_test_player_shot(npc):
 	if npc == self and !_is_dead:
-		print("DEAD", self)
+		print("DEAD ", self)
 		_event_array.append([_frame_counter, HEALTH])
 		_cur_event += 1
 		HEALTH = 0
 		_is_dead = true
 		mesh.material_override = DEAD_MATERIAL
+		voice.play()
