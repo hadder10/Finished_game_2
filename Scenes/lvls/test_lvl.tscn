@@ -29,11 +29,15 @@ script = ExtResource("1_vekjd")
 countdownBar = NodePath("../HUD/TimeLimitBar/TextureProgressBar")
 countdownLabel = NodePath("../HUD/TimeLimitBar/TimerLabel")
 timeLimit = 30.0
+reverse = true
 
 [node name="widget_activator_dummy" type="Node" parent="."]
 script = ExtResource("2_pp2r8")
 
 [node name="HUD" parent="." instance=ExtResource("2_ide7n")]
+
+[node name="RewindWidget" parent="HUD" index="2"]
+visible = false
 
 [node name="Widget" parent="." instance=ExtResource("2_h6s1n")]
 can_disable = true
