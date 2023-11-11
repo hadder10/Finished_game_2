@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cjvhf2xtxp7gd"]
 
-[ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="1_w7reb"]
+[ext_resource type="Material" path="res://Scenes/ui/mask_invert.tres" id="1_w7reb"]
 [ext_resource type="Theme" uid="uid://c8srnko7udoeh" path="res://Scenes/ui/main.tres" id="2_sspgh"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/toggle_ui_group.gd" id="3_e2fc4"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/scene_changer.gd" id="3_w5ear"]
