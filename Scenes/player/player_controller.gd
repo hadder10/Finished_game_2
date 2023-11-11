@@ -87,9 +87,12 @@ func _input(event):
 			_rewinding = false
 			rewind_end.emit()
 		_fast_forwarding = true
+		play_rewind_sound()
 		fast_forward_start.emit()
 	if event.is_action_released("fast_forward") and _paused:
 		_fast_forwarding = false
+		rewind_sound.stop()
+		rewind_sound_status = "start"
 		fast_forward_end.emit()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
 		if ray.is_colliding():
