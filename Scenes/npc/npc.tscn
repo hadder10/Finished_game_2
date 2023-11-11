@@ -1,6 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bf8f45a25urks"]
+[gd_scene load_steps=10 format=3 uid="uid://bf8f45a25urks"]
 
 [ext_resource type="Script" path="res://Scenes/npc/npc.gd" id="1_twaug"]
+[ext_resource type="AudioStream" uid="uid://svnxl8jjmsid" path="res://Music/pain/PainMedium.wav" id="3_gnue3"]
+[ext_resource type="AudioStream" uid="uid://cvlg02xveej6d" path="res://Music/pain/PainLarge.wav" id="4_4pkbb"]
+[ext_resource type="AudioStream" uid="uid://bwyvsxvy7wntd" path="res://Music/pain/ChildDeath.wav" id="5_vwxtg"]
+[ext_resource type="AudioStream" uid="uid://cuw28vxfsvvb7" path="res://Music/pain/MaleDeath.wav" id="6_o3cko"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sbflj"]
 
@@ -9,6 +13,17 @@ albedo_color = Color(0.34902, 0.580392, 0.815686, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_c552x"]
 material = SubResource("StandardMaterial3D_dsdk6")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pbjd4"]
+streams_count = 4
+stream_0/stream = ExtResource("3_gnue3")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_4pkbb")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("5_vwxtg")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("6_o3cko")
+stream_3/weight = 1.0
 
 [node name="npc" type="CharacterBody3D" groups=["NPC"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -19,5 +34,8 @@ shape = SubResource("CapsuleShape3D_sbflj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
 mesh = SubResource("CapsuleMesh_c552x")
+
+[node name="PainSound" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_pbjd4")
 
 [connection signal="target_shot" from="." to="." method="_on_target_shot"]

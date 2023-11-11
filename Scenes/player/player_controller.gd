@@ -5,6 +5,8 @@ signal pause_start
 signal pause_end
 signal rewind_start
 signal rewind_end
+signal fast_forward_start
+signal fast_forward_end
 signal shot(npc)
 
 @export var SPEED = 5.0
@@ -17,10 +19,23 @@ signal shot(npc)
 @export var CAMERA_CONTROLLER : Node3D 
 
 @onready var ray = $camera_controller/RayCast3D
+@onready var step_sound: AudioStreamPlayer3D = $FootstepPlayer
+@onready var pause_click: AudioStreamPlayer = $PauseClick
+@onready var footstep_timer: Timer = $FootstepPlayer/FootstepTimer
+@onready var rewind_sound: AudioStreamPlayer = $RewindSound
+@onready var gunshot_sound: AudioStreamPlayer3D = $GunshotSound
+
+@onready var rewind_start_sound = preload("res://Music/rewind/rewind_start.wav")
+@onready var rewind_loop_sound = preload("res://Music/rewind/rewind_loop_2.wav")
+
+
+var rewind_sound_status: String = "start"
+var is_rewind_sound_playing: bool = false
+
 var _npc_shot : Array
 
 var _mouse_input : bool = false
-var _mouse_rotation : Vector3
+var _mouse_rotation : Vector3 = Vector3(0, 0, 0)
 var _rotation_input : float
 var _tilt_input : float
 var _player_rotation : Vector3
@@ -31,10 +46,13 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var _paused : bool = false
 var _rewinding : bool = false
+var _fast_forwarding : bool = false
 var _frame_counter : int = 0
+var _pause_frame : int = -1
 var _player_positions_array : Array
 var _player_rotations_array : Array
 
+var step_timer_on: bool = false
 
 func _input(event):
 	if event.is_action_pressed("exit"):
@@ -45,19 +63,43 @@ func _input(event):
 		if _paused:
 			if _rewinding:
 				_rewinding = false
+				rewind_sound.stop()
 				rewind_end.emit()
 			_paused = false
 			pause_end.emit()
+			rewind_sound.stop()
+			pause_click.play()
 		else:
 			_paused = true
+			stop_all_sounds()
 			pause_start.emit()
+			pause_click.play()
 	if event.is_action_pressed("rewind") and _paused:
+		if _fast_forwarding:
+			_fast_forwarding = false
+			fast_forward_end.emit()
 		_rewinding = true
+		play_rewind_sound()
 		rewind_start.emit()
 	if event.is_action_released("rewind") and _paused:
 		_rewinding = false
+		rewind_sound.stop()
+		rewind_sound_status = "start"
 		rewind_end.emit()
+	if event.is_action_pressed("fast_forward") and _paused:
+		if _rewinding:
+			_rewinding = false
+			rewind_end.emit()
+		_fast_forwarding = true
+		play_rewind_sound()
+		fast_forward_start.emit()
+	if event.is_action_released("fast_forward") and _paused:
+		_fast_forwarding = false
+		rewind_sound.stop()
+		rewind_sound_status = "start"
+		fast_forward_end.emit()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
+		gunshot_sound.play()
 		if ray.is_colliding():
 			while ray.get_collider() != null and ray.get_collider().is_in_group("NPC"):
 				var target = ray.get_collider()
@@ -80,8 +122,8 @@ func _unhandled_input(event):
 
 func _update_camera(delta):
 	if _paused:
-		if _rewinding and _frame_counter > 0:
-			_mouse_rotation = _player_rotations_array.back()
+		if _rewinding and _frame_counter > 0 or _fast_forwarding and _frame_counter < _pause_frame:
+			_mouse_rotation = _player_rotations_array[_frame_counter]
 			_player_rotation = Vector3(0.0, _mouse_rotation.y, 0.0)
 			_camera_rotation = Vector3(_mouse_rotation.x, 0.0, 0.0)
 		
@@ -89,8 +131,6 @@ func _update_camera(delta):
 			CAMERA_CONTROLLER.rotation.z = 0.0
 		
 			global_transform.basis = Basis.from_euler(_player_rotation)
-		
-			_player_rotations_array.pop_back()
 		else:
 			pass
 	else:
@@ -114,18 +154,31 @@ func _update_camera(delta):
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_player_positions_array.append(position)
+	_player_rotations_array.append(_mouse_rotation)
 
 
 func _physics_process(delta):
-	_update_camera(delta)
 	if _paused:
+		if _pause_frame == -1:
+			_pause_frame = _frame_counter
 		if _rewinding and _frame_counter > 0:
-			position = _player_positions_array.back()
-			_player_positions_array.pop_back()
 			_frame_counter -= 1
+			position = _player_positions_array[_frame_counter]
+		elif _fast_forwarding and _frame_counter < _pause_frame:
+			_frame_counter += 1
+			position = _player_positions_array[_frame_counter]
 		else:
-			pass
+			rewind_sound.stop()
+		_update_camera(delta)
 	else:
+		if _pause_frame != -1:
+			for i in range(len(_player_positions_array) - _frame_counter - 1):
+				_player_positions_array.pop_back()
+				_player_rotations_array.pop_back()
+			_pause_frame = -1
+		_update_camera(delta)
+		
 		# Add the gravity.
 		if not is_on_floor():
 			velocity.y -= gravity * delta
@@ -140,6 +193,10 @@ func _physics_process(delta):
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
+			if not step_sound.playing and not step_timer_on:
+				footstep_timer.start()
+				step_timer_on = true
+				step_sound.play()
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -148,3 +205,29 @@ func _physics_process(delta):
 		
 		_frame_counter += 1
 		_player_positions_array.append(position)
+
+
+func _on_footstep_timer_timeout():
+	step_timer_on = false
+
+
+func play_rewind_sound():
+	if rewind_sound_status == "start":
+		rewind_sound.set_stream(rewind_start_sound)
+		rewind_sound.play()
+		is_rewind_sound_playing = true
+		await Signal(rewind_sound, 'finished')
+		is_rewind_sound_playing = false
+		rewind_sound_status = "loop"
+	if rewind_sound_status == "loop":
+		rewind_sound.set_stream(rewind_loop_sound)
+		rewind_sound.play()
+		is_rewind_sound_playing = true
+		await Signal(rewind_sound, 'finished')
+		is_rewind_sound_playing = false
+
+
+# Stops all non-rewind sounds like gunshots and step sounds
+func stop_all_sounds():
+	gunshot_sound.stop()
+	step_sound.stop()
