@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://rbc0rsf5pq4f"
-path="res://.godot/imported/EurostileExtended.ttf-a174dca44af2702d371645d7bbcb54ef.fontdata"
+uid="uid://cq6vl6nmc00ba"
+path="res://.godot/imported/EurostileExtendedBold.ttf-2942c0b218e0aba271eb823dcd727dda.fontdata"
 
 [deps]
 
-source_file="res://Scenes/ui/fonts/EurostileExtended.ttf"
-dest_files=["res://.godot/imported/EurostileExtended.ttf-a174dca44af2702d371645d7bbcb54ef.fontdata"]
+source_file="res://Assets/ui/fonts/EurostileExtendedBold.ttf"
+dest_files=["res://.godot/imported/EurostileExtendedBold.ttf-2942c0b218e0aba271eb823dcd727dda.fontdata"]
 
 [params]
 

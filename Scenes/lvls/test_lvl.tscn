@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dflruof1yvtcu"]
+[gd_scene load_steps=11 format=3 uid="uid://dflruof1yvtcu"]
 
 [ext_resource type="MeshLibrary" uid="uid://v6fpygqcysof" path="res://Assets/tileset/new_block.tres" id="1_1dsb4"]
-[ext_resource type="Script" path="res://Scenes/ui/countdown_test.gd" id="1_xt8q6"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="1_vekjd"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_83noy"]
+[ext_resource type="PackedScene" uid="uid://cjvhf2xtxp7gd" path="res://Scenes/ui/GenericWidget.tscn" id="2_h6s1n"]
 [ext_resource type="PackedScene" uid="uid://l66esyv1u63" path="res://Scenes/ui/HUD.tscn" id="2_ide7n"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/widget_keybind.gd" id="2_pp2r8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0oxhd"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -22,13 +24,19 @@ glow_enabled = true
 
 [node name="Node3D" type="Node3D"]
 
-[node name="countdown" type="Node" parent="." node_paths=PackedStringArray("countdownBar", "countdownLabel")]
-script = ExtResource("1_xt8q6")
+[node name="countdown_dummy" type="Node" parent="." node_paths=PackedStringArray("countdownBar", "countdownLabel")]
+script = ExtResource("1_vekjd")
 countdownBar = NodePath("../HUD/TimeLimitBar/TextureProgressBar")
 countdownLabel = NodePath("../HUD/TimeLimitBar/TimerLabel")
 timeLimit = 30.0
 
+[node name="widget_activator_dummy" type="Node" parent="."]
+script = ExtResource("2_pp2r8")
+
 [node name="HUD" parent="." instance=ExtResource("2_ide7n")]
+
+[node name="Widget" parent="." instance=ExtResource("2_h6s1n")]
+can_disable = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_16blm")
@@ -49,5 +57,7 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.33619, 1.40479, -1)
 mesh = SubResource("SphereMesh_bwfyk")
+
+[connection signal="tab_pressed" from="widget_activator_dummy" to="Widget" method="_on_activate"]
 
 [editable path="HUD"]

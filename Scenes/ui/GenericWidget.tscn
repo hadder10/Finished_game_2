@@ -1,0 +1,138 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjvhf2xtxp7gd"]
+
+[ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="1_w7reb"]
+[ext_resource type="Theme" uid="uid://c8srnko7udoeh" path="res://Scenes/ui/main.tres" id="2_sspgh"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/toggle_ui_group.gd" id="3_e2fc4"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/scene_changer.gd" id="3_w5ear"]
+
+[node name="GenericWidget" type="Control" node_paths=PackedStringArray("target")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_e2fc4")
+target = NodePath(".")
+enable_animation = false
+
+[node name="background_inversion" type="ColorRect" parent="."]
+material = ExtResource("1_w7reb")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -251.0
+offset_top = -170.0
+offset_right = 247.0
+offset_bottom = 123.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="button_menu" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -247.0
+offset_top = 1.0
+offset_right = 84.0
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_sspgh")
+text = "MAIN 
+MENU"
+script = ExtResource("3_w5ear")
+
+[node name="button_resume" type="Button" parent="." node_paths=PackedStringArray("target")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -247.0
+offset_top = -155.0
+offset_right = 83.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_sspgh")
+text = "CONTINUE"
+script = ExtResource("3_e2fc4")
+can_enable = false
+can_disable = true
+target = NodePath("..")
+enable_animation = false
+
+[node name="decor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="decor_tl" type="ColorRect" parent="decor"]
+layout_mode = 1
+offset_left = -257.0
+offset_top = -176.0
+offset_right = -231.0
+offset_bottom = -150.0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
+[node name="decor_bl" type="ColorRect" parent="decor"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -257.0
+offset_top = 103.0
+offset_right = -231.0
+offset_bottom = 129.0
+grow_vertical = 0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
+[node name="decor_br" type="ColorRect" parent="decor"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 227.0
+offset_top = 103.0
+offset_right = 253.0
+offset_bottom = 129.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
+[node name="decor_tr" type="ColorRect" parent="decor"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 227.0
+offset_top = -176.0
+offset_right = 253.0
+offset_bottom = -150.0
+grow_horizontal = 0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
+[connection signal="pressed" from="button_menu" to="button_menu" method="_on_activate"]
+[connection signal="pressed" from="button_resume" to="button_resume" method="_on_activate"]

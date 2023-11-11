@@ -1,16 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://l66esyv1u63"]
+[gd_scene load_steps=11 format=3 uid="uid://l66esyv1u63"]
 
-[ext_resource type="Material" path="res://Scenes/ui/mask_invert.tres" id="1_qglaf"]
-[ext_resource type="Texture2D" path="res://Scenes/ui/textures/progressbar_frame.png" id="1_xujfx"]
-[ext_resource type="Texture2D" path="res://Scenes/ui/textures/progressbar.png" id="2_vd781"]
-[ext_resource type="FontFile" path="res://Scenes/ui/fonts/EurostileExtendedBold.ttf" id="4_6rv6v"]
+[ext_resource type="Texture2D" uid="uid://cqrbeomwwjjbm" path="res://Assets/ui/progressbar_frame.png" id="1_b2b54"]
+[ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="1_qglaf"]
+[ext_resource type="Texture2D" uid="uid://jeprio8833ve" path="res://Assets/ui/progressbar.png" id="2_qmn1f"]
+[ext_resource type="FontFile" uid="uid://rbc0rsf5pq4f" path="res://Assets/ui/fonts/EurostileExtended.ttf" id="3_o84d0"]
+[ext_resource type="FontFile" uid="uid://cq6vl6nmc00ba" path="res://Assets/ui/fonts/EurostileExtendedBold.ttf" id="3_y8ceq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_74h4v"]
-font = ExtResource("4_6rv6v")
-font_color = Color(0.717237, 0.717237, 0.717237, 1)
+font = ExtResource("3_o84d0")
+font_color = Color(0.894118, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kjdt7"]
+font = ExtResource("3_y8ceq")
+font_size = 28
+font_color = Color(0.894118, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_34pg7"]
+font = ExtResource("3_y8ceq")
+font_size = 28
+font_color = Color(0.0784314, 0.0823529, 0.0941176, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ditdj"]
+font = ExtResource("3_y8ceq")
+font_color = Color(0.894118, 1, 1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_7e1u4"]
-font = ExtResource("4_6rv6v")
+font = ExtResource("3_y8ceq")
 font_size = 36
 
 [node name="HUD" type="Control"]
@@ -41,17 +56,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -238.5
-offset_top = -24.5
-offset_right = 238.5
-offset_bottom = 24.5
+offset_left = -238.0
+offset_top = -24.0
+offset_right = 239.0
+offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 step = 0.2
 value = 50.0
 nine_patch_stretch = true
-texture_under = ExtResource("1_xujfx")
-texture_progress = ExtResource("2_vd781")
+texture_under = ExtResource("1_b2b54")
+texture_progress = ExtResource("2_qmn1f")
 
 [node name="Label" type="Label" parent="TimeLimitBar"]
 layout_mode = 1
@@ -61,9 +76,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -239.0
-offset_top = 8.0
+offset_top = -9.0
 offset_right = 239.0
-offset_bottom = 35.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "OPERATION TIME REMAINING"
@@ -78,14 +93,115 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -239.0
-offset_top = -61.0
+offset_top = -58.0
 offset_right = 239.0
-offset_bottom = -34.0
+offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "00:00.00"
 label_settings = SubResource("LabelSettings_74h4v")
 horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -244.5
+offset_top = -57.0
+offset_right = 244.5
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "PLAYBACK MODE N"
+label_settings = SubResource("LabelSettings_kjdt7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RewindWidget" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -62.0
+offset_right = 20.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -22.0
+offset_right = 257.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.894118, 1, 1, 1)
+
+[node name="Label" type="Label" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.5
+offset_top = -15.0
+offset_right = 244.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLAYBACK MODE R"
+label_settings = SubResource("LabelSettings_34pg7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -46.0
+offset_right = -15.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "A"
+label_settings = SubResource("LabelSettings_ditdj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 15.0
+offset_top = -47.0
+offset_right = 47.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "D"
+label_settings = SubResource("LabelSettings_ditdj")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Crosshair" type="Control" parent="."]
 layout_mode = 1
@@ -167,11 +283,14 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Decor" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 576.0
-offset_top = 28.0
-offset_right = 616.0
-offset_bottom = 68.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
 
 [node name="Label" type="Label" parent="Decor"]
 layout_mode = 1
@@ -180,62 +299,60 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 366.0
-offset_top = 502.0
-offset_right = 536.0
-offset_bottom = 580.0
+offset_left = -170.0
+offset_top = -78.0
 grow_horizontal = 0
 grow_vertical = 0
 label_settings = SubResource("LabelSettings_7e1u4")
 horizontal_alignment = 2
 
 [node name="decor2" type="ColorRect" parent="Decor"]
-material = ExtResource("1_qglaf")
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = -553.0
-offset_top = 493.0
-offset_right = -537.0
-offset_bottom = 557.0
+offset_left = 23.0
+offset_top = -87.0
+offset_right = 39.0
+offset_bottom = -23.0
 grow_vertical = 0
 mouse_filter = 2
+color = Color(0.894118, 1, 1, 1)
 
 [node name="decor4" type="ColorRect" parent="Decor"]
-material = ExtResource("1_qglaf")
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 496.0
-offset_top = 493.0
-offset_right = 512.0
-offset_bottom = 557.0
+offset_left = -39.0
+offset_top = -87.0
+offset_right = -23.0
+offset_bottom = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
+color = Color(0.894118, 1, 1, 1)
 
 [node name="decor" type="ColorRect" parent="Decor"]
-material = ExtResource("1_qglaf")
 layout_mode = 1
-offset_left = -553.0
-offset_top = -5.0
-offset_right = -505.0
-offset_bottom = 43.0
+offset_left = 23.0
+offset_top = 23.0
+offset_right = 71.0
+offset_bottom = 71.0
 mouse_filter = 2
+color = Color(0.894118, 1, 1, 1)
 
 [node name="decor3" type="ColorRect" parent="Decor"]
-material = ExtResource("1_qglaf")
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 466.0
-offset_top = -5.0
-offset_right = 514.0
-offset_bottom = 43.0
+offset_left = -71.0
+offset_top = 23.0
+offset_right = -23.0
+offset_bottom = 71.0
 grow_horizontal = 0
 mouse_filter = 2
+color = Color(0.894118, 1, 1, 1)
