@@ -17,6 +17,18 @@ signal shot(npc)
 @export var CAMERA_CONTROLLER : Node3D 
 
 @onready var ray = $camera_controller/RayCast3D
+@onready var step_sound: AudioStreamPlayer3D = $FootstepPlayer
+@onready var pause_click: AudioStreamPlayer = $PauseClick
+@onready var footstep_timer: Timer = $FootstepPlayer/FootstepTimer
+@onready var rewind_sound: AudioStreamPlayer = $RewindSound
+
+@onready var rewind_start_sound = preload("res://Music/rewind/rewind_start.wav")
+@onready var rewind_loop_sound = preload("res://Music/rewind/rewind_loop_2.wav")
+
+
+var rewind_sound_status: String = "start"
+var is_rewind_sound_playing: bool = false
+
 var _npc_shot : Array
 
 var _mouse_input : bool = false
@@ -35,6 +47,7 @@ var _frame_counter : int = 0
 var _player_positions_array : Array
 var _player_rotations_array : Array
 
+var step_timer_on: bool = false
 
 func _input(event):
 	if event.is_action_pressed("exit"):
@@ -48,14 +61,19 @@ func _input(event):
 				rewind_end.emit()
 			_paused = false
 			pause_end.emit()
+			pause_click.play()
 		else:
 			_paused = true
 			pause_start.emit()
+			pause_click.play()
 	if event.is_action_pressed("rewind") and _paused:
 		_rewinding = true
+		play_rewind_sound()
 		rewind_start.emit()
 	if event.is_action_released("rewind") and _paused:
 		_rewinding = false
+		rewind_sound.stop()
+		rewind_sound_status = "start"
 		rewind_end.emit()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
 		if ray.is_colliding():
@@ -140,6 +158,10 @@ func _physics_process(delta):
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
+			if not step_sound.playing and not step_timer_on:
+				footstep_timer.start()
+				step_timer_on = true
+				step_sound.play()
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -148,3 +170,23 @@ func _physics_process(delta):
 		
 		_frame_counter += 1
 		_player_positions_array.append(position)
+
+
+func _on_footstep_timer_timeout():
+	step_timer_on = false
+
+
+func play_rewind_sound():
+	if rewind_sound_status == "start":
+		rewind_sound.set_stream(rewind_start_sound)
+		rewind_sound.play()
+		is_rewind_sound_playing = true
+		await Signal(rewind_sound, 'finished')
+		is_rewind_sound_playing = false
+		rewind_sound_status = "loop"
+	if rewind_sound_status == "loop":
+		rewind_sound.set_stream(rewind_loop_sound)
+		rewind_sound.play()
+		is_rewind_sound_playing = true
+		await Signal(rewind_sound, 'finished')
+		is_rewind_sound_playing = false

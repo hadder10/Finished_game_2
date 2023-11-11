@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bx653frlt4b2g"]
 
-[ext_resource type="MeshLibrary" uid="uid://cs00asvysbiiy" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_xky8m"]
+[ext_resource type="MeshLibrary" uid="uid://bvavvmdsacdk3" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_xky8m"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_h1sab"]
 [ext_resource type="PackedScene" uid="uid://l66esyv1u63" path="res://Scenes/ui/HUD.tscn" id="3_ngg04"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="4_wh0lm"]

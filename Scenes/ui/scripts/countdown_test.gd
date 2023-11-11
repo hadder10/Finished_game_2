@@ -20,8 +20,8 @@ func format_seconds(seconds):
 	var mils_string = "%0*d" % [2, millis]
 		
 	return mins_string + ":" + secs_string + "." + mils_string
-	
-	
+
+
 func _ready():
 	countdown = 0
 	if countdownBar:
