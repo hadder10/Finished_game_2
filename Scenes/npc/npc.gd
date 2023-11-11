@@ -17,6 +17,7 @@ var _is_dead : bool = false
 
 var _frame_counter = 0
 var _event_array : Array
+var _paused : bool = false
 var _rewinding : bool = false
 
 
@@ -64,16 +65,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if _rewinding:
-		if !_event_array.is_empty() and _event_array.back()[0] == _frame_counter:
-			HEALTH = _event_array.back()[1]
-			if _is_dead:
-				_is_dead = false
-				mesh.material_override = aliveMaterial
-			_event_array.pop_back()
-		if not _is_dead and _cur_action > 0:
-			_undo_action(delta)
-		_frame_counter -= 1
+	if _paused:
+		if _rewinding:
+			if !_event_array.is_empty() and _event_array.back()[0] == _frame_counter:
+				HEALTH = _event_array.back()[1]
+				if _is_dead:
+					_is_dead = false
+					mesh.material_override = aliveMaterial
+				_event_array.pop_back()
+			if not _is_dead and _cur_action > 0:
+				_undo_action(delta)
+			_frame_counter -= 1
+		else:
+			pass
 	else:
 		if not _is_dead and _cur_action < len(_action_array):
 			_do_action(delta)
@@ -89,12 +93,20 @@ func _on_target_shot(target):
 			_is_dead = true
 
 
+func _on_test_player_pause_start():
+	_paused = true
+
+
+func _on_test_player_pause_end():
+	_paused = false
+
+
 func _on_test_player_rewind_start():
-	_rewinding = true # Replace with function body.
+	_rewinding = true
 
 
 func _on_test_player_rewind_end():
-	_rewinding = false # Replace with function body.
+	_rewinding = false
 
 
 func _on_test_player_shot(npc):
