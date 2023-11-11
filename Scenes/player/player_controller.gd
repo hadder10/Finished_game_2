@@ -5,6 +5,8 @@ signal pause_start
 signal pause_end
 signal rewind_start
 signal rewind_end
+signal fast_forward_start
+signal fast_forward_end
 signal shot(npc)
 
 @export var SPEED = 5.0
@@ -32,7 +34,7 @@ var is_rewind_sound_playing: bool = false
 var _npc_shot : Array
 
 var _mouse_input : bool = false
-var _mouse_rotation : Vector3
+var _mouse_rotation : Vector3 = Vector3(0, 0, 0)
 var _rotation_input : float
 var _tilt_input : float
 var _player_rotation : Vector3
@@ -43,7 +45,9 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var _paused : bool = false
 var _rewinding : bool = false
+var _fast_forwarding : bool = false
 var _frame_counter : int = 0
+var _pause_frame : int = -1
 var _player_positions_array : Array
 var _player_rotations_array : Array
 
@@ -67,6 +71,9 @@ func _input(event):
 			pause_start.emit()
 			pause_click.play()
 	if event.is_action_pressed("rewind") and _paused:
+		if _fast_forwarding:
+			_fast_forwarding = false
+			fast_forward_end.emit()
 		_rewinding = true
 		play_rewind_sound()
 		rewind_start.emit()
@@ -75,6 +82,15 @@ func _input(event):
 		rewind_sound.stop()
 		rewind_sound_status = "start"
 		rewind_end.emit()
+	if event.is_action_pressed("fast_forward") and _paused:
+		if _rewinding:
+			_rewinding = false
+			rewind_end.emit()
+		_fast_forwarding = true
+		fast_forward_start.emit()
+	if event.is_action_released("fast_forward") and _paused:
+		_fast_forwarding = false
+		fast_forward_end.emit()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
 		if ray.is_colliding():
 			while ray.get_collider() != null and ray.get_collider().is_in_group("NPC"):
@@ -98,8 +114,8 @@ func _unhandled_input(event):
 
 func _update_camera(delta):
 	if _paused:
-		if _rewinding and _frame_counter > 0:
-			_mouse_rotation = _player_rotations_array.back()
+		if _rewinding and _frame_counter > 0 or _fast_forwarding and _frame_counter < _pause_frame:
+			_mouse_rotation = _player_rotations_array[_frame_counter]
 			_player_rotation = Vector3(0.0, _mouse_rotation.y, 0.0)
 			_camera_rotation = Vector3(_mouse_rotation.x, 0.0, 0.0)
 		
@@ -107,8 +123,6 @@ func _update_camera(delta):
 			CAMERA_CONTROLLER.rotation.z = 0.0
 		
 			global_transform.basis = Basis.from_euler(_player_rotation)
-		
-			_player_rotations_array.pop_back()
 		else:
 			pass
 	else:
@@ -132,18 +146,31 @@ func _update_camera(delta):
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_player_positions_array.append(position)
+	_player_rotations_array.append(_mouse_rotation)
 
 
 func _physics_process(delta):
-	_update_camera(delta)
 	if _paused:
+		if _pause_frame == -1:
+			_pause_frame = _frame_counter
 		if _rewinding and _frame_counter > 0:
-			position = _player_positions_array.back()
-			_player_positions_array.pop_back()
 			_frame_counter -= 1
+			position = _player_positions_array[_frame_counter]
+		elif _fast_forwarding and _frame_counter < _pause_frame:
+			_frame_counter += 1
+			position = _player_positions_array[_frame_counter]
 		else:
 			pass
+		_update_camera(delta)
 	else:
+		if _pause_frame != -1:
+			for i in range(len(_player_positions_array) - _frame_counter - 1):
+				_player_positions_array.pop_back()
+				_player_rotations_array.pop_back()
+			_pause_frame = -1
+		_update_camera(delta)
+		
 		# Add the gravity.
 		if not is_on_floor():
 			velocity.y -= gravity * delta

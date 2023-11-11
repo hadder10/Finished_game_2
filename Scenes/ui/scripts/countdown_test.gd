@@ -4,10 +4,14 @@ extends Node
 @export var countdownBar : TextureProgressBar
 @export var countdownLabel : Label
 @export var timeLimit : float
-@export var reverse : bool = false
-@export var pause : bool = false
+
+var rewind : bool = false
+var fast_forward : bool = false
+var pause : bool = false
+
 
 var countdown
+var pause_countdown
 # Called when the node enters the scene tree for the first time.
 func format_seconds(seconds):
 	var minutes = int(seconds / 60)
@@ -24,6 +28,7 @@ func format_seconds(seconds):
 
 func _ready():
 	countdown = 0
+	pause_countdown = -1
 	if countdownBar:
 		countdownBar.value = 0
 	if countdownLabel:
@@ -32,11 +37,21 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if pause:
-		if countdown > 0 and reverse:
+		if pause_countdown == -1:
+			pause_countdown = countdown
+		if countdown > 0 and rewind:
 			countdown -= delta
+			if countdown < 0:
+				countdown = 0
+		elif countdown < pause_countdown and fast_forward:
+			countdown += delta
+			if countdown > pause_countdown:
+				countdown = pause_countdown
 		else:
 			pass
 	else:
+		if pause_countdown != -1:
+			pause_countdown = -1
 		if countdown < timeLimit:
 			countdown += delta
 	
@@ -47,11 +62,11 @@ func _process(delta):
 
 
 func _on_test_player_rewind_start():
-	reverse = true
+	rewind = true
 
 
 func _on_test_player_rewind_end():
-	reverse = false
+	rewind = false
 
 
 func _on_test_player_pause_start():
@@ -60,3 +75,11 @@ func _on_test_player_pause_start():
 
 func _on_test_player_pause_end():
 	pause = false
+
+
+func _on_test_player_fast_forward_start():
+	fast_forward = true
+
+
+func _on_test_player_fast_forward_end():
+	fast_forward = false
