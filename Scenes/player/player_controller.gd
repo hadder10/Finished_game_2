@@ -62,9 +62,11 @@ func _input(event):
 		if _paused:
 			if _rewinding:
 				_rewinding = false
+				rewind_sound.stop()
 				rewind_end.emit()
 			_paused = false
 			pause_end.emit()
+			rewind_sound.stop()
 			pause_click.play()
 		else:
 			_paused = true
@@ -164,7 +166,7 @@ func _physics_process(delta):
 			_frame_counter += 1
 			position = _player_positions_array[_frame_counter]
 		else:
-			pass
+			rewind_sound.stop()
 		_update_camera(delta)
 	else:
 		if _pause_frame != -1:
