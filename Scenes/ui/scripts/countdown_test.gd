@@ -8,6 +8,7 @@ extends Node
 var rewind : bool = false
 var fast_forward : bool = false
 var pause : bool = false
+var rewind_speed : int = 1
 
 
 var countdown
@@ -39,16 +40,17 @@ func _process(delta):
 	if pause:
 		if pause_countdown == -1:
 			pause_countdown = countdown
-		if countdown > 0 and rewind:
-			countdown -= delta
-			if countdown < 0:
-				countdown = 0
-		elif countdown < pause_countdown and fast_forward:
-			countdown += delta
-			if countdown > pause_countdown:
-				countdown = pause_countdown
-		else:
-			pass
+		for i in range (rewind_speed):
+			if countdown > 0 and rewind:
+				countdown -= delta
+				if countdown < 0:
+					countdown = 0
+			elif countdown < pause_countdown and fast_forward:
+				countdown += delta
+				if countdown > pause_countdown:
+					countdown = pause_countdown
+			else:
+				pass
 	else:
 		if pause_countdown != -1:
 			pause_countdown = -1
@@ -83,3 +85,11 @@ func _on_test_player_fast_forward_start():
 
 func _on_test_player_fast_forward_end():
 	fast_forward = false
+
+
+func _on_test_player_accel_start(speed):
+	rewind_speed = speed
+
+
+func _on_test_player_accel_end():
+	rewind_speed = 1
