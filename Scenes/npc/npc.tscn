@@ -10,7 +10,7 @@ albedo_color = Color(0.34902, 0.580392, 0.815686, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_c552x"]
 material = SubResource("StandardMaterial3D_dsdk6")
 
-[node name="CharacterBody3D" type="CharacterBody3D" groups=["NPC"]]
+[node name="npc" type="CharacterBody3D" groups=["NPC"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_twaug")
 
