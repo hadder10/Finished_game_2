@@ -13,6 +13,7 @@ config_version=5
 config/name="Finished_game_2"
 run/main_scene="res://Scenes/lvls/demo_level.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [input]
