@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://brhl5w86v4bbt"]
+[gd_scene load_steps=5 format=3 uid="uid://brhl5w86v4bbt"]
 
 [ext_resource type="MeshLibrary" uid="uid://bvavvmdsacdk3" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_jgejd"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_2uly4"]
+[ext_resource type="PackedScene" uid="uid://l66esyv1u63" path="res://Scenes/ui/HUD.tscn" id="3_u2si4"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="4_n2pr6"]
 
 [node name="first_lvl" type="Node3D"]
 
@@ -19,5 +21,8 @@ metadata/_editor_floor_ = Vector3(11, 0, 22)
 
 [node name="test_player" parent="." instance=ExtResource("2_2uly4")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.65746, 0)
+
+[node name="HUD" parent="." instance=ExtResource("3_u2si4")]
+script = ExtResource("4_n2pr6")
 
 [editable path="test_player"]
