@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dj726jedyospf"]
+
+[ext_resource type="Shader" path="res://Scenes/ui/invert_color.gdshader" id="1_q3dk7"]
+
+[resource]
+shader = ExtResource("1_q3dk7")

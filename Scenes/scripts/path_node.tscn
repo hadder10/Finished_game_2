@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm0oysj3srqg4"]
+
+[ext_resource type="Script" path="res://Scenes/scripts/path_node.gd" id="1_xru4d"]
+
+[node name="npc_path_node" type="Node3D"]
+script = ExtResource("1_xru4d")
