@@ -1,5 +1,6 @@
 extends Node
 
+@export var player : CharacterBody3D
 @export var countdownBar : TextureProgressBar
 @export var countdownLabel : Label
 @export var timeLimit : float
@@ -37,3 +38,11 @@ func _process(delta):
 		if countdownLabel:
 			countdownLabel.text = format_seconds(countdown)
 	
+
+
+func _on_test_player_rewind_start():
+	reverse = true
+
+
+func _on_test_player_rewind_end():
+	reverse = false

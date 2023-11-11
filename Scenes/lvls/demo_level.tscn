@@ -1,11 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://crinhcchne8bs"]
+[gd_scene load_steps=7 format=3 uid="uid://crinhcchne8bs"]
 
 [ext_resource type="MeshLibrary" uid="uid://bvavvmdsacdk3" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_xky8m"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_h1sab"]
 [ext_resource type="PackedScene" uid="uid://l66esyv1u63" path="res://Scenes/ui/HUD.tscn" id="3_ngg04"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="4_wh0lm"]
+[ext_resource type="PackedScene" uid="uid://bf8f45a25urks" path="res://Scenes/npc/npc.tscn" id="5_daegp"]
+[ext_resource type="PackedScene" uid="uid://bm0oysj3srqg4" path="res://Scenes/scripts/path_node.tscn" id="6_p6jbp"]
 
 [node name="demo_level" type="Node3D"]
+
+[node name="HUD_CONTROLLER" type="Node3D" parent="." node_paths=PackedStringArray("player", "countdownBar", "countdownLabel")]
+script = ExtResource("4_wh0lm")
+player = NodePath("../test_player")
+countdownBar = NodePath("../HUD/TimeLimitBar/TextureProgressBar")
+countdownLabel = NodePath("../HUD/TimeLimitBar/TimerLabel")
+timeLimit = 30.0
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_xky8m")
@@ -19,13 +28,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184107, 1.48588, -0.04154
 
 [node name="HUD" parent="." instance=ExtResource("3_ngg04")]
 
-[node name="Node3D" type="Node3D" parent="." node_paths=PackedStringArray("countdownBar", "countdownLabel")]
-script = ExtResource("4_wh0lm")
-countdownBar = NodePath("../HUD/TimeLimitBar/TextureProgressBar")
-countdownLabel = NodePath("../HUD/TimeLimitBar/TimerLabel")
-timeLimit = 30.0
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.942851, 0.333215, 0, -0.333215, 0.942851, 0, 13.4288, 0)
+
+[node name="NPC" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("5_daegp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43959, -7.95996)
+FIRST_ACTION_NODE = NodePath("../npc_path_node_START")
+SPEED = 3.0
+
+[node name="npc_path_node_START" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8.033)
+next = NodePath("../npc_path_node")
+
+[node name="npc_path_node" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0915, 1.5, -16)
+next = NodePath("../npc_path_node2")
+
+[node name="npc_path_node2" parent="." instance=ExtResource("6_p6jbp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.44292, 1.5, -15.7228)
+next = NodePath("")
+
+[connection signal="rewind_end" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="NPC" method="_on_test_player_rewind_end"]
+[connection signal="rewind_start" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="NPC" method="_on_test_player_rewind_start"]
+[connection signal="shot" from="test_player" to="NPC" method="_on_test_player_shot"]
 
 [editable path="HUD"]
