@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://b7g61xnpllj2"]
+[gd_scene load_steps=17 format=3 uid="uid://b7g61xnpllj2"]
 
 [ext_resource type="PackedScene" uid="uid://c0rfcjgxxwgk6" path="res://Scenes/tilemap/wall_block.tscn" id="1_myp06"]
 [ext_resource type="PackedScene" uid="uid://dcmee4ugva00r" path="res://Scenes/tilemap/colomn.tscn" id="2_5ij8i"]
 [ext_resource type="Texture2D" uid="uid://c80tpeq6b7ftl" path="res://Assets/tiles/ass_Asphalt_002_COLOR.png" id="3_orpmi"]
 [ext_resource type="Texture2D" uid="uid://dtejbba1wfvdy" path="res://Assets/tiles/ass_Asphalt_002_ROUGH.png" id="4_jwcqo"]
 [ext_resource type="Texture2D" uid="uid://sfpwrkifjx2t" path="res://Assets/tiles/ass_Asphalt_002_NORM.png" id="5_uofqr"]
+[ext_resource type="PackedScene" uid="uid://n15jcalgy6dc" path="res://Assets/tiles/glass_new.tscn" id="6_qmthr"]
+[ext_resource type="PackedScene" uid="uid://d0ffc7cqrv81u" path="res://Assets/tiles/soft_wall.tscn" id="7_qgnde"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgpn3"]
 albedo_color = Color(0.0666667, 0.137255, 0.188235, 1)
@@ -119,3 +121,7 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ass/Cube_001/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_7bhmg")
+
+[node name="glass_new" parent="." instance=ExtResource("6_qmthr")]
+
+[node name="soft_wall" parent="." instance=ExtResource("7_qgnde")]
