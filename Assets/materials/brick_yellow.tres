@@ -1,12 +1,11 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dhofiadde6iig"]
 
-[ext_resource type="Texture2D" uid="uid://d2j1i4nvmo4wi" path="res://Assets/textures/brick_red.PNG" id="1_57v4v"]
+[ext_resource type="Texture2D" uid="uid://c1dl0on5uutwb" path="res://Assets/textures/brick_yellow.PNG" id="1_37pmk"]
 
 [resource]
-albedo_texture = ExtResource("1_57v4v")
+albedo_texture = ExtResource("1_37pmk")
 roughness = 0.81
 uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 uv1_world_triplanar = true
-uv2_scale = Vector3(-0.895, 0.37, 0.34)
 texture_filter = 1

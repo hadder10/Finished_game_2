@@ -1,10 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://l66esyv1u63"]
+[gd_scene load_steps=16 format=3 uid="uid://l66esyv1u63"]
 
 [ext_resource type="Texture2D" uid="uid://cqrbeomwwjjbm" path="res://Assets/ui/progressbar_frame.png" id="1_b2b54"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/toggle_ui_group.gd" id="1_hxh15"]
 [ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="1_qglaf"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/toggleTexture.gd" id="2_q1fpr"]
 [ext_resource type="Texture2D" uid="uid://jeprio8833ve" path="res://Assets/ui/progressbar.png" id="2_qmn1f"]
+[ext_resource type="Texture2D" uid="uid://bf1lvcy2dmajh" path="res://Assets/ui/rewind_button_inactive.png" id="3_87oj8"]
 [ext_resource type="FontFile" uid="uid://rbc0rsf5pq4f" path="res://Assets/ui/fonts/EurostileExtended.ttf" id="3_o84d0"]
 [ext_resource type="FontFile" uid="uid://cq6vl6nmc00ba" path="res://Assets/ui/fonts/EurostileExtendedBold.ttf" id="3_y8ceq"]
+[ext_resource type="Texture2D" uid="uid://dh8fyumrntpp6" path="res://Assets/ui/rewind_button.png" id="4_gtg5g"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_74h4v"]
 font = ExtResource("3_o84d0")
@@ -41,6 +45,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="RewindWidgetControl" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_hxh15")
+can_disable = true
+target = NodePath("../RewindWidget")
+enable_animation = false
+
+[node name="CrosshairControl" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_hxh15")
+can_disable = true
+target = NodePath("../Crosshair")
+enable_animation = false
+
+[node name="ForwIndicatorControl" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("2_q1fpr")
+target = NodePath("../RewindWidget/rewind_indicator_forw")
+default = ExtResource("3_87oj8")
+changed = ExtResource("4_gtg5g")
+
+[node name="BackIndicatorControl" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("2_q1fpr")
+target = NodePath("../RewindWidget/rewind_indicator_back")
+default = ExtResource("3_87oj8")
+changed = ExtResource("4_gtg5g")
 
 [node name="TimeLimitBar" type="Control" parent="."]
 layout_mode = 1
@@ -106,7 +134,7 @@ text = "00:00.00"
 label_settings = SubResource("LabelSettings_kuarv")
 horizontal_alignment = 2
 
-[node name="Label2" type="Label" parent="."]
+[node name="playback_label_n" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -125,53 +153,31 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RewindWidget" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="label_frame" type="ColorRect" parent="RewindWidget"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -62.0
-offset_right = 20.0
-offset_bottom = -22.0
+offset_left = -258.0
+offset_top = -66.0
+offset_right = 255.0
+offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 0
-
-[node name="ColorRect" type="ColorRect" parent="RewindWidget"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -22.0
-offset_right = 257.0
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
 color = Color(0.894118, 1, 1, 1)
 
-[node name="Label" type="Label" parent="RewindWidget"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -244.5
-offset_top = -15.0
-offset_right = 244.5
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "PLAYBACK MODE R"
-label_settings = SubResource("LabelSettings_34pg7")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="RewindWidget"]
+[node name="pause1" type="ColorRect" parent="RewindWidget"]
+layout_direction = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -179,33 +185,114 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -47.0
-offset_top = -46.0
+offset_top = -49.0
 offset_right = -15.0
-offset_bottom = -20.0
+offset_bottom = 47.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "A"
-label_settings = SubResource("LabelSettings_ditdj")
-horizontal_alignment = 1
-vertical_alignment = 1
+color = Color(0.894118, 1, 1, 1)
 
-[node name="Label3" type="Label" parent="RewindWidget"]
+[node name="pause2" type="ColorRect" parent="RewindWidget"]
+layout_direction = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 15.0
-offset_top = -47.0
-offset_right = 47.0
-offset_bottom = -21.0
+offset_left = 17.0
+offset_top = -49.0
+offset_right = 49.0
+offset_bottom = 47.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.894118, 1, 1, 1)
+
+[node name="playback_label_r" type="Label" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -245.0
+offset_top = -57.0
+offset_right = 244.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "PLAYBACK MODE R"
+label_settings = SubResource("LabelSettings_34pg7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tooltip_a" type="Label" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -96.0
+offset_right = -64.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "A"
+label_settings = SubResource("LabelSettings_ditdj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tooltip_d" type="Label" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 65.7999
+offset_top = -95.0
+offset_right = 97.7999
+offset_bottom = -69.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "D"
 label_settings = SubResource("LabelSettings_ditdj")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="rewind_indicator_back" type="TextureRect" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -151.0
+offset_right = -26.0
+offset_bottom = -71.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.66, 0.66)
+texture = ExtResource("3_87oj8")
+
+[node name="rewind_indicator_forw" type="TextureRect" parent="RewindWidget"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 107.8
+offset_top = -150.0
+offset_right = 187.8
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(-0.66, 0.66)
+texture = ExtResource("3_87oj8")
 
 [node name="Crosshair" type="Control" parent="."]
 layout_mode = 1

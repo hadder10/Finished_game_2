@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dflruof1yvtcu"]
+[gd_scene load_steps=14 format=3 uid="uid://dflruof1yvtcu"]
 
 [ext_resource type="MeshLibrary" uid="uid://v6fpygqcysof" path="res://Assets/tileset/new_block.tres" id="1_1dsb4"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="1_vekjd"]
@@ -6,6 +6,19 @@
 [ext_resource type="PackedScene" uid="uid://cjvhf2xtxp7gd" path="res://Scenes/ui/GenericWidget.tscn" id="2_h6s1n"]
 [ext_resource type="PackedScene" uid="uid://l66esyv1u63" path="res://Scenes/ui/HUD.tscn" id="2_ide7n"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/widget_keybind.gd" id="2_pp2r8"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_gxexj"]
+keycode = 4194306
+
+[sub_resource type="InputEventKey" id="InputEventKey_ynhy7"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="InputEventKey" id="InputEventKey_u2vf8"]
+device = -1
+keycode = 50
+unicode = 50
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0oxhd"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -24,19 +37,28 @@ glow_enabled = true
 
 [node name="Node3D" type="Node3D"]
 
-[node name="countdown_dummy" type="Node" parent="." node_paths=PackedStringArray("countdownBar", "countdownLabel")]
+[node name="TMP_countdown_dummy" type="Node" parent="." node_paths=PackedStringArray("countdownBar", "countdownLabel")]
 script = ExtResource("1_vekjd")
 countdownBar = NodePath("../HUD/TimeLimitBar/TextureProgressBar")
 countdownLabel = NodePath("../HUD/TimeLimitBar/TimerLabel")
 timeLimit = 30.0
 reverse = true
 
-[node name="widget_activator_dummy" type="Node" parent="."]
+[node name="TMP_widget_activator_dummy" type="Node" parent="."]
 script = ExtResource("2_pp2r8")
+keybind = SubResource("InputEventKey_gxexj")
+
+[node name="TMP_playback_toggler_dummy" type="Node" parent="."]
+script = ExtResource("2_pp2r8")
+keybind = SubResource("InputEventKey_ynhy7")
+
+[node name="TMP_playback_toggler_dummy2" type="Node" parent="."]
+script = ExtResource("2_pp2r8")
+keybind = SubResource("InputEventKey_u2vf8")
 
 [node name="HUD" parent="." instance=ExtResource("2_ide7n")]
 
-[node name="RewindWidget" parent="HUD" index="2"]
+[node name="RewindWidget" parent="HUD" index="6"]
 visible = false
 
 [node name="Widget" parent="." instance=ExtResource("2_h6s1n")]
@@ -62,6 +84,9 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.33619, 1.40479, -1)
 mesh = SubResource("SphereMesh_bwfyk")
 
-[connection signal="tab_pressed" from="widget_activator_dummy" to="Widget" method="_on_activate"]
+[connection signal="tab_pressed" from="TMP_widget_activator_dummy" to="HUD/RewindWidgetControl" method="_on_activate"]
+[connection signal="tab_pressed" from="TMP_widget_activator_dummy" to="HUD/CrosshairControl" method="_on_activate"]
+[connection signal="tab_pressed" from="TMP_playback_toggler_dummy" to="HUD/BackIndicatorControl" method="_on_activate"]
+[connection signal="tab_pressed" from="TMP_playback_toggler_dummy2" to="HUD/ForwIndicatorControl" method="_on_activate"]
 
 [editable path="HUD"]

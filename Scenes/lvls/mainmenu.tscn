@@ -9,7 +9,7 @@
 [ext_resource type="Material" uid="uid://cyim4xrqty318" path="res://Assets/materials/primitives/gray.tres" id="8_3efls"]
 [ext_resource type="Material" uid="uid://rnvc7tyo0mra" path="res://Assets/materials/concrete.tres" id="8_kyve0"]
 [ext_resource type="Material" uid="uid://dhofiadde6iig" path="res://Assets/materials/brick_yellow.tres" id="9_p5odk"]
-[ext_resource type="Material" uid="uid://c17x1nkqcd55j" path="res://Assets/materials/primitives/red.tres" id="10_dehl3"]
+[ext_resource type="Material" uid="uid://blybgsfpo17og" path="res://Assets/materials/brick_gray.tres" id="11_1fk2h"]
 [ext_resource type="Material" uid="uid://c3bbn88pojt0b" path="res://Assets/materials/steel.tres" id="11_qd0p5"]
 [ext_resource type="Material" uid="uid://dmphxb0hpu1du" path="res://Assets/materials/primitives/yellowsmooth.tres" id="12_4x38j"]
 
@@ -162,16 +162,15 @@ shadow_enabled = true
 
 [node name="floor" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(24.1834, 0, 0, 0, 1, 0, 0, 0, 4.36215, -5.27209, 0, 0)
-material_override = ExtResource("8_kyve0")
 mesh = SubResource("PlaneMesh_520u8")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("7_m2hml")
+surface_material_override/0 = ExtResource("8_kyve0")
 
 [node name="ceil" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(-3.23236e-07, 0, -30.5829, 0, 0.138609, 0, 6.2689, 0, -1.13329e-06, 0.962227, 5.28088, -0.0986267)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("7_m2hml")
+surface_material_override/0 = ExtResource("11_qd0p5")
 
 [node name="base3" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(-2.68157e-07, 0, -0.196361, 0, 0.138609, 0, 5.20069, 0, -7.27637e-09, 2.45911, 4.80649, -0.0290866)
@@ -399,108 +398,108 @@ spot_angle = 105.0
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.146946, 0.302539, 2.38839)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall4" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.146946, 1.30254, 2.38839)
-material_override = ExtResource("9_p5odk")
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall5" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.146946, 1.30254, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall6" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.146946, 0.302539, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall7" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.146946, 1.30254, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall8" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.146946, 0.302539, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall13" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 5.14695, 1.30254, 1.98759)
 material_override = ExtResource("9_p5odk")
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall14" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 5.14695, 0.302539, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall15" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 5.14695, 1.30254, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall16" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, 5.14695, 0.302539, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall9" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -4.85305, 1.30254, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall10" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -4.85305, 0.302539, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall11" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -4.85305, 1.30254, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall12" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -4.85305, 0.302539, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall2" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.736938, 0.302539, -2.81241)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall3" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, 0.736938, 1.30254, -2.81241)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall17" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, 0.146946, 3.53439, 2.38839)
-material_override = ExtResource("9_p5odk")
+material_override = ExtResource("11_1fk2h")
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
 
 [node name="wall18" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, 0.146946, 3.53439, 1.98759)
+material_override = ExtResource("11_1fk2h")
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("8_3efls")
@@ -509,29 +508,29 @@ surface_material_override/0 = ExtResource("8_3efls")
 transform = Transform3D(0.292154, 0, 0, 0, 1, 0, 0, 0, 5.60563, -23.9065, 1.30254, -0.176318)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall50" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(0.292154, 0, 0, 0, 1, 0, 0, 0, 5.60563, -23.9065, 0.302539, -0.176318)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall51" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(0.292154, 0, 0, 0, 3.48852, 0, 0, 0, 5.60563, -23.9065, 3.53439, -0.176318)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall19" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, 0.146946, 3.53439, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall20" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, 5.14695, 3.53439, 1.98759)
-material_override = ExtResource("11_qd0p5")
+material_override = ExtResource("11_1fk2h")
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("8_3efls")
@@ -540,10 +539,11 @@ surface_material_override/0 = ExtResource("8_3efls")
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, 5.14695, 3.53439, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall22" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -4.85305, 3.53439, 1.98759)
+material_override = ExtResource("11_1fk2h")
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("8_3efls")
@@ -552,14 +552,14 @@ surface_material_override/0 = ExtResource("8_3efls")
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -4.85305, 3.53439, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall24" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, 1.22123, 3.339, -2.66903)
 lod_bias = 0.001
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="barrel" type="Node3D" parent="corridor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36016, 0, 1.49907)
@@ -847,145 +847,145 @@ spot_angle = 105.0
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.8531, 0.302539, 2.38839)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall26" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.8531, 1.30254, 2.38839)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall27" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.8531, 1.30254, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall28" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.8531, 0.302539, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall29" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.8531, 1.30254, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall30" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.8531, 0.302539, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall31" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -9.85305, 1.30254, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall32" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -9.85305, 0.302539, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall33" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -9.85305, 1.30254, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall34" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -9.85305, 0.302539, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall35" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -19.8531, 1.30254, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall36" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -19.8531, 0.302539, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall37" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -19.8531, 1.30254, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall38" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 1, 0, 0, 0, 0.409371, -19.8531, 0.302539, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall39" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.2631, 0.302539, -2.81241)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall40" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 1, 0, 0, 0, 0.409371, -14.2631, 1.30254, -2.81241)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("10_dehl3")
+surface_material_override/0 = ExtResource("9_p5odk")
 
 [node name="wall41" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -14.8531, 3.53439, 2.38839)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall42" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -14.8531, 3.53439, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall43" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -14.8531, 3.53439, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall44" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -9.85305, 3.53439, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall45" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -9.85305, 3.53439, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall46" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -19.8531, 3.53439, 1.98759)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall47" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(1.10921, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -19.8531, 3.53439, -2.40351)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="wall48" type="MeshInstance3D" parent="corridor"]
 transform = Transform3D(19.6024, 0, 0, 0, 3.48852, 0, 0, 0, 0.409371, -14.2631, 3.53439, -2.81241)
 mesh = SubResource("BoxMesh_yvyua")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("8_3efls")
+surface_material_override/0 = ExtResource("11_1fk2h")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.804479, 0.0655414, 0.590354, 0.0366185, 0.997476, -0.06084, -0.592852, -0.0273266, -0.804848, 7.78598, 1.51939, -2.29537)
