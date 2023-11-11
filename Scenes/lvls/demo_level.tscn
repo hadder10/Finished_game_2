@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bx653frlt4b2g"]
+[gd_scene load_steps=9 format=3 uid="uid://bx653frlt4b2g"]
 
 [ext_resource type="MeshLibrary" uid="uid://cs00asvysbiiy" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_xky8m"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_h1sab"]
@@ -6,24 +6,8 @@
 [ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="4_wh0lm"]
 [ext_resource type="PackedScene" uid="uid://bf8f45a25urks" path="res://Scenes/npc/npc.tscn" id="5_daegp"]
 [ext_resource type="PackedScene" uid="uid://bm0oysj3srqg4" path="res://Scenes/scripts/path_node.tscn" id="6_p6jbp"]
-[ext_resource type="Shader" path="res://Scenes/lvls/fisheye.gdshader" id="7_1leew"]
-[ext_resource type="Shader" path="res://Scenes/lvls/pixilise.gdshader" id="7_3a8af"]
 [ext_resource type="PackedScene" uid="uid://claaykfklsvm7" path="res://Assets/enemies/MAN_skeletal.glb" id="8_5f4ao"]
-[ext_resource type="Shader" path="res://Scenes/lvls/streaks.gdshader" id="8_op1rd"]
-[ext_resource type="Shader" path="res://Scenes/lvls/rewind.gdshader" id="9_4vwe3"]
 [ext_resource type="Script" path="res://Assets/enemies/MAN_skeletal.gd" id="9_xlqb3"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vv41f"]
-shader = ExtResource("9_4vwe3")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vq2gf"]
-shader = ExtResource("7_3a8af")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4cav"]
-shader = ExtResource("8_op1rd")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1h8hn"]
-shader = ExtResource("7_1leew")
 
 [node name="demo_level" type="Node3D"]
 
@@ -88,59 +72,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231, 1.5, -16.681)
 [node name="npc_2_path_node_1" parent="." instance=ExtResource("6_p6jbp")]
 
 [node name="npc_2_path_node_3" parent="." instance=ExtResource("6_p6jbp")]
-
-[node name="CanvasLayer4" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer4"]
-visible = false
-material = SubResource("ShaderMaterial_vv41f")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 0
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_vq2gf")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="CanvasLayer3" type="CanvasLayer" parent="."]
-layer = 0
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer3"]
-material = SubResource("ShaderMaterial_v4cav")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-layer = 0
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
-material = SubResource("ShaderMaterial_1h8hn")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="MAN_skeletal" parent="." instance=ExtResource("8_5f4ao")]
 transform = Transform3D(-0.0547759, 0, 0.998499, 0, 1, 0, -0.998499, 0, -0.0547759, -4.69152, 18.6675, 0.947536)
