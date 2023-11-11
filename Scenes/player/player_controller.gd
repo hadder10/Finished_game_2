@@ -15,6 +15,7 @@ signal shot(npc)
 @export var CAMERA_CONTROLLER : Node3D 
 
 @onready var ray = $camera_controller/RayCast3D
+var _npc_shot : Array
 
 var _mouse_input : bool = false
 var _mouse_rotation : Vector3
@@ -45,11 +46,16 @@ func _input(event):
 		rewind_end.emit()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if ray.is_colliding():
-			print("shooting")
-			var target = ray.get_collider()
-			print(target)
-			if target.is_in_group("NPC"):
+			while ray.get_collider() != null and ray.get_collider().is_in_group("NPC"):
+				var target = ray.get_collider()
+				print(target)
 				shot.emit(target)
+				_npc_shot.append(target) #add it to the array.
+				ray.add_exception(target) #add to ray's exception. That way it could detect something being behind it.
+				ray.force_raycast_update() #update the ray's collision query.
+			for target in _npc_shot:
+				ray.remove_exception(target)
+			_npc_shot.clear()
 
 
 func _unhandled_input(event):
