@@ -39,7 +39,7 @@ var Weapons_List = {
 @export var Start_Weapons: Array[String]
 
 func _ready():
-	Animation_Player.animation_finished.connect(_on_animation_finished)
+	%AnimationPlayer.animation_finished.connect(_on_animation_finished)
 	Initialize(Start_Weapons) #current starts on the first weapon in the stack
 
 func _input(event):
@@ -91,7 +91,7 @@ func Initialize(_Start_Weapons: Array):
 	enter()
 
 func enter():
-	Animation_Player.queue(Current_Weapon.Pick_Up_Anim)
+	%AnimationPlayer.queue(Current_Weapon.Pick_Up_Anim)
 	Current_Weapon.Spray_Count_Update()
 	Weapon_Changed.emit(Current_Weapon.Weapon_Name)
 	Update_Ammo.emit([Current_Weapon.Current_Ammo, Current_Weapon.Reserve_Ammo])

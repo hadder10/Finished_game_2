@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dorp48lq5ihjb"]
+
+[ext_resource type="PackedScene" uid="uid://hnfu45gb7ov4" path="res://Assets/weapon_ig/pistol_new.glb" id="1_h4vxy"]
+
+[node name="blasterN" type="Node3D"]
+
+[node name="pistol_new" parent="." instance=ExtResource("1_h4vxy")]
+transform = Transform3D(-3.49691e-09, 0, 0.08, 0, 0.08, 0, -0.08, 0, -3.49691e-09, -0.471053, 0, 0.0104507)
