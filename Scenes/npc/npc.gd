@@ -6,7 +6,6 @@ extends CharacterBody3D
 @export var HEALTH : int = 3
 @export var IS_ENEMY : bool = false
 
-@onready var mesh = $CollisionShape3D/MeshInstance3D
 @onready var pain_sound = $PainSound
 @onready var die_timer = $DieTimer
 @onready var _animplayer = $CollisionShape3D/MAN_skeletal/AnimationPlayer
@@ -189,13 +188,14 @@ func _on_test_player_shot(npc):
 		_cur_event += 1
 		HEALTH = 0
 		_is_dead = true
-		mesh.material_override = DEAD_MATERIAL
-		die_timer.start()
-		await Signal(die_timer, 'timeout')
-		pain_sound.play()
 		_collision.disabled = true
 		_animplayer.play("death")
 		_animplayer.queue("dead/deatd")
+
+		#ALWAYS DO THIS AT THE END OF THE FUNC
+		die_timer.start()
+		await Signal(die_timer, 'timeout')
+		pain_sound.play()
 
 
 func _on_test_player_accel_start(speed):
