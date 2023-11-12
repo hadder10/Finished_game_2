@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Scenes/ui/scripts/toggleTexture.gd" id="3_2nybb"]
 [ext_resource type="FontFile" uid="uid://rbc0rsf5pq4f" path="res://Assets/ui/fonts/EurostileExtended.ttf" id="3_o84d0"]
 [ext_resource type="FontFile" uid="uid://cq6vl6nmc00ba" path="res://Assets/ui/fonts/EurostileExtendedBold.ttf" id="3_y8ceq"]
-[ext_resource type="Texture2D" path="res://Assets/ui/rewind_button_inactive.png" id="4_56vui"]
+[ext_resource type="Texture2D" uid="uid://fv877ca00nqq" path="res://Assets/ui/rewind_button_inactive.png" id="4_56vui"]
 [ext_resource type="Texture2D" uid="uid://dh8fyumrntpp6" path="res://Assets/ui/rewind_button.png" id="5_ymgi7"]
 [ext_resource type="Shader" path="res://Scenes/ui/rewind.gdshader" id="6_4s08u"]
 [ext_resource type="Shader" path="res://Scenes/ui/pixilise.gdshader" id="7_iqqt7"]
