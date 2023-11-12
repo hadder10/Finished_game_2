@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqsoh47ipw0hk"]
+[gd_scene load_steps=9 format=3 uid="uid://dqsoh47ipw0hk"]
 
 [ext_resource type="MeshLibrary" uid="uid://cs00asvysbiiy" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_0wrkl"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="1_k3iqm"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_ctoco"]
 [ext_resource type="PackedScene" uid="uid://l66esyv1u63" path="res://Scenes/ui/HUD.tscn" id="4_805dc"]
+[ext_resource type="Shader" path="res://Scenes/lvls/pixilise.gdshader" id="5_rcg2j"]
+[ext_resource type="Shader" path="res://Scenes/lvls/fisheye.gdshader" id="6_13uc3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_abp3j"]
+shader = ExtResource("6_13uc3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6ixr"]
+shader = ExtResource("5_rcg2j")
 
 [node name="Level_1" type="Node3D"]
 
@@ -33,10 +41,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.4817, 1.45281, 0)
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.534869, 0.844935, 0, -0.844935, -0.534869, 0, 15.8644, 0)
 
+[node name="FishEye" type="CanvasLayer" parent="."]
+layer = -1
+visible = false
+
+[node name="FishEye" type="ColorRect" parent="FishEye"]
+material = SubResource("ShaderMaterial_abp3j")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PixeliseShader" type="CanvasLayer" parent="."]
+layer = -1
+visible = false
+
+[node name="Pixelise" type="ColorRect" parent="PixeliseShader"]
+material = SubResource("ShaderMaterial_w6ixr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="HUD" parent="." instance=ExtResource("4_805dc")]
 
-[node name="RewindWidget" parent="HUD" index="6"]
-visible = true
+[node name="RewindWidget" parent="HUD" index="2"]
 mouse_filter = 2
 
 [connection signal="fast_forward_end" from="test_player" to="CountdownControl" method="_on_test_player_fast_forward_end"]
