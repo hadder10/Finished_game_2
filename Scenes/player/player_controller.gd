@@ -7,11 +7,13 @@ signal rewind_start
 signal rewind_end
 signal fast_forward_start
 signal fast_forward_end
+signal accel_start(speed)
+signal accel_end
 signal shot(npc)
 
 @export var SPEED = 5.0
 @export var JUMP_VELOCITY = 4.5
-
+@export var FAST_REWIND = 3
 
 @export var MOUSE_SENSETIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -49,6 +51,7 @@ var _rewinding : bool = false
 var _fast_forwarding : bool = false
 var _frame_counter : int = 0
 var _pause_frame : int = -1
+var _rewind_speed : int = 1
 var _player_positions_array : Array
 var _player_rotations_array : Array
 
@@ -65,6 +68,9 @@ func _input(event):
 				_rewinding = false
 				rewind_sound.stop()
 				rewind_end.emit()
+			if _rewind_speed != 1:
+				_rewind_speed = 1
+				accel_end.emit()
 			_paused = false
 			pause_end.emit()
 			rewind_sound.stop()
@@ -98,6 +104,12 @@ func _input(event):
 		rewind_sound.stop()
 		rewind_sound_status = "start"
 		fast_forward_end.emit()
+	if event.is_action_pressed("accel") and _paused:
+		_rewind_speed = FAST_REWIND
+		accel_start.emit(FAST_REWIND)
+	if event.is_action_released("accel") and _paused:
+		_rewind_speed = 1
+		accel_end.emit()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
 		gunshot_sound.play()
 		if ray.is_colliding():
@@ -163,10 +175,14 @@ func _physics_process(delta):
 		if _pause_frame == -1:
 			_pause_frame = _frame_counter
 		if _rewinding and _frame_counter > 0:
-			_frame_counter -= 1
+			_frame_counter -= _rewind_speed
+			if _frame_counter < 0:
+				_frame_counter = 0
 			position = _player_positions_array[_frame_counter]
 		elif _fast_forwarding and _frame_counter < _pause_frame:
-			_frame_counter += 1
+			_frame_counter += _rewind_speed
+			if _frame_counter > _pause_frame:
+				_frame_counter = _pause_frame
 			position = _player_positions_array[_frame_counter]
 		else:
 			rewind_sound.stop()
