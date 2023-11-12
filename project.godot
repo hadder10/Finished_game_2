@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.1", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://Music/default_bus_layout.tres"
+
 [input]
 
 move_forward={
