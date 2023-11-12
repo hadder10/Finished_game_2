@@ -36,9 +36,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184107, 1.48588, -0.04154
 
 [node name="HUD" parent="." instance=ExtResource("3_ngg04")]
 
-[node name="ColorRect" parent="HUD/CanvasLayer4" index="0"]
-anchors_preset = 15
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.942851, 0.333215, 0, -0.333215, 0.942851, 0, 13.4288, 0)
 

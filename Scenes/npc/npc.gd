@@ -8,8 +8,7 @@ extends CharacterBody3D
 @export var DEAD_MATERIAL : StandardMaterial3D = StandardMaterial3D.new()
 
 @onready var mesh = $CollisionShape3D/MeshInstance3D
-
-signal target_shot(target)
+@onready var ray = $RayCast3D
 
 var _action_array : Array
 var _cur_action = 0
@@ -35,8 +34,17 @@ func _do_action(delta) -> void:
 			_cur_action += 1
 			return
 		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
+		look_at(cur_action_node.global_position)
 	elif cur_action_node.action == "FIRE":
-		target_shot.emit(cur_action_node.target)
+		look_at(cur_action_node.global_position)
+		if ray.is_colliding():
+			var target = ray.get_collider()
+			if target.is_in_group("NPC"):
+				target._get_shot()
+			elif target.is_in_group("PLAYER"):
+				target._dead()
+		_event_array.append([_frame_counter, "shoot"])
+		_cur_event += 1
 		_cur_action += 1
 	else:
 		printerr("Node doesn't have action")
@@ -51,7 +59,9 @@ func _undo_action(delta) -> void:
 			_cur_action -= 1
 			return
 		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
+		look_at(2 * position - cur_action_node.global_position)
 	elif cur_action_node.next.action == "FIRE":
+		look_at(cur_action_node.next.global_position)
 		_cur_action -= 1
 	else:
 		printerr("Node doesn't have action")
@@ -76,10 +86,11 @@ func _process(delta):
 		for i in range(_rewind_speed):
 			if _rewinding and _frame_counter > 0:
 				if _cur_event > -1 and _event_array[_cur_event][0] == _frame_counter:
-					HEALTH += _event_array[_cur_event][1]
-					if _is_dead:
-						_is_dead = false
-						mesh.material_override = ALIVE_MATERIAL
+					if typeof(_event_array[_cur_event][1]) == 2:
+						HEALTH += _event_array[_cur_event][1]
+						if _is_dead:
+							_is_dead = false
+							mesh.material_override = ALIVE_MATERIAL
 					_cur_event -= 1
 				if not _is_dead and _cur_action > 0:
 					_undo_action(delta)
@@ -107,8 +118,8 @@ func _process(delta):
 		_frame_counter += 1
 
 
-func _on_target_shot(target):
-	if target == self and !_is_dead:
+func _get_shot():
+	if !_is_dead:
 		_event_array.append([_frame_counter, 1])
 		_cur_event += 1
 		HEALTH -= 1

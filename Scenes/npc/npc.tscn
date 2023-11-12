@@ -20,4 +20,6 @@ shape = SubResource("CapsuleShape3D_sbflj")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
 mesh = SubResource("CapsuleMesh_c552x")
 
-[connection signal="target_shot" from="." to="." method="_on_target_shot"]
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0.576, 0)
+target_position = Vector3(0, 0, -1)
