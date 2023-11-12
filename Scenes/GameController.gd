@@ -16,7 +16,7 @@ func _ready():
 
 
 func _on_death():
-	pass
+	lose()
 
 
 func lose():
