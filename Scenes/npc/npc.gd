@@ -39,7 +39,7 @@ func _do_action(delta) -> void:
 	var cur_action_node = _action_array[_cur_action]
 	if cur_action_node.action == "STAND":
 		_animplayer.play("idle")
-		look_at(cur_action_node.target.global_position)
+		look_at(Vector3(cur_action_node.target.global_position.x, position.y, cur_action_node.target.global_position.z))
 		if _cur_wait == -1:
 			_cur_wait = cur_action_node.wait
 		if _cur_wait <= 0:
@@ -54,11 +54,11 @@ func _do_action(delta) -> void:
 		if position == cur_action_node.global_position:
 			_cur_action += 1
 			return
-		look_at(cur_action_node.global_position)
+		look_at(Vector3(cur_action_node.global_position.x, position.y, cur_action_node.global_position.z))
 		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
 	
 	elif cur_action_node.action == "FIRE":
-		look_at(cur_action_node.target.global_position)
+		look_at(Vector3(cur_action_node.target.global_position.x, position.y, cur_action_node.target.global_position.z))
 		_animplayer.play("shoot")
 		if _shots_fired:
 			if ray.is_colliding():
@@ -80,11 +80,11 @@ func _undo_action(delta) -> void:
 	var cur_action_node = _action_array[_cur_action]
 	var prev_action_node = _action_array[_cur_action - 1] if _cur_action > 0 else null
 	if cur_action_node.action == "STAND":
-		look_at(cur_action_node.target.global_position)
+		look_at(Vector3(cur_action_node.target.global_position.x, position.y, cur_action_node.target.global_position.z))
 		_animplayer.play("idle")
 		if _cur_wait == -1:
 			_cur_wait = 0
-		if _cur_wait >= cur_action_node.next.wait:
+		if _cur_wait >= cur_action_node.wait:
 			_cur_action -= 1
 			_cur_wait = -1
 			return
@@ -95,11 +95,11 @@ func _undo_action(delta) -> void:
 		if position == prev_action_node.global_position:
 			_cur_action -= 1
 			return
-		look_at(2 * position - prev_action_node.global_position)
+		look_at(2 * position - Vector3(prev_action_node.global_position.x, position.y, prev_action_node.global_position.z))
 		position = position.move_toward(prev_action_node.global_position, delta * SPEED)
 	
 	elif cur_action_node.action == "FIRE":
-		look_at(cur_action_node.target.global_position)
+		look_at(Vector3(cur_action_node.target.global_position.x, position.y, cur_action_node.target.global_position.z))
 		_animplayer.play("shoot", -1, 1, true)
 		if _shots_fired:
 			_cur_action -= 1

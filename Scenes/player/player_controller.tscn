@@ -1,17 +1,55 @@
-[gd_scene load_steps=17 format=3 uid="uid://cm7wa4vj7af2q"]
+[gd_scene load_steps=25 format=3 uid="uid://cm7wa4vj7af2q"]
 
 [ext_resource type="Script" path="res://Scenes/player/player_controller.gd" id="1_but4q"]
 [ext_resource type="AudioStream" uid="uid://d2ruufrbp343f" path="res://Music/footsteps/StoneStep1.wav" id="2_2arvn"]
+[ext_resource type="Script" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="2_o0hpe"]
 [ext_resource type="AudioStream" uid="uid://d4avvivo20yuy" path="res://Music/footsteps/StoneStep2.wav" id="3_ef1eq"]
+[ext_resource type="Resource" uid="uid://yc1f2j7pl4vr" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres" id="3_sv0ag"]
+[ext_resource type="Resource" uid="uid://bwrs8ensewkgc" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres" id="4_5ybr1"]
 [ext_resource type="AudioStream" uid="uid://67siamb0clmc" path="res://Music/footsteps/StoneStep3.wav" id="4_lqr7u"]
 [ext_resource type="AudioStream" uid="uid://h7r5agcwuahy" path="res://Music/footsteps/StoneStep4.wav" id="5_7wolo"]
+[ext_resource type="Resource" uid="uid://c1jg0ifn7yvve" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres" id="5_ytqj1"]
+[ext_resource type="ArrayMesh" uid="uid://bnt8arqlmtk00" path="res://Assets/tiles/pistol_Cube_021.res" id="6_4ufkh"]
 [ext_resource type="AudioStream" uid="uid://dcmahmn40ff8y" path="res://Music/rewind/rewind_start.wav" id="6_dk27t"]
 [ext_resource type="AudioStream" uid="uid://bukdmk3ptqr5s" path="res://Music/rewind/pause_click.wav" id="6_wf6jw"]
+[ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://Player_Controller/weapon_animation.res" id="7_scdbk"]
 [ext_resource type="AudioStream" uid="uid://bmg6j0bwahnqs" path="res://Music/shot_sound/gun_shot_0.wav" id="8_5608p"]
 [ext_resource type="AudioStream" uid="uid://b051m40xhqxgj" path="res://Music/shot_sound/gun_shot_2.wav" id="10_hnawx"]
 [ext_resource type="AudioStream" uid="uid://ct6hs3kfw2aeh" path="res://Music/shot_sound/gun_shot_4.mp3" id="12_smlfi"]
 [ext_resource type="AudioStream" uid="uid://b4vw15huwi67" path="res://Music/shot_sound/gun_shot_5.wav" id="13_iheki"]
 [ext_resource type="AudioStream" uid="uid://d05g7qgko5fmn" path="res://Music/shot_sound/gun_shot_6.wav" id="14_fifvu"]
+
+[sub_resource type="Animation" id="Animation_tvd50"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.193, 1.255, -0.643)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterN:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ys4uk"]
+_data = {
+"RESET": SubResource("Animation_tvd50")
+}
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w3wbe"]
 
@@ -51,6 +89,39 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.915389, 0.151196)
 
 [node name="Camera3D" type="Camera3D" parent="camera_controller"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.101394)
+
+[node name="Weapons_Manager" type="Node3D" parent="camera_controller/Camera3D"]
+script = ExtResource("2_o0hpe")
+_weapon_resources = Array[Resource("res://Player_Controller/scripts/Weapon_State_Machine/weapon_resource.gd")]([ExtResource("3_sv0ag"), ExtResource("4_5ybr1"), ExtResource("5_ytqj1")])
+Start_Weapons = Array[String](["blasterN", "blasterI"])
+
+[node name="Weapons_Models" type="Node3D" parent="camera_controller/Camera3D/Weapons_Manager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)
+
+[node name="blasterN" type="Node3D" parent="camera_controller/Camera3D/Weapons_Manager/Weapons_Models"]
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193, 1.255, -0.643)
+
+[node name="blasterN" type="Node3D" parent="camera_controller/Camera3D/Weapons_Manager/Weapons_Models/blasterN"]
+transform = Transform3D(1.78921, 0, 0, 0, 1.01487, 0, -4.54747e-13, 0, 0.875635, 0, 0, 0)
+
+[node name="tmpParent" type="Node3D" parent="camera_controller/Camera3D/Weapons_Manager/Weapons_Models/blasterN/blasterN"]
+
+[node name="blasterN2" type="MeshInstance3D" parent="camera_controller/Camera3D/Weapons_Manager/Weapons_Models/blasterN/blasterN/tmpParent"]
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("6_4ufkh")
+skeleton = NodePath("")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="camera_controller/Camera3D/Weapons_Manager/Weapons_Models"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_ys4uk"),
+"Global": ExtResource("7_scdbk")
+}
+
+[node name="BulletPoint" type="Marker3D" parent="camera_controller/Camera3D/Weapons_Manager"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.313352, -0.240567, -0.907474)
+gizmo_extents = 0.21
 
 [node name="RayCast3D" type="RayCast3D" parent="camera_controller" groups=["PLAYER"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
