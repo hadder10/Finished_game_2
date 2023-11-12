@@ -58,6 +58,7 @@ func _undo_action(delta) -> void:
 		_cur_action -= 1
 	var cur_action_node = _action_array[_cur_action - 1]
 	if cur_action_node.next.action == "MOVE":
+		_animplayer.play("RUN_alternative");
 		if position == cur_action_node.global_position:
 			_cur_action -= 1
 			return
@@ -88,6 +89,9 @@ func _process(delta):
 		for i in range(_rewind_speed):
 			if _rewinding and _frame_counter > 0:
 				if _cur_event > -1 and _event_array[_cur_event][0] == _frame_counter:
+					if _event_array[_cur_event][1] == "death":
+						print("play undeath")
+						_animplayer.play("death", -1, 1, true)
 					if _event_array[_cur_event][1] == "hp":
 						HEALTH += _event_array[_cur_event][2]
 						if _is_dead:
@@ -102,6 +106,7 @@ func _process(delta):
 						HEALTH -= _event_array[_cur_event + 1][2]
 						if HEALTH == 0:
 							_is_dead = true
+							_animplayer.play("death")
 					_cur_event += 1
 				if not _is_dead and _cur_action < len(_action_array):
 					_do_action(delta)
@@ -126,6 +131,7 @@ func _get_shot():
 		HEALTH -= 1
 		if HEALTH == 0:
 			_is_dead = true
+			_animplayer.play("death")
 
 
 func _on_test_player_pause_start():
@@ -168,6 +174,7 @@ func _on_test_player_shot(npc):
 		_cur_event += 1
 		HEALTH = 0
 		_is_dead = true
+		_animplayer.play("death")
 
 
 func _on_test_player_accel_start(speed):
@@ -176,3 +183,9 @@ func _on_test_player_accel_start(speed):
 
 func _on_test_player_accel_end():
 	_rewind_speed = 1
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "death" and !_paused:
+		_event_array.append([_frame_counter, "death"])
+		_cur_event += 1
