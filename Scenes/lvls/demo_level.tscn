@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bx653frlt4b2g"]
+[gd_scene load_steps=7 format=3 uid="uid://bx653frlt4b2g"]
 
 [ext_resource type="MeshLibrary" uid="uid://cs00asvysbiiy" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_xky8m"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_h1sab"]
@@ -6,8 +6,6 @@
 [ext_resource type="Script" path="res://Scenes/ui/scripts/countdown_test.gd" id="4_wh0lm"]
 [ext_resource type="PackedScene" uid="uid://bf8f45a25urks" path="res://Scenes/npc/npc.tscn" id="5_daegp"]
 [ext_resource type="PackedScene" uid="uid://bm0oysj3srqg4" path="res://Scenes/scripts/path_node.tscn" id="6_p6jbp"]
-[ext_resource type="PackedScene" uid="uid://claaykfklsvm7" path="res://Assets/enemies/MAN_skeletal.glb" id="8_5f4ao"]
-[ext_resource type="Script" path="res://Assets/enemies/MAN_skeletal.gd" id="9_xlqb3"]
 
 [node name="demo_level" type="Node3D"]
 
@@ -29,11 +27,6 @@ metadata/_editor_floor_ = Vector3(0, -2, -14)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0184107, 1.48588, -0.0415459)
 
 [node name="HUD" parent="." instance=ExtResource("3_ngg04")]
-offset_left = 243.0
-offset_top = 151.0
-offset_right = -109.0
-offset_bottom = -47.0001
-scale = Vector2(0.813801, 0.813801)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.942851, 0.333215, 0, -0.333215, 0.942851, 0, 13.4288, 0)
@@ -43,20 +36,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -7.96)
 FIRST_ACTION_NODE = NodePath("../npc_path_node_START")
 SPEED = 3.0
 
-[node name="npc_path_node_START" parent="." instance=ExtResource("6_p6jbp")]
+[node name="npc_path_node_START" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8.033)
-next = NodePath("")
+action = "MOVE"
+next = NodePath("../npc_path_node")
 
-[node name="npc_path_node" parent="." instance=ExtResource("6_p6jbp")]
+[node name="npc_path_node" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0915, 1.5, -16)
-next = NodePath("")
+action = "MOVE"
+next = NodePath("../npc_path_node_2")
 
 [node name="npc_path_node_2" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.506, 0.911605, 19.5224)
+action = "MOVE"
 next = NodePath("../npc_path_node_3")
 
 [node name="npc_path_node_3" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20738, 1.5, 19.21)
+action = "MOVE"
 next = NodePath("../npc_path_node_END")
 
 [node name="npc_path_node_END" parent="." instance=ExtResource("6_p6jbp")]
@@ -73,38 +70,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231, 1.5, -16.681)
 
 [node name="npc_2_path_node_3" parent="." instance=ExtResource("6_p6jbp")]
 
-[node name="MAN_skeletal" parent="." instance=ExtResource("8_5f4ao")]
-transform = Transform3D(-0.0547759, 0, 0.998499, 0, 1, 0, -0.998499, 0, -0.0547759, -4.69152, 18.6675, 0.947536)
-script = ExtResource("9_xlqb3")
-
-[node name="Skeleton3D" parent="MAN_skeletal/Armature" index="0"]
-bones/1/rotation = Quaternion(0.0697239, -0.00815957, 0.176783, 0.981743)
-bones/2/rotation = Quaternion(-0.033846, 0.0103417, 0.111176, 0.99317)
-bones/4/rotation = Quaternion(-0.0129556, 0.0290501, -0.289371, 0.956688)
-bones/5/rotation = Quaternion(0.179867, 0.659219, -0.719389, 0.124734)
-bones/6/rotation = Quaternion(0.580061, 0.404792, -0.0460677, 0.705373)
-bones/7/rotation = Quaternion(0.546338, -0.0417163, 0.0954537, 0.831061)
-bones/8/rotation = Quaternion(0.107273, -0.138437, -0.283633, 0.942804)
-bones/9/rotation = Quaternion(0.651442, -0.472016, -0.409556, 0.43022)
-bones/10/rotation = Quaternion(0.501069, 0.274786, -0.28357, 0.770072)
-bones/11/rotation = Quaternion(0.497153, 0.118066, 0.124007, 0.850601)
-bones/12/rotation = Quaternion(0.0762584, 0.0045771, 0.373815, 0.924352)
-bones/13/rotation = Quaternion(-0.147963, -0.660942, 0.701231, 0.22257)
-bones/14/rotation = Quaternion(-0.358072, 0.748802, 0.501179, 0.244746)
-bones/15/rotation = Quaternion(-0.108249, -0.0105013, -0.393676, 0.912793)
-bones/16/rotation = Quaternion(-0.295769, 0.359416, 0.555594, 0.688953)
-bones/17/rotation = Quaternion(0.706632, -0.340572, -0.503422, 0.362282)
-bones/18/rotation = Quaternion(0.493001, 0.355398, -0.067679, 0.791241)
-bones/19/rotation = Quaternion(-0.0136783, 0.0187898, -0.330189, 0.943629)
-bones/20/rotation = Quaternion(0.7444, -0.619212, 0.173522, 0.179817)
-bones/21/position = Vector3(-3.47986, -7.10877, -1.35493)
-bones/21/rotation = Quaternion(0.830215, -0.056185, -0.415736, 0.367083)
-bones/22/position = Vector3(-3.94747, -6.90877, -1.52286)
-bones/23/position = Vector3(-5.03886, -16.1686, 1.58281)
-bones/23/rotation = Quaternion(-0.3846, -0.117275, 0.859263, 0.316222)
-bones/24/position = Vector3(6.49565, -15.1665, -2.08755)
-bones/24/rotation = Quaternion(0.571441, -0.543658, 0.611622, -0.0617219)
-
+[connection signal="accel_end" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="NPC" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="NPC_2" method="_on_test_player_accel_end"]
+[connection signal="accel_start" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="NPC" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="NPC_2" method="_on_test_player_accel_start"]
+[connection signal="fast_forward_end" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="NPC" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="NPC_2" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_start" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="NPC" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="NPC_2" method="_on_test_player_fast_forward_start"]
 [connection signal="pause_end" from="test_player" to="HUD_CONTROLLER" method="_on_test_player_pause_end"]
 [connection signal="pause_end" from="test_player" to="NPC" method="_on_test_player_pause_end"]
 [connection signal="pause_end" from="test_player" to="NPC_2" method="_on_test_player_pause_end"]
@@ -121,4 +98,3 @@ bones/24/rotation = Quaternion(0.571441, -0.543658, 0.611622, -0.0617219)
 [connection signal="shot" from="test_player" to="NPC_2" method="_on_test_player_shot"]
 
 [editable path="HUD"]
-[editable path="MAN_skeletal"]
