@@ -1772,7 +1772,7 @@ bone_idx = 4
 transform = Transform3D(1, -2.23517e-08, 0, 3.72529e-08, 1, 7.45058e-09, -2.98023e-08, -9.31323e-10, 1, -0.342669, -3.82983, -0.620652)
 
 [node name="Decal" type="Decal" parent="CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/BoneAttachment3D/decalroot"]
-transform = Transform3D(0.929752, -16.8673, -0.468544, 0.37766, 2.84034, 7.25764, -1.08675, -13.4435, 2.12127, 1.03966, 0.620089, 2.12415)
+transform = Transform3D(0.929752, -16.8673, -0.468544, 0.37766, 2.84034, 7.25764, -1.08675, -13.4435, 2.12127, 1.04993, 0.667827, 2.1474)
 visible = false
 size = Vector3(14.6717, 0.969354, 2)
 texture_albedo = ExtResource("8_n1qac")
@@ -1784,7 +1784,7 @@ libraries = {
 }
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0.576, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0.00651026, 0.576, -0.00856233)
 target_position = Vector3(0, 0, -1)
 
 [node name="PainSound" type="AudioStreamPlayer3D" parent="."]

@@ -993,7 +993,7 @@ mesh = SubResource("BoxMesh_c0d7p")
 shape = SubResource("BoxShape3D_up18d")
 
 [node name="test_player" parent="." instance=ExtResource("2_ctoco")]
-transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -21.4817, 2.31336, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.4817, 1.22164, 0)
 SPEED = 10.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -1002,8 +1002,8 @@ transform = Transform3D(1, 0, 0, 0, -0.534869, 0.844935, 0, -0.844935, -0.534869
 [node name="HUD" parent="." instance=ExtResource("4_805dc")]
 
 [node name="npc" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 1.2038, 0)
-FIRST_ACTION_NODE = NodePath("../npc_path_node")
+transform = Transform3D(1.2, 0, 0, 0, 1.19994, 0.0119588, 0, -0.0119588, 1.19994, -15.9732, 1.2038, 0)
+FIRST_ACTION_NODE = NodePath("../npc_path_node6")
 
 [node name="npc_path_node" parent="." node_paths=PackedStringArray("target") instance=ExtResource("15_jcoiw")]
 target = NodePath("../npc_look_node")
@@ -1018,24 +1018,182 @@ data = {
 metadata/_editor_floor_ = Vector3(12, -4, -11)
 
 [node name="npc_look_node" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19093, 5.02661, -1.83659)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.28751, -0.327164, -1.2063)
+
+[node name="npc2" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
+transform = Transform3D(1.44, 0, 0, 0, 1.44, 0, 0, 0, 1.44, -9.11468, 1.78175, -14.8327)
+FIRST_ACTION_NODE = NodePath("../npc_path_node")
+IS_ENEMY = true
+
+[node name="npc3" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -6.8857, 1.20049, 13.9055)
+FIRST_ACTION_NODE = NodePath("../npc_path_node12")
+IS_ENEMY = true
+
+[node name="npc4" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 7.77626, 1.20049, 13.9055)
+FIRST_ACTION_NODE = NodePath("../npc_path_node13")
+IS_ENEMY = true
+
+[node name="npc5" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 7.77626, 1.20049, -0.609148)
+FIRST_ACTION_NODE = NodePath("../npc_path_node14")
+IS_ENEMY = true
+
+[node name="npc6" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
+transform = Transform3D(1.2, 0, 0, 0, 1.19994, 0.0119588, 0, -0.0119588, 1.19994, -20.9583, 1.2038, 5.07212)
+FIRST_ACTION_NODE = NodePath("../npc_path_node11")
+
+[node name="npc7" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
+transform = Transform3D(1.2, 0, 0, 0, 1.19994, 0.0119588, 0, -0.0119588, 1.19994, -21.6212, 1.2038, -4.33039)
+FIRST_ACTION_NODE = NodePath("../npc_path_node5")
+
+[node name="npc_path_node2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3437, 1.4, -15.5219)
+target = NodePath("../npc_look_node2")
+wait = 1e+06
+
+[node name="npc_look_node2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999928, 0.012025, 0, -0.012025, 0.999928, -3.9892, 1.4, -15.4792)
+
+[node name="npc_path_node3" parent="." node_paths=PackedStringArray("next", "target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1824, 1.4, 14.3335)
+action = "FIRE"
+next = NodePath("../npc_path_node4")
+target = NodePath("../npc_look_node3")
+
+[node name="npc_look_node3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.24334, 1.4, 14.9838)
+
+[node name="npc_path_node4" parent="." node_paths=PackedStringArray("target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.77598, 1.4, 14.3335)
+target = NodePath("../npc_look_node3")
+wait = 10000.0
+
+[node name="npc_path_node5" parent="." node_paths=PackedStringArray("next", "target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.6108, 1.4, -4.32663)
+next = NodePath("../npc_path_node9")
+target = NodePath("../npc_path_node9")
+
+[node name="npc_path_node6" parent="." node_paths=PackedStringArray("next", "target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1696, 1.4, 0)
+next = NodePath("../npc_path_node10")
+target = NodePath("../npc_path_node10")
+wait = 1.0
+
+[node name="npc_path_node7" parent="." node_paths=PackedStringArray("next") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3437, 1.4, -15.5219)
+action = "MOVE"
+next = NodePath("../npc_path_node2")
+
+[node name="npc_path_node8" parent="." node_paths=PackedStringArray("next") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1824, 1.4, 14.3335)
+action = "MOVE"
+next = NodePath("../npc_path_node3")
+
+[node name="npc_path_node9" parent="." node_paths=PackedStringArray("next") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3437, 1.4, -15.5219)
+action = "MOVE"
+next = NodePath("../npc_path_node2")
+wait = 1e+06
+
+[node name="npc_path_node10" parent="." node_paths=PackedStringArray("next") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+action = "MOVE"
+next = NodePath("../npc_path_node")
+
+[node name="npc_path_node11" parent="." node_paths=PackedStringArray("next", "target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.9755, 1.4, 5.07024)
+next = NodePath("../npc_path_node8")
+target = NodePath("../npc_path_node8")
+wait = 2.0
+
+[node name="npc_path_node12" parent="." node_paths=PackedStringArray("target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.79928, 1.4, 14.1402)
+target = NodePath("../npc_path_node8")
+wait = 10000.0
+
+[node name="npc_path_node13" parent="." node_paths=PackedStringArray("target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.50719, 1.4, 13.795)
+target = NodePath("../npc_path_node8")
+wait = 10000.0
+
+[node name="npc_path_node14" parent="." node_paths=PackedStringArray("target") instance=ExtResource("15_jcoiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.78836, 1.4, -0.595269)
+target = NodePath("../npc_path_node10")
+wait = 10000.0
 
 [connection signal="accel_end" from="test_player" to="HUD" method="_on_test_player_accel_end"]
 [connection signal="accel_end" from="test_player" to="npc" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="npc2" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="npc3" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="npc4" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="npc5" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="npc6" method="_on_test_player_accel_end"]
+[connection signal="accel_end" from="test_player" to="npc7" method="_on_test_player_accel_end"]
 [connection signal="accel_start" from="test_player" to="HUD" method="_on_test_player_accel_start"]
 [connection signal="accel_start" from="test_player" to="npc" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="npc2" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="npc3" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="npc4" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="npc5" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="npc6" method="_on_test_player_accel_start"]
+[connection signal="accel_start" from="test_player" to="npc7" method="_on_test_player_accel_start"]
 [connection signal="fast_forward_end" from="test_player" to="HUD" method="_on_test_player_fast_forward_end"]
 [connection signal="fast_forward_end" from="test_player" to="npc" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="npc2" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="npc3" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="npc4" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="npc5" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="npc6" method="_on_test_player_fast_forward_end"]
+[connection signal="fast_forward_end" from="test_player" to="npc7" method="_on_test_player_fast_forward_end"]
 [connection signal="fast_forward_start" from="test_player" to="HUD" method="_on_test_player_fast_forward_start"]
 [connection signal="fast_forward_start" from="test_player" to="npc" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="npc2" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="npc3" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="npc4" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="npc5" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="npc6" method="_on_test_player_fast_forward_start"]
+[connection signal="fast_forward_start" from="test_player" to="npc7" method="_on_test_player_fast_forward_start"]
+[connection signal="mouse_entered" from="test_player" to="npc5" method="_on_test_player_mouse_entered"]
 [connection signal="pause_end" from="test_player" to="HUD" method="_on_test_player_pause_end"]
 [connection signal="pause_end" from="test_player" to="npc" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc2" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc3" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc4" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc5" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc6" method="_on_test_player_pause_end"]
+[connection signal="pause_end" from="test_player" to="npc7" method="_on_test_player_pause_end"]
 [connection signal="pause_start" from="test_player" to="HUD" method="_on_test_player_pause_start"]
 [connection signal="pause_start" from="test_player" to="npc" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc2" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc3" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc4" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc5" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc6" method="_on_test_player_pause_start"]
+[connection signal="pause_start" from="test_player" to="npc7" method="_on_test_player_pause_start"]
 [connection signal="rewind_end" from="test_player" to="HUD" method="_on_test_player_rewind_end"]
 [connection signal="rewind_end" from="test_player" to="npc" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="npc2" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="npc3" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="npc4" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="npc5" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="npc6" method="_on_test_player_rewind_end"]
+[connection signal="rewind_end" from="test_player" to="npc7" method="_on_test_player_rewind_end"]
 [connection signal="rewind_start" from="test_player" to="HUD" method="_on_test_player_rewind_start"]
 [connection signal="rewind_start" from="test_player" to="npc" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="npc2" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="npc3" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="npc4" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="npc5" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="npc6" method="_on_test_player_rewind_start"]
+[connection signal="rewind_start" from="test_player" to="npc7" method="_on_test_player_rewind_start"]
 [connection signal="shot" from="test_player" to="npc" method="_on_test_player_shot"]
+[connection signal="shot" from="test_player" to="npc2" method="_on_test_player_shot"]
+[connection signal="shot" from="test_player" to="npc3" method="_on_test_player_shot"]
+[connection signal="shot" from="test_player" to="npc4" method="_on_test_player_shot"]
+[connection signal="shot" from="test_player" to="npc5" method="_on_test_player_shot"]
+[connection signal="shot" from="test_player" to="npc6" method="_on_test_player_shot"]
+[connection signal="shot" from="test_player" to="npc7" method="_on_test_player_shot"]
 
 [editable path="HUD"]
