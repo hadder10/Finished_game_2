@@ -19,9 +19,11 @@ var _frame_counter = 0
 var _pause_frame = -1
 var _event_array : Array
 var _cur_event = -1
+var _rewind_speed = 1
 var _paused : bool = false
 var _rewinding : bool = false
 var _fast_forwarding : bool = false
+
 
 
 func _do_action(delta) -> void:
@@ -71,28 +73,29 @@ func _process(delta):
 	if _paused:
 		if _pause_frame == -1:
 			_pause_frame = _frame_counter
-		if _rewinding and _frame_counter > 0:
-			if _cur_event > -1 and _event_array[_cur_event][0] == _frame_counter:
-				HEALTH += _event_array[_cur_event][1]
-				if _is_dead:
-					_is_dead = false
-					mesh.material_override = ALIVE_MATERIAL
-				_cur_event -= 1
-			if not _is_dead and _cur_action > 0:
-				_undo_action(delta)
-			_frame_counter -= 1
-		elif _fast_forwarding and _frame_counter < _pause_frame:
-			if _cur_event < len(_event_array) - 1 and _event_array[_cur_event + 1][0] == _frame_counter:
-				HEALTH -= _event_array[_cur_event + 1][1]
-				if HEALTH == 0:
-					_is_dead = true
-					mesh.material_override = DEAD_MATERIAL
-				_cur_event += 1
-			if not _is_dead and _cur_action < len(_action_array):
-				_do_action(delta)
-			_frame_counter += 1
-		else:
-			pass
+		for i in range(_rewind_speed):
+			if _rewinding and _frame_counter > 0:
+				if _cur_event > -1 and _event_array[_cur_event][0] == _frame_counter:
+					HEALTH += _event_array[_cur_event][1]
+					if _is_dead:
+						_is_dead = false
+						mesh.material_override = ALIVE_MATERIAL
+					_cur_event -= 1
+				if not _is_dead and _cur_action > 0:
+					_undo_action(delta)
+				_frame_counter -= 1
+			elif _fast_forwarding and _frame_counter < _pause_frame:
+				if _cur_event < len(_event_array) - 1 and _event_array[_cur_event + 1][0] == _frame_counter:
+					HEALTH -= _event_array[_cur_event + 1][1]
+					if HEALTH == 0:
+						_is_dead = true
+						mesh.material_override = DEAD_MATERIAL
+					_cur_event += 1
+				if not _is_dead and _cur_action < len(_action_array):
+					_do_action(delta)
+				_frame_counter += 1
+			else:
+				pass
 	else:
 		if _pause_frame != -1:
 			_pause_frame = -1
@@ -145,3 +148,11 @@ func _on_test_player_shot(npc):
 		HEALTH = 0
 		_is_dead = true
 		mesh.material_override = DEAD_MATERIAL
+
+
+func _on_test_player_accel_start(speed):
+	_rewind_speed = speed
+
+
+func _on_test_player_accel_end():
+	_rewind_speed = 1
