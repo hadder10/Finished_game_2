@@ -4,15 +4,8 @@ extends CharacterBody3D
 @export var SPEED = 5.0
 @export var TURN_SPEED = 5.0
 @export var HEALTH : int = 3
-@export var ALIVE_MATERIAL : StandardMaterial3D = StandardMaterial3D.new()
-@export var DEAD_MATERIAL : StandardMaterial3D = StandardMaterial3D.new()
-
-@onready var mesh = $CollisionShape3D/MeshInstance3D
 
 @onready var _animplayer = $CollisionShape3D/MAN_skeletal/AnimationPlayer
-
-
-
 @onready var ray = $RayCast3D
 
 
@@ -30,7 +23,6 @@ var _rewinding : bool = false
 var _fast_forwarding : bool = false
 
 
-
 func _do_action(delta) -> void:
 	var cur_action_node = _action_array[_cur_action]
 	if cur_action_node.action == "STAND":
@@ -41,10 +33,9 @@ func _do_action(delta) -> void:
 		if position == cur_action_node.global_position:
 			_cur_action += 1
 			return
-		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
-
-
 		look_at(cur_action_node.global_position)
+		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
+	
 	elif cur_action_node.action == "FIRE":
 		_animplayer.play("shoot");
 		look_at(cur_action_node.global_position)
@@ -70,10 +61,9 @@ func _undo_action(delta) -> void:
 		if position == cur_action_node.global_position:
 			_cur_action -= 1
 			return
-		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
-
 		look_at(2 * position - cur_action_node.global_position)
-
+		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
+	
 	elif cur_action_node.next.action == "FIRE":
 		look_at(cur_action_node.next.global_position)
 		_cur_action -= 1
@@ -84,8 +74,6 @@ func _undo_action(delta) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ALIVE_MATERIAL.albedo_color = Color(0.349, 0.58, 0.816)
-	DEAD_MATERIAL.albedo_color = Color(0.92, 0.69, 0.13, 1.0)
 	if FIRST_ACTION_NODE != null:
 		_action_array.append(FIRST_ACTION_NODE)
 		while _action_array.back().next != null:
@@ -100,21 +88,20 @@ func _process(delta):
 		for i in range(_rewind_speed):
 			if _rewinding and _frame_counter > 0:
 				if _cur_event > -1 and _event_array[_cur_event][0] == _frame_counter:
-					if typeof(_event_array[_cur_event][1]) == 2:
-						HEALTH += _event_array[_cur_event][1]
+					if _event_array[_cur_event][1] == "hp":
+						HEALTH += _event_array[_cur_event][2]
 						if _is_dead:
 							_is_dead = false
-							mesh.material_override = ALIVE_MATERIAL
 					_cur_event -= 1
 				if not _is_dead and _cur_action > 0:
 					_undo_action(delta)
 				_frame_counter -= 1
 			elif _fast_forwarding and _frame_counter < _pause_frame:
 				if _cur_event < len(_event_array) - 1 and _event_array[_cur_event + 1][0] == _frame_counter:
-					HEALTH -= _event_array[_cur_event + 1][1]
-					if HEALTH == 0:
-						_is_dead = true
-						mesh.material_override = DEAD_MATERIAL
+					if _event_array[_cur_event + 1][1] == "hp":
+						HEALTH -= _event_array[_cur_event + 1][2]
+						if HEALTH == 0:
+							_is_dead = true
 					_cur_event += 1
 				if not _is_dead and _cur_action < len(_action_array):
 					_do_action(delta)
@@ -128,13 +115,13 @@ func _process(delta):
 				_event_array.pop_back()
 		if not _is_dead and _cur_action < len(_action_array):
 			_do_action(delta)
-	
+		
 		_frame_counter += 1
 
 
 func _get_shot():
 	if !_is_dead:
-		_event_array.append([_frame_counter, 1])
+		_event_array.append([_frame_counter, "hp", 1])
 		_cur_event += 1
 		HEALTH -= 1
 		if HEALTH == 0:
@@ -153,7 +140,7 @@ func _on_test_player_pause_end():
 
 
 func _on_test_player_rewind_start():
-	_animplayer.speed_scale = -1* _rewind_speed
+	_animplayer.speed_scale = -1 * _rewind_speed
 	_animplayer.play()
 	_rewinding = true
 
@@ -164,7 +151,7 @@ func _on_test_player_rewind_end():
 
 
 func _on_test_player_fast_forward_start():
-	_animplayer.speed_scale =  _rewind_speed
+	_animplayer.speed_scale = _rewind_speed
 	_animplayer.play()
 	_fast_forwarding = true
 
@@ -176,12 +163,11 @@ func _on_test_player_fast_forward_end():
 
 func _on_test_player_shot(npc):
 	if npc == self and !_is_dead:
-		print("DEAD", self)
-		_event_array.append([_frame_counter, HEALTH])
+		print("DEAD ", self)
+		_event_array.append([_frame_counter, "hp", HEALTH])
 		_cur_event += 1
 		HEALTH = 0
 		_is_dead = true
-		mesh.material_override = DEAD_MATERIAL
 
 
 func _on_test_player_accel_start(speed):

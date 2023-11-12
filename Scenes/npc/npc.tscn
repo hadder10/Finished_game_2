@@ -1,29 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://bf8f45a25urks"]
+[gd_scene load_steps=4 format=3 uid="uid://bf8f45a25urks"]
 
 [ext_resource type="Script" path="res://Scenes/npc/npc.gd" id="1_twaug"]
 [ext_resource type="PackedScene" uid="uid://claaykfklsvm7" path="res://Assets/enemies/MAN_skeletal.glb" id="2_vj5q2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sbflj"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dsdk6"]
-albedo_color = Color(0.34902, 0.580392, 0.815686, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_c552x"]
-material = SubResource("StandardMaterial3D_dsdk6")
+radius = 0.4
 
 [node name="npc" type="CharacterBody3D" groups=["NPC"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_twaug")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.2, 0)
 shape = SubResource("CapsuleShape3D_sbflj")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
-visible = false
-mesh = SubResource("CapsuleMesh_c552x")
-
 [node name="MAN_skeletal" parent="CollisionShape3D" instance=ExtResource("2_vj5q2")]
-transform = Transform3D(-6.25958e-09, 0, -0.143202, 0, 0.143202, 0, 0.143202, 0, -6.25958e-09, -0.00757724, 1.60041, -0.0153624)
+transform = Transform3D(-4.50807e-09, 0, -0.103133, 0, 0.103133, 0, 0.103133, 0, -4.50807e-09, 0, 0.87, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0.576, 0)
