@@ -5,6 +5,6 @@ extends Node
 func _on_activate():
 	if scene:
 		print(name,": Loading scene...")
-		get_tree().change_scene_to_packed(scene)
+		get_tree().quit()
 	else:
 		print(name, ": WARNING: no associated scene")
