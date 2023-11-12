@@ -26,7 +26,7 @@ signal shot(npc)
 @onready var footstep_timer: Timer = $FootstepPlayer/FootstepTimer
 @onready var rewind_sound: AudioStreamPlayer = $RewindSound
 @onready var gunshot_sound: AudioStreamPlayer3D = $GunshotSound
-
+@onready var gun_anim_player = $camera_controller/pistol/AnimationPlayer
 @onready var rewind_start_sound = preload("res://Music/rewind/rewind_start.wav")
 @onready var rewind_loop_sound = preload("res://Music/rewind/rewind_loop_2.wav")
 
@@ -54,8 +54,69 @@ var _pause_frame : int = -1
 var _rewind_speed : int = 1
 var _player_positions_array : Array
 var _player_rotations_array : Array
-
+var _player_animations_array : Array
+var _anim_counter : int = -1
 var step_timer_on: bool = false
+
+
+func _rewind_start():
+	_rewinding = true
+	gun_anim_player.speed_scale = -1 * _rewind_speed
+	gun_anim_player.play()
+	play_rewind_sound()
+	rewind_start.emit()
+
+
+func _rewind_end():
+	_rewinding = false
+	gun_anim_player.pause()
+	rewind_sound.stop()
+	rewind_sound_status = "start"
+	rewind_end.emit()
+
+
+func _fast_forward_start():
+	_fast_forwarding = true
+	gun_anim_player.speed_scale = _rewind_speed
+	gun_anim_player.play()
+	play_rewind_sound()
+	fast_forward_start.emit()
+
+
+func _fast_forward_end():
+	_fast_forwarding = false
+	gun_anim_player.pause()
+	rewind_sound.stop()
+	rewind_sound_status = "start"
+	fast_forward_end.emit()
+
+
+func _pause_start():
+	_paused = true
+	stop_all_sounds()
+	gun_anim_player.pause()
+	pause_start.emit()
+	pause_click.play()
+
+
+func _pause_end():
+	_paused = false
+	gun_anim_player.speed_scale = 1.0
+	gun_anim_player.play()
+	pause_end.emit()
+	rewind_sound.stop()
+	pause_click.play()
+
+
+func _accel_start():
+	_rewind_speed = FAST_REWIND
+	accel_start.emit(FAST_REWIND)
+
+
+func _accel_end():
+	_rewind_speed = 1
+	accel_end.emit()
+
 
 func _input(event):
 	if event.is_action_pressed("exit"):
@@ -65,59 +126,36 @@ func _input(event):
 	if event.is_action_pressed("pause"):
 		if _paused:
 			if _rewinding:
-				_rewinding = false
-				rewind_sound.stop()
-				rewind_sound_status = "start"
-				rewind_end.emit()
+				_rewind_end()
 			if _fast_forwarding:
-				_fast_forwarding = false
-				rewind_sound.stop()
-				rewind_sound_status = "start"
-				fast_forward_end.emit()
+				_fast_forward_end()
 			if _rewind_speed != 1:
 				_rewind_speed = 1
 				accel_end.emit()
-			_paused = false
-			pause_end.emit()
-			rewind_sound.stop()
-			pause_click.play()
+			_pause_end()
 		else:
-			_paused = true
-			stop_all_sounds()
-			pause_start.emit()
-			pause_click.play()
+			_pause_start()
 	if event.is_action_pressed("rewind") and _paused and !_rewinding:
 		if _fast_forwarding:
-			_fast_forwarding = false
-			fast_forward_end.emit()
-		_rewinding = true
-		play_rewind_sound()
-		rewind_start.emit()
+			_fast_forward_end()
+		_rewind_start()
 	if event.is_action_released("rewind") and _paused and _rewinding:
-		_rewinding = false
-		rewind_sound.stop()
-		rewind_sound_status = "start"
-		rewind_end.emit()
+		_rewind_end()
 	if event.is_action_pressed("fast_forward") and _paused and !_fast_forwarding:
 		if _rewinding:
-			_rewinding = false
-			rewind_end.emit()
-		_fast_forwarding = true
-		play_rewind_sound()
-		fast_forward_start.emit()
+			_rewind_end()
+		_fast_forward_start()
 	if event.is_action_released("fast_forward") and _paused and _fast_forwarding:
-		_fast_forwarding = false
-		rewind_sound.stop()
-		rewind_sound_status = "start"
-		fast_forward_end.emit()
+		_fast_forward_end()
 	if event.is_action_pressed("accel") and _paused:
-		_rewind_speed = FAST_REWIND
-		accel_start.emit(FAST_REWIND)
+		_accel_start()
 	if event.is_action_released("accel") and _paused:
-		_rewind_speed = 1
-		accel_end.emit()
+		_accel_end()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
 		gunshot_sound.play()
+		gun_anim_player.play("shoot")
+		_player_animations_array.append(["start", _frame_counter])
+		_anim_counter += 1
 		if ray.is_colliding():
 			while ray.get_collider() != null and ray.get_collider().is_in_group("NPC"):
 				var target = ray.get_collider()
@@ -181,25 +219,29 @@ func _physics_process(delta):
 		if _pause_frame == -1:
 			_pause_frame = _frame_counter
 		if _rewinding and _frame_counter <= 0:
-			_rewinding = false
-			rewind_sound.stop()
-			rewind_sound_status = "start"
-			rewind_end.emit()
+			_rewind_end()
 		elif _rewinding:
 			_frame_counter -= _rewind_speed
 			if _frame_counter < 0:
 				_frame_counter = 0
 			position = _player_positions_array[_frame_counter]
+			if _anim_counter >= 0:
+				if _frame_counter <= _player_animations_array[_anim_counter][1]:
+					if _player_animations_array[_anim_counter][0] == "end":
+						gun_anim_player.play("shoot", -1, 1, true)
+					_anim_counter -= 1
 		elif _fast_forwarding and _frame_counter >= _pause_frame:
-			_fast_forwarding = false
-			rewind_sound.stop()
-			rewind_sound_status = "start"
-			fast_forward_end.emit()
+			_fast_forward_end()
 		elif _fast_forwarding and _frame_counter < _pause_frame:
 			_frame_counter += _rewind_speed
 			if _frame_counter > _pause_frame:
 				_frame_counter = _pause_frame
 			position = _player_positions_array[_frame_counter]
+			if _anim_counter < len(_player_animations_array) - 1:
+				if _frame_counter >= _player_animations_array[_anim_counter + 1][1]:
+					if _player_animations_array[_anim_counter + 1][0] == "start":
+						gun_anim_player.play("shoot")
+					_anim_counter += 1
 		else:
 			rewind_sound.stop()
 		_update_camera(delta)
@@ -208,6 +250,8 @@ func _physics_process(delta):
 			for i in range(len(_player_positions_array) - _frame_counter - 1):
 				_player_positions_array.pop_back()
 				_player_rotations_array.pop_back()
+			for i in range(len(_player_animations_array) - _anim_counter - 1):
+				_player_animations_array.pop_back()
 			_pause_frame = -1
 		_update_camera(delta)
 		
@@ -267,3 +311,9 @@ func play_rewind_sound():
 func stop_all_sounds():
 	gunshot_sound.stop()
 	step_sound.stop()
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "shoot" and !_paused:
+		_player_animations_array.append(["end", _frame_counter])
+		_anim_counter += 1
