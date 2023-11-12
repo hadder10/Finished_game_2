@@ -8,6 +8,8 @@ extends CharacterBody3D
 @export var DEAD_MATERIAL : StandardMaterial3D = StandardMaterial3D.new()
 
 @onready var mesh = $CollisionShape3D/MeshInstance3D
+@onready var pain_sound = $PainSound
+@onready var die_timer = $DieTimer
 
 signal target_shot(target)
 
@@ -118,6 +120,7 @@ func _on_target_shot(target):
 
 func _on_test_player_pause_start():
 	_paused = true
+	stop_all_sounds()
 
 
 func _on_test_player_pause_end():
@@ -148,6 +151,9 @@ func _on_test_player_shot(npc):
 		HEALTH = 0
 		_is_dead = true
 		mesh.material_override = DEAD_MATERIAL
+		die_timer.start()
+		await Signal(die_timer, 'timeout')
+		pain_sound.play()
 
 
 func _on_test_player_accel_start(speed):
@@ -156,3 +162,8 @@ func _on_test_player_accel_start(speed):
 
 func _on_test_player_accel_end():
 	_rewind_speed = 1
+
+
+func stop_all_sounds():
+	die_timer.stop()
+	pain_sound.stop()
