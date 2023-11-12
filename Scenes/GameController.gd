@@ -26,6 +26,7 @@ func _on_death():
 
 
 func lose():
+	print("lost")
 	LoseTimer.start()
 	await Signal(LoseTimer, 'timeout')
 	get_tree().change_scene_to_packed(lose_scene)

@@ -10,6 +10,7 @@ signal fast_forward_end
 signal accel_start(speed)
 signal accel_end
 signal shot(npc)
+signal lose
 
 @export var SPEED = 5.0
 @export var JUMP_VELOCITY = 4.5
@@ -166,6 +167,7 @@ func _input(event):
 				ray.force_raycast_update() #update the ray's collision query.
 			for target in _npc_shot:
 				ray.remove_exception(target)
+			check_win_lose(_npc_shot)
 			_npc_shot.clear()
 
 
@@ -209,6 +211,8 @@ func _update_camera(delta):
 
 
 func _ready() -> void:
+	var root_node = get_tree().root.get_child(0)
+	lose.connect(root_node.lose)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_player_positions_array.append(position)
 	_player_rotations_array.append(_mouse_rotation)
@@ -317,3 +321,19 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot" and !_paused:
 		_player_animations_array.append(["end", _frame_counter])
 		_anim_counter += 1
+
+
+func check_win_lose(npc_list: Array):
+	var has_enemies = false
+	var has_teammates = false 
+	for npc in npc_list:
+		if npc.IS_ENEMY:
+			has_enemies = true
+		else:
+			has_teammates = true
+	
+	if (not has_enemies) and (has_teammates):
+		lose.emit()
+	else:
+		pass
+
