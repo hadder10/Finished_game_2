@@ -1,9 +1,8 @@
-extends Node
+extends Control
 
-@export var player : CharacterBody3D
-@export var countdownBar : TextureProgressBar
-@export var countdownLabel : Label
-@export var timeLimit : float
+@onready var countdownBar = $TimeLimitBar/TextureProgressBar
+@onready var countdownLabel = $TimeLimitBar/TimerLabel
+@export var timeLimit : float = 30.0
 
 var rewind : bool = false
 var fast_forward : bool = false
@@ -64,10 +63,12 @@ func _process(delta):
 
 
 func _on_test_player_rewind_start():
+	$CanvasLayer4.show()
 	rewind = true
 
 
 func _on_test_player_rewind_end():
+	$CanvasLayer4.hide()
 	
 	rewind = false
 
@@ -81,10 +82,12 @@ func _on_test_player_pause_end():
 
 
 func _on_test_player_fast_forward_start():
+	$CanvasLayer4.show()
 	fast_forward = true
 
 
 func _on_test_player_fast_forward_end():
+	$CanvasLayer4.hide()
 	fast_forward = false
 
 
