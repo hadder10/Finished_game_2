@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cecm6pa0eu7xs"]
+
+[ext_resource type="Shader" path="res://Scenes/ui/aberration.gdshader" id="1_pwom2"]
+
+[resource]
+shader = ExtResource("1_pwom2")
+shader_parameter/magnitude_x = 0.001
+shader_parameter/magnitude_y = 6.9852e-10

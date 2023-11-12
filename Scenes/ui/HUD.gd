@@ -1,7 +1,7 @@
 extends Control
 
-@onready var countdownBar = $TimeLimitBar/TextureProgressBar
-@onready var countdownLabel = $TimeLimitBar/TimerLabel
+@onready var countdownBar = $Display/TimeLimitBar/TextureProgressBar
+@onready var countdownLabel = $Display/TimeLimitBar/TimerLabel
 @export var timeLimit : float = 30.0
 
 var rewind : bool = false
