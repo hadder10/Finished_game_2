@@ -38,6 +38,7 @@ func _do_action(delta) -> void:
 	
 	elif cur_action_node.action == "FIRE":
 		_animplayer.play("shoot");
+		
 		look_at(cur_action_node.global_position)
 		if ray.is_colliding():
 			var target = ray.get_collider()
