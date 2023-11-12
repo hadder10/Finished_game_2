@@ -41,7 +41,7 @@ stream_3/weight = 1.0
 stream_4/stream = ExtResource("14_fifvu")
 stream_4/weight = 1.0
 
-[node name="test_player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
+[node name="test_player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45281, 0)
 script = ExtResource("1_but4q")
 CAMERA_CONTROLLER = NodePath("camera_controller")
