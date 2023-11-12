@@ -4,6 +4,7 @@ extends Node3D
 var points: int = 0
 var living_npcs: int = 0
 var npc_list := []
+var player: CharacterBody3D 
 
 @export var current_level: PackedScene
 @export var rumble: AudioStreamPlayer
@@ -14,10 +15,6 @@ func _ready():
 	print(get_tree().get_nodes_in_group("NPC"))
 	for npc in get_tree().get_nodes_in_group("NPC"):
 		npc_list.append(npc)
-
-
-
-
 
 func _on_death():
 	lose()
