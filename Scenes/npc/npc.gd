@@ -139,6 +139,7 @@ func _process(delta):
 					if _event_array[_cur_event][1] == "hp":
 						HEALTH += _event_array[_cur_event][2]
 						if _is_dead:
+							$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/BoneAttachment3D/decalroot/Decal.hide()
 							$Decal.hide()
 							_is_dead = false
 							_collision.disabled = false
@@ -152,6 +153,7 @@ func _process(delta):
 						HEALTH -= _event_array[_cur_event + 1][2]
 						if HEALTH == 0:
 							_is_dead = true
+							$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/BoneAttachment3D/decalroot/Decal.show()
 							$Decal.show()
 							_collision.disabled = true
 							_animplayer.play("death")
@@ -180,6 +182,7 @@ func _get_shot():
 		HEALTH -= 1
 		if HEALTH == 0:
 			_is_dead = true
+			$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/BoneAttachment3D/decalroot/Decal.show()
 			$Decal.show()
 			_collision.disabled = true
 			_animplayer.play("death")
@@ -230,6 +233,7 @@ func _on_test_player_shot(npc):
 		HEALTH = 0
 		_is_dead = true
 		$Decal.show()
+		$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/BoneAttachment3D/decalroot/Decal.show()
 		_collision.disabled = true
 		_animplayer.play("death")
 		_animplayer.queue("dead/deatd")

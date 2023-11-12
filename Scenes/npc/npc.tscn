@@ -1763,6 +1763,20 @@ transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -1.48705
 mesh = ExtResource("2_y0vki")
 skin = SubResource("Skin_xthhj")
 
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="CollisionShape3D/MAN_skeletal/Armature/Skeleton3D"]
+transform = Transform3D(0.987993, -0.106533, 0.111897, 0.105857, 0.994309, 0.0119889, -0.112537, 6.1933e-08, 0.993648, 0.174581, -0.836083, -0.0121651)
+bone_name = "head"
+bone_idx = 4
+
+[node name="decalroot" type="Node3D" parent="CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1, -2.23517e-08, 0, 3.72529e-08, 1, 7.45058e-09, -2.98023e-08, -9.31323e-10, 1, -0.342669, -3.82983, -0.620652)
+
+[node name="Decal" type="Decal" parent="CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/BoneAttachment3D/decalroot"]
+transform = Transform3D(0.929752, -16.8673, -0.468544, 0.37766, 2.84034, 7.25764, -1.08675, -13.4435, 2.12127, 1.03966, 0.620089, 2.12415)
+visible = false
+size = Vector3(14.6717, 0.969354, 2)
+texture_albedo = ExtResource("8_n1qac")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionShape3D/MAN_skeletal"]
 libraries = {
 "": SubResource("AnimationLibrary_s3pyr"),
@@ -1780,7 +1794,7 @@ stream = SubResource("AudioStreamRandomizer_h8qqf")
 wait_time = 0.5
 
 [node name="Decal" type="Decal" parent="."]
-transform = Transform3D(-0.0364047, 0.173553, 1.18048, 0.026244, 1.43398, -0.138056, -0.459633, 0.068131, -0.101382, -0.0836987, -0.654885, -1.41245)
+transform = Transform3D(-0.0371687, 0.174804, 1.1802, 0.0253358, 1.43398, -0.139201, -0.459623, 0.0649093, -0.103114, -0.0836987, -0.654885, -0.462669)
 visible = false
 size = Vector3(5.5946, 2, 2)
 texture_albedo = ExtResource("8_n1qac")
