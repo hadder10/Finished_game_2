@@ -4,6 +4,7 @@ extends CharacterBody3D
 @export var SPEED = 5.0
 @export var TURN_SPEED = 5.0
 @export var HEALTH : int = 3
+@export var IS_ENEMY : bool = false
 
 @onready var _animplayer = $CollisionShape3D/MAN_skeletal/AnimationPlayer
 @onready var ray = $RayCast3D
@@ -13,6 +14,7 @@ extends CharacterBody3D
 var _action_array : Array
 var _cur_action = 0
 var _is_dead : bool = false
+
 
 var _frame_counter = 0
 var _pause_frame = -1
@@ -38,7 +40,7 @@ func _do_action(delta) -> void:
 		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
 	
 	elif cur_action_node.action == "FIRE":
-		_animplayer.play("shoot");
+		_animplayer.play("shoot")
 		
 		look_at(cur_action_node.global_position)
 		if ray.is_colliding():
@@ -166,6 +168,8 @@ func _on_test_player_rewind_end():
 func _on_test_player_fast_forward_start():
 	_animplayer.speed_scale = _rewind_speed
 	_animplayer.play()
+	if _animplayer.current_animation == "death":
+		_animplayer.queue("dead/deatd")
 	_fast_forwarding = true
 
 
