@@ -36,7 +36,8 @@ data = {
 metadata/_editor_floor_ = Vector3(12, -4, -11)
 
 [node name="test_player" parent="." instance=ExtResource("2_ctoco")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.4817, 1.45281, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.4817, 1.45281, 0)
+SPEED = 10.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.534869, 0.844935, 0, -0.844935, -0.534869, 0, 15.8644, 0)
