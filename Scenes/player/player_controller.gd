@@ -223,6 +223,10 @@ func _physics_process(delta):
 		_player_positions_array.append(position)
 
 
+func _dead():
+	pass # write your code
+
+
 func _on_footstep_timer_timeout():
 	step_timer_on = false
 
