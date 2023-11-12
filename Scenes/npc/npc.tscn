@@ -38,4 +38,7 @@ mesh = SubResource("CapsuleMesh_c552x")
 [node name="PainSound" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_pbjd4")
 
+[node name="DieTimer" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="target_shot" from="." to="." method="_on_target_shot"]
