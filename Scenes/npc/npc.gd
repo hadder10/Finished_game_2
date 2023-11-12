@@ -134,10 +134,12 @@ func _process(delta):
 				if _cur_event > -1 and _event_array[_cur_event][0] == _frame_counter:
 					if _event_array[_cur_event][1] == "death":
 						print("play undeath")
+						
 						_animplayer.play("death", -1, 1, true)
 					if _event_array[_cur_event][1] == "hp":
 						HEALTH += _event_array[_cur_event][2]
 						if _is_dead:
+							$Decal.hide()
 							_is_dead = false
 							_collision.disabled = false
 					_cur_event -= 1
@@ -150,6 +152,7 @@ func _process(delta):
 						HEALTH -= _event_array[_cur_event + 1][2]
 						if HEALTH == 0:
 							_is_dead = true
+							$Decal.show()
 							_collision.disabled = true
 							_animplayer.play("death")
 							_animplayer.queue("dead/deatd")
@@ -177,6 +180,7 @@ func _get_shot():
 		HEALTH -= 1
 		if HEALTH == 0:
 			_is_dead = true
+			$Decal.show()
 			_collision.disabled = true
 			_animplayer.play("death")
 			_animplayer.queue("dead/deatd")
@@ -225,6 +229,7 @@ func _on_test_player_shot(npc):
 		_cur_event += 1
 		HEALTH = 0
 		_is_dead = true
+		$Decal.show()
 		_collision.disabled = true
 		_animplayer.play("death")
 		_animplayer.queue("dead/deatd")

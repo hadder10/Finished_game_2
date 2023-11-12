@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bf8f45a25urks"]
+[gd_scene load_steps=21 format=3 uid="uid://bf8f45a25urks"]
 
 [ext_resource type="Script" path="res://Scenes/npc/npc.gd" id="1_twaug"]
 [ext_resource type="ArrayMesh" uid="uid://y73fbmwpsqrc" path="res://Assets/enemies/MAN_skeletal_Cube_002.res" id="2_y0vki"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cvlg02xveej6d" path="res://Music/pain/PainLarge.wav" id="5_ju4rr"]
 [ext_resource type="AudioStream" uid="uid://svnxl8jjmsid" path="res://Music/pain/PainMedium.wav" id="6_kkvv1"]
 [ext_resource type="AudioStream" uid="uid://ckbp174qs2xum" path="res://Music/pain/PainSmall.wav" id="7_mh1af"]
+[ext_resource type="Texture2D" uid="uid://bdmwa3nqcohbs" path="res://Assets/enemies/MAN_skeletal_dead_260-2606857_splash-salpicadura-de-pintura-roja.png" id="8_n1qac"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sbflj"]
 radius = 0.4
@@ -1777,5 +1778,11 @@ stream = SubResource("AudioStreamRandomizer_h8qqf")
 
 [node name="DieTimer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(-0.0364047, 0.173553, 1.18048, 0.026244, 1.43398, -0.138056, -0.459633, 0.068131, -0.101382, -0.0836987, -0.654885, -1.41245)
+visible = false
+size = Vector3(5.5946, 2, 2)
+texture_albedo = ExtResource("8_n1qac")
 
 [connection signal="animation_changed" from="CollisionShape3D/MAN_skeletal/AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
