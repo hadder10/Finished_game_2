@@ -1,10 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://l66esyv1u63"]
+[gd_scene load_steps=20 format=3 uid="uid://l66esyv1u63"]
 
+[ext_resource type="Script" path="res://Scenes/ui/HUD.gd" id="1_3uj2k"]
 [ext_resource type="Texture2D" uid="uid://cqrbeomwwjjbm" path="res://Assets/ui/progressbar_frame.png" id="1_b2b54"]
 [ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="1_qglaf"]
 [ext_resource type="Texture2D" uid="uid://jeprio8833ve" path="res://Assets/ui/progressbar.png" id="2_qmn1f"]
 [ext_resource type="FontFile" uid="uid://rbc0rsf5pq4f" path="res://Assets/ui/fonts/EurostileExtended.ttf" id="3_o84d0"]
 [ext_resource type="FontFile" uid="uid://cq6vl6nmc00ba" path="res://Assets/ui/fonts/EurostileExtendedBold.ttf" id="3_y8ceq"]
+[ext_resource type="Shader" path="res://Scenes/ui/rewind.gdshader" id="6_4s08u"]
+[ext_resource type="Shader" path="res://Scenes/ui/pixilise.gdshader" id="7_iqqt7"]
+[ext_resource type="Shader" path="res://Scenes/ui/streaks.gdshader" id="8_ihqi6"]
+[ext_resource type="Shader" path="res://Scenes/ui/fisheye.gdshader" id="9_uvebe"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_74h4v"]
 font = ExtResource("3_o84d0")
@@ -28,6 +33,18 @@ font_color = Color(0.894118, 1, 1, 1)
 font = ExtResource("3_y8ceq")
 font_size = 36
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wiqhp"]
+shader = ExtResource("6_4s08u")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o15pq"]
+shader = ExtResource("7_iqqt7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y21oj"]
+shader = ExtResource("8_ihqi6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_346t6"]
+shader = ExtResource("9_uvebe")
+
 [node name="HUD" type="Control"]
 custom_minimum_size = Vector2(2, 2)
 layout_mode = 3
@@ -37,6 +54,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_3uj2k")
 
 [node name="TimeLimitBar" type="Control" parent="."]
 layout_mode = 1
@@ -356,3 +374,56 @@ offset_bottom = 71.0
 grow_horizontal = 0
 mouse_filter = 2
 color = Color(0.894118, 1, 1, 1)
+
+[node name="CanvasLayer4" type="CanvasLayer" parent="."]
+layer = -1
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer4"]
+material = SubResource("ShaderMaterial_wiqhp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_o15pq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer3"]
+material = SubResource("ShaderMaterial_y21oj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_346t6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
