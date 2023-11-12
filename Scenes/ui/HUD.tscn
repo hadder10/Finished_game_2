@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/ui/HUD.gd" id="1_3uj2k"]
 [ext_resource type="Texture2D" uid="uid://cqrbeomwwjjbm" path="res://Assets/ui/progressbar_frame.png" id="1_b2b54"]
-[ext_resource type="Material" path="res://Scenes/ui/gui_aberration.tres" id="1_gkbvs"]
+[ext_resource type="Material" uid="uid://cecm6pa0eu7xs" path="res://Scenes/ui/gui_aberration.tres" id="1_gkbvs"]
 [ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="1_qglaf"]
 [ext_resource type="Texture2D" uid="uid://jeprio8833ve" path="res://Assets/ui/progressbar.png" id="2_qmn1f"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/toggle_ui_group.gd" id="2_vydmp"]

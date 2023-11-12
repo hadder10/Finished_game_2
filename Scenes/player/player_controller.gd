@@ -1,6 +1,5 @@
 extends CharacterBody3D
 
-
 signal pause_start
 signal pause_end
 signal rewind_start
@@ -10,6 +9,7 @@ signal fast_forward_end
 signal accel_start(speed)
 signal accel_end
 signal shot(npc)
+signal lose
 
 @export var SPEED = 5.0
 @export var JUMP_VELOCITY = 4.5
@@ -124,6 +124,7 @@ func _input(event):
 				print(target)
 				shot.emit(target)
 				_npc_shot.append(target) #add it to the array.
+				check_win_lose(_npc_shot)
 				ray.add_exception(target) #add to ray's exception. That way it could detect something being behind it.
 				ray.force_raycast_update() #update the ray's collision query.
 			for target in _npc_shot:
@@ -171,6 +172,8 @@ func _update_camera(delta):
 
 
 func _ready() -> void:
+	var root_node = get_tree().root.get_child(0)
+	lose.connect(root_node.lose)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_player_positions_array.append(position)
 	_player_rotations_array.append(_mouse_rotation)
@@ -267,3 +270,10 @@ func play_rewind_sound():
 func stop_all_sounds():
 	gunshot_sound.stop()
 	step_sound.stop()
+
+
+func check_win_lose(npc_list: Array):
+	for npc in npc_list:
+		if not npc.IS_ENEMY:
+			lose.emit()
+			return

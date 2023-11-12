@@ -10,9 +10,27 @@ var npc_list := []
 
 func _ready():
 	add_child(current_level.instantiate())
+	print(get_tree().get_nodes_in_group("NPC"))
 	for npc in get_tree().get_nodes_in_group("NPC"):
-		npc_list.append(npc_list)
+		npc_list.append(npc)
 
 
 func _on_death():
 	pass
+
+
+func lose():
+	print("Game lost")
+
+
+func win():
+	print("Game won")
+
+
+func check_win_lose_on_timer_end():
+	for npc in npc_list:
+		if not npc._is_dead:
+			lose()
+			return
+	win()
+	return

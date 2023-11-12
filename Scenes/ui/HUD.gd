@@ -1,5 +1,7 @@
 extends Control
 
+signal time_end
+
 @onready var countdownBar = $Display/TimeLimitBar/TextureProgressBar
 @onready var countdownLabel = $Display/TimeLimitBar/TimerLabel
 @export var timeLimit : float = 30.0
@@ -27,6 +29,8 @@ func format_seconds(seconds):
 
 
 func _ready():
+	var root_node = get_tree().root.get_child(0)
+	time_end.connect(root_node.check_win_lose_on_timer_end)
 	countdown = 0
 	pause_countdown = -1
 	if countdownBar:
@@ -48,13 +52,13 @@ func _process(delta):
 				countdown += delta
 				if countdown > pause_countdown:
 					countdown = pause_countdown
-			else:
-				pass
 	else:
 		if pause_countdown != -1:
 			pause_countdown = -1
 		if countdown < timeLimit:
 			countdown += delta
+		else:
+			time_end.emit()
 	
 	if countdownBar:
 		countdownBar.value = 100 * countdown / timeLimit
