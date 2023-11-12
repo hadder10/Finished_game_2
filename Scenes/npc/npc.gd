@@ -7,6 +7,7 @@ extends CharacterBody3D
 
 @onready var _animplayer = $CollisionShape3D/MAN_skeletal/AnimationPlayer
 @onready var ray = $RayCast3D
+@onready var _collision = $CollisionShape3D
 
 
 var _action_array : Array
@@ -97,6 +98,7 @@ func _process(delta):
 						HEALTH += _event_array[_cur_event][2]
 						if _is_dead:
 							_is_dead = false
+							_collision.disabled = false
 					_cur_event -= 1
 				if not _is_dead and _cur_action > 0:
 					_undo_action(delta)
@@ -107,7 +109,9 @@ func _process(delta):
 						HEALTH -= _event_array[_cur_event + 1][2]
 						if HEALTH == 0:
 							_is_dead = true
+							_collision.disabled = true
 							_animplayer.play("death")
+							_animplayer.queue("dead/deatd")
 					_cur_event += 1
 				if not _is_dead and _cur_action < len(_action_array):
 					_do_action(delta)
@@ -132,7 +136,9 @@ func _get_shot():
 		HEALTH -= 1
 		if HEALTH == 0:
 			_is_dead = true
+			_collision.disabled = true
 			_animplayer.play("death")
+			_animplayer.queue("dead/deatd")
 
 
 func _on_test_player_pause_start():
@@ -175,7 +181,9 @@ func _on_test_player_shot(npc):
 		_cur_event += 1
 		HEALTH = 0
 		_is_dead = true
+		_collision.disabled = true
 		_animplayer.play("death")
+		_animplayer.queue("dead/deatd")
 
 
 func _on_test_player_accel_start(speed):
@@ -186,7 +194,7 @@ func _on_test_player_accel_end():
 	_rewind_speed = 1
 
 
-func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "death" and !_paused:
+func _on_animation_player_animation_changed(old_name, _new_name):
+	if old_name == "death" and !_paused:
 		_event_array.append([_frame_counter, "death"])
 		_cur_event += 1
