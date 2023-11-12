@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal died
+
 @export var FIRST_ACTION_NODE : Node3D
 @export var SPEED = 5.0
 @export var TURN_SPEED = 5.0
@@ -112,6 +114,9 @@ func _undo_action(delta) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var root_node: Node3D = get_tree().root.get_child(0)
+	died.connect(root_node._on_death)
+
 	if IS_ENEMY:
 		$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/Cube.set_surface_override_material(2, mat1)
 		$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/Cube.set_surface_override_material(0, facemat1)
@@ -228,6 +233,7 @@ func _on_test_player_fast_forward_end():
 func _on_test_player_shot(npc):
 	if npc == self and !_is_dead:
 		print("DEAD ", self)
+		
 		_event_array.append([_frame_counter, "hp", HEALTH])
 		_cur_event += 1
 		HEALTH = 0
