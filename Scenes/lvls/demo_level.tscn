@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bx653frlt4b2g"]
+[gd_scene load_steps=9 format=3 uid="uid://bx653frlt4b2g"]
 
 [ext_resource type="MeshLibrary" uid="uid://cs00asvysbiiy" path="res://Assets/tileset/fuck_me_in_ass_lib.tres" id="1_xky8m"]
 [ext_resource type="PackedScene" uid="uid://cm7wa4vj7af2q" path="res://Scenes/player/player_controller.tscn" id="2_h1sab"]
@@ -6,7 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://bf8f45a25urks" path="res://Scenes/npc/npc.tscn" id="5_daegp"]
 [ext_resource type="PackedScene" uid="uid://bm0oysj3srqg4" path="res://Scenes/scripts/path_node.tscn" id="6_p6jbp"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1vw40"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_54k7o"]
+sky_material = SubResource("ProceduralSkyMaterial_1vw40")
+
+[sub_resource type="Environment" id="Environment_tqur2"]
+background_mode = 2
+sky = SubResource("Sky_54k7o")
+tonemap_mode = 2
+glow_enabled = true
+
 [node name="demo_level" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tqur2")
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_xky8m")

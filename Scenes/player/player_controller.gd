@@ -65,7 +65,12 @@ func _input(event):
 		if _paused:
 			if _rewinding:
 				_rewinding = false
+				rewind_sound.stop()
 				rewind_end.emit()
+			if _fast_forwarding:
+				_fast_forwarding = false
+				rewind_sound.stop()
+				fast_forward_end.emit()
 			if _rewind_speed != 1:
 				_rewind_speed = 1
 				accel_end.emit()
