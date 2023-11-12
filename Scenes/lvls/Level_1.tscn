@@ -813,6 +813,8 @@ material_override = ExtResource("6_rjlhy")
 mesh = SubResource("BoxMesh_c0d7p")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="LevelGeometry/wall20"]
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelGeometry/wall20/StaticBody3D"]
 shape = SubResource("BoxShape3D_up18d")
@@ -883,8 +885,11 @@ material_override = ExtResource("6_rjlhy")
 mesh = SubResource("BoxMesh_c0d7p")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="LevelGeometry/wall24"]
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LevelGeometry/wall24/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -1.13687e-13, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_up18d")
 
 [node name="wall26" type="MeshInstance3D" parent="LevelGeometry"]
@@ -988,7 +993,7 @@ mesh = SubResource("BoxMesh_c0d7p")
 shape = SubResource("BoxShape3D_up18d")
 
 [node name="test_player" parent="." instance=ExtResource("2_ctoco")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21.4817, 1.45281, 0)
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -21.4817, 2.31336, 0)
 SPEED = 10.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -997,7 +1002,7 @@ transform = Transform3D(1, 0, 0, 0, -0.534869, 0.844935, 0, -0.844935, -0.534869
 [node name="HUD" parent="." instance=ExtResource("4_805dc")]
 
 [node name="npc" parent="." node_paths=PackedStringArray("FIRST_ACTION_NODE") instance=ExtResource("14_p861l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.998856, 0)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 1.2038, 0)
 FIRST_ACTION_NODE = NodePath("../npc_path_node")
 
 [node name="npc_path_node" parent="." instance=ExtResource("15_jcoiw")]
