@@ -8,7 +8,7 @@ signal Add_Signal_To_HUD
 
 signal Connect_Weapon_To_HUD
 
-@export var Animation_Player: AnimationPlayer
+@onready var Animation_Player = %AnimationPlayer
 @onready var Bullet_Point = get_node("%BulletPoint")
 @onready var Debug_Bullet = preload("res://Player_Controller/Spawnable_Objects/hit_debug.tscn")
 

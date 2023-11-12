@@ -65,9 +65,8 @@ unique_name_in_owner = true
 cull_mask = 524287
 current = true
 
-[node name="Weapons_Manager" type="Node3D" parent="Camera/MainCamera" node_paths=PackedStringArray("Animation_Player")]
+[node name="Weapons_Manager" type="Node3D" parent="Camera/MainCamera"]
 script = ExtResource("5_wuueu")
-Animation_Player = NodePath("Weapons_Models/AnimationPlayer")
 _weapon_resources = Array[Resource("res://Player_Controller/scripts/Weapon_State_Machine/weapon_resource.gd")]([ExtResource("6_tpjp5"), ExtResource("7_gf6gb"), ExtResource("8_vhb8h")])
 Start_Weapons = Array[String](["blasterN", "blasterI"])
 
