@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ctdtbgkm70mi7" path="res://Assets/textures/steel.PNG" id="1_g5ug8"]
 [ext_resource type="Theme" uid="uid://c8srnko7udoeh" path="res://Scenes/ui/main.tres" id="2_hekpe"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/scene_changer.gd" id="3_uuqrw"]
-[ext_resource type="PackedScene" uid="uid://bk0abbg3a2dgg" path="res://Scenes/Game.tscn" id="4_hltqd"]
+[ext_resource type="PackedScene" uid="uid://tq8njbtwlsux" path="res://Scenes/lvls/Level_1.tscn" id="4_hltqd"]
 [ext_resource type="Script" path="res://Scenes/ui/button_menu.gd" id="5_aknbt"]
 
 [node name="lose" type="Control"]
