@@ -24,12 +24,23 @@ var _rewind_speed = 1
 var _paused : bool = false
 var _rewinding : bool = false
 var _fast_forwarding : bool = false
+var _shots_fired : bool = false
+var _cur_wait : float = -1
 
 
 func _do_action(delta) -> void:
 	var cur_action_node = _action_array[_cur_action]
 	if cur_action_node.action == "STAND":
-		_animplayer.play("idle");
+		_animplayer.play("idle")
+		look_at(cur_action_node.target.global_position)
+		if _cur_wait == -1:
+			_cur_wait = cur_action_node.wait
+		if _cur_wait <= 0:
+			_cur_action += 1
+			_cur_wait = -1
+			return
+		else:
+			_cur_wait -= delta
 		pass
 	elif cur_action_node.action == "MOVE":
 		_animplayer.play("RUN_alternative");
@@ -40,19 +51,18 @@ func _do_action(delta) -> void:
 		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
 	
 	elif cur_action_node.action == "FIRE":
+		look_at(cur_action_node.target.global_position)
 		_animplayer.play("shoot")
-		
-		look_at(cur_action_node.global_position)
-		if ray.is_colliding():
-			var target = ray.get_collider()
-			if target.is_in_group("NPC"):
-				target._get_shot()
-			elif target.is_in_group("PLAYER"):
-				target._dead()
-		_event_array.append([_frame_counter, "shoot"])
-		_cur_event += 1
-
-		_cur_action += 1
+		if _shots_fired:
+			if ray.is_colliding():
+				var target = ray.get_collider()
+				if target.is_in_group("NPC"):
+					target._get_shot()
+				elif target.is_in_group("PLAYER"):
+					target._dead()
+			_cur_action += 1
+			_shots_fired = false
+			return
 	else:
 		printerr("Node doesn't have action")
 	return
@@ -60,18 +70,34 @@ func _do_action(delta) -> void:
 func _undo_action(delta) -> void:
 	if _cur_action == len(_action_array):
 		_cur_action -= 1
-	var cur_action_node = _action_array[_cur_action - 1]
-	if cur_action_node.next.action == "MOVE":
+	var cur_action_node = _action_array[_cur_action]
+	var prev_action_node = _action_array[_cur_action - 1] if _cur_action > 0 else null
+	if cur_action_node.action == "STAND":
+		look_at(cur_action_node.target.global_position)
+		_animplayer.play("idle")
+		if _cur_wait == -1:
+			_cur_wait = 0
+		if _cur_wait >= cur_action_node.next.wait:
+			_cur_action -= 1
+			_cur_wait = -1
+			return
+		else:
+			_cur_wait += delta
+	elif cur_action_node.action == "MOVE":
 		_animplayer.play("RUN_alternative");
-		if position == cur_action_node.global_position:
+		if position == prev_action_node.global_position:
 			_cur_action -= 1
 			return
-		look_at(2 * position - cur_action_node.global_position)
-		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
+		look_at(2 * position - prev_action_node.global_position)
+		position = position.move_toward(prev_action_node.global_position, delta * SPEED)
 	
-	elif cur_action_node.next.action == "FIRE":
-		look_at(cur_action_node.next.global_position)
-		_cur_action -= 1
+	elif cur_action_node.action == "FIRE":
+		look_at(cur_action_node.target.global_position)
+		_animplayer.play("shoot", -1, 1, true)
+		if _shots_fired:
+			_cur_action -= 1
+			_shots_fired = false
+			return
 	else:
 		printerr("Node doesn't have action")
 	return
@@ -102,7 +128,7 @@ func _process(delta):
 							_is_dead = false
 							_collision.disabled = false
 					_cur_event -= 1
-				if not _is_dead and _cur_action > 0:
+				if not _is_dead and _cur_action >= 0:
 					_undo_action(delta)
 				_frame_counter -= 1
 			elif _fast_forwarding and _frame_counter < _pause_frame:
@@ -202,3 +228,8 @@ func _on_animation_player_animation_changed(old_name, _new_name):
 	if old_name == "death" and !_paused:
 		_event_array.append([_frame_counter, "death"])
 		_cur_event += 1
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "shoot":
+		_shots_fired = true
