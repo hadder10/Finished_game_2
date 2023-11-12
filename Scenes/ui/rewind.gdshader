@@ -4,7 +4,7 @@ const vec4 noise = vec4 (0.73724, 0.65463, 0.37368, 0.71777);
 const float speed = 2.0;
 
 float hash(vec2 p) {
-  return fract(sin(dot(p * 17.17, vec2(14.91, 67.31))) * 4791.9511);
+	return fract(sin(dot(p * 17.17, vec2(14.91, 67.31))) * 4791.9511);
 }
 
 void fragment() {

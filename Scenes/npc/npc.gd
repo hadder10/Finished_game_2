@@ -8,6 +8,7 @@ extends CharacterBody3D
 @export var DEAD_MATERIAL : StandardMaterial3D = StandardMaterial3D.new()
 
 @onready var mesh = $CollisionShape3D/MeshInstance3D
+@onready var _animplayer = $CollisionShape3D/MAN_skeletal/AnimationPlayer
 
 signal target_shot(target)
 
@@ -29,13 +30,17 @@ var _fast_forwarding : bool = false
 func _do_action(delta) -> void:
 	var cur_action_node = _action_array[_cur_action]
 	if cur_action_node.action == "STAND":
+		_animplayer.play("idle");
 		pass
 	elif cur_action_node.action == "MOVE":
+		_animplayer.play("RUN_alternative");
 		if position == cur_action_node.global_position:
 			_cur_action += 1
 			return
 		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
+		look_at(cur_action_node.global_position, Vector3.UP)
 	elif cur_action_node.action == "FIRE":
+		_animplayer.play("shoot");
 		target_shot.emit(cur_action_node.target)
 		_cur_action += 1
 	else:
@@ -51,6 +56,7 @@ func _undo_action(delta) -> void:
 			_cur_action -= 1
 			return
 		position = position.move_toward(cur_action_node.global_position, delta * SPEED)
+		look_at(2*position - cur_action_node.global_position,Vector3.UP)
 	elif cur_action_node.next.action == "FIRE":
 		_cur_action -= 1
 	else:
@@ -117,26 +123,35 @@ func _on_target_shot(target):
 
 
 func _on_test_player_pause_start():
+	_animplayer.pause()
 	_paused = true
 
 
 func _on_test_player_pause_end():
+	_animplayer.speed_scale = 1.0
+	_animplayer.play()
 	_paused = false
 
 
 func _on_test_player_rewind_start():
+	_animplayer.speed_scale = -1* _rewind_speed
+	_animplayer.play()
 	_rewinding = true
 
 
 func _on_test_player_rewind_end():
+	_animplayer.pause()
 	_rewinding = false
 
 
 func _on_test_player_fast_forward_start():
+	_animplayer.speed_scale =  _rewind_speed
+	_animplayer.play()
 	_fast_forwarding = true
 
 
 func _on_test_player_fast_forward_end():
+	_animplayer.pause()
 	_fast_forwarding = false
 
 

@@ -2,7 +2,7 @@ shader_type canvas_item;
 
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
-const vec2 pixel_size = vec2(4.0,2.0);
+const vec2 pixel_size = vec2(3,3);
 const vec3 palette = vec3(16,16,16);
 
 void fragment() {
@@ -14,6 +14,6 @@ void fragment() {
 	vec4 newest_color = vec4(0.0,0.0,0.0,0.0);
 	newest_color[int(floor(place.x * 3.5))] = new_color[int(floor(place.x*3.5))];
 	
-	COLOR.xyz = new_color.xyz/1.4 + newest_color.xyz/5.0;
+	COLOR.xyz = (new_color.xyz/1.4 + newest_color.xyz/5.0)*sign(floor(place.y*9.0));
 	
 }
