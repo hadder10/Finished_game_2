@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cm7wa4vj7af2q"]
+[gd_scene load_steps=22 format=3 uid="uid://cm7wa4vj7af2q"]
 
 [ext_resource type="Script" path="res://Scenes/player/player_controller.gd" id="1_but4q"]
 [ext_resource type="AudioStream" uid="uid://d2ruufrbp343f" path="res://Music/footsteps/StoneStep1.wav" id="2_2arvn"]
@@ -70,9 +70,15 @@ tracks/1/keys = {
 "values": [Vector3(0, 3.14159, 0), Vector3(-0.607375, 3.14159, -0.361283), Vector3(-0.314159, 3.14159, 0), Vector3(0, 3.14159, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_lh4sq"]
+resource_name = "idle"
+length = 0.1
+loop_mode = 1
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yxojl"]
 _data = {
 "RESET": SubResource("Animation_5kecf"),
+"idle": SubResource("Animation_lh4sq"),
 "shoot": SubResource("Animation_rnj2r")
 }
 
@@ -128,6 +134,7 @@ mesh = ExtResource("6_4ufkh")
 skeleton = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="camera_controller/pistol"]
+autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_yxojl")
 }
@@ -164,5 +171,5 @@ stream = SubResource("AudioStreamRandomizer_udm3s")
 
 [node name="ShootCooldown" type="Timer" parent="."]
 
-[connection signal="animation_finished" from="camera_controller/pistol/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_changed" from="camera_controller/pistol/AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="timeout" from="FootstepPlayer/FootstepTimer" to="." method="_on_footstep_timer_timeout"]

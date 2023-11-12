@@ -166,6 +166,7 @@ func _input(event):
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
 		gunshot_sound.play()
 		gun_anim_player.play("shoot")
+		gun_anim_player.queue("idle")
 		_player_animations_array.append(["start", _frame_counter])
 		_anim_counter += 1
 		if ray.is_colliding():
@@ -250,6 +251,7 @@ func _physics_process(delta):
 				if _frame_counter <= _player_animations_array[_anim_counter][1]:
 					if _player_animations_array[_anim_counter][0] == "end":
 						gun_anim_player.play("shoot", -1, 1, true)
+						gun_anim_player.queue("idle")
 					_anim_counter -= 1
 		elif _fast_forwarding and _frame_counter >= _pause_frame:
 			_fast_forward_end()
@@ -262,6 +264,7 @@ func _physics_process(delta):
 				if _frame_counter >= _player_animations_array[_anim_counter + 1][1]:
 					if _player_animations_array[_anim_counter + 1][0] == "start":
 						gun_anim_player.play("shoot")
+						gun_anim_player.queue("idle")
 					_anim_counter += 1
 		else:
 			rewind_sound.stop()
@@ -334,10 +337,11 @@ func stop_all_sounds():
 	step_sound.stop()
 
 
-func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "shoot" and !_paused:
+func _on_animation_player_animation_changed(old_name, new_name):
+	if old_name == "shoot" and !_paused:
 		_player_animations_array.append(["end", _frame_counter])
 		_anim_counter += 1
+
 
 
 func check_win_lose(npc_list: Array):
@@ -353,4 +357,7 @@ func check_win_lose(npc_list: Array):
 		lose.emit()
 	else:
 		pass
+
+
+
 
