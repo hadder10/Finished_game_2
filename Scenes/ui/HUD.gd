@@ -1,7 +1,7 @@
 extends Control
 
-@onready var countdownBar = $TimeLimitBar/TextureProgressBar
-@onready var countdownLabel = $TimeLimitBar/TimerLabel
+@onready var countdownBar = $Display/TimeLimitBar/TextureProgressBar
+@onready var countdownLabel = $Display/TimeLimitBar/TimerLabel
 @export var timeLimit : float = 30.0
 
 var rewind : bool = false
@@ -63,30 +63,38 @@ func _process(delta):
 
 
 func _on_test_player_rewind_start():
+	$"Display/ToggleIdicator<<"._on_activate()
 	$CanvasLayer4.show()
 	rewind = true
 
 
 func _on_test_player_rewind_end():
+	$"Display/ToggleIdicator<<"._on_activate()
 	$CanvasLayer4.hide()
 	
 	rewind = false
 
 
 func _on_test_player_pause_start():
+	$Crosshair.hide()
+	$Display/RewindOverlay.show()
 	pause = true
 
 
 func _on_test_player_pause_end():
+	$Crosshair.show()
+	$Display/RewindOverlay.hide()
 	pause = false
 
 
 func _on_test_player_fast_forward_start():
+	$"Display/ToggleIndicator>>"._on_activate()
 	$CanvasLayer4.show()
 	fast_forward = true
 
 
 func _on_test_player_fast_forward_end():
+	$"Display/ToggleIndicator>>"._on_activate()
 	$CanvasLayer4.hide()
 	fast_forward = false
 

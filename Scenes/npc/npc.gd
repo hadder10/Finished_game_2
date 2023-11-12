@@ -14,6 +14,11 @@ signal died
 @onready var ray = $RayCast3D
 @onready var _collision = $CollisionShape3D
 
+var mat1 = preload("res://Assets/enemies/enemy_kurtka.tres")
+var mat2 = preload("res://Assets/enemies/friendkurtka.tres")
+var facemat1 = preload("res://Assets/enemies/enemyface.tres")
+var facemat2 = preload("res://Assets/enemies/friendface.tres")
+
 
 var _action_array : Array
 var _cur_action = 0
@@ -85,6 +90,13 @@ func _undo_action(delta) -> void:
 func _ready():
 	var root_node: Node3D = get_tree().root.get_child(0)
 	died.connect(root_node._on_death)
+
+	if IS_ENEMY:
+		$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/Cube.set_surface_override_material(2, mat1)
+		$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/Cube.set_surface_override_material(0, facemat1)
+	else:
+		$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/Cube.set_surface_override_material(2, mat2)
+		$CollisionShape3D/MAN_skeletal/Armature/Skeleton3D/Cube.set_surface_override_material(0, facemat2)
 	if FIRST_ACTION_NODE != null:
 		_action_array.append(FIRST_ACTION_NODE)
 		while _action_array.back().next != null:

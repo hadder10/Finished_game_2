@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ctlwifsshx88x"]
+
+[ext_resource type="Texture2D" uid="uid://cmwl8lxl42man" path="res://Assets/enemies/MAN_skeletal2_1663141616_9-phonoteka-org-p-tekstura-litsa-cheloveka-oboi-10.png" id="1_w5lrk"]
+
+[resource]
+resource_name = "Material.001"
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_w5lrk")
+roughness = 0.881818
