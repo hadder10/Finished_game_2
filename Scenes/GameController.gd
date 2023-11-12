@@ -21,10 +21,14 @@ func _on_death():
 
 
 func lose():
+	$EndGameWidget.visible = true
+	$EndGameWidget/Label.text = "MISSION FAILURE"
 	print("Game lost")
 
 
 func win():
+	$EndGameWidget.visible = true
+	$EndGameWidget/Label.text = "MISSION SUCCESS"
 	print("Game won")
 
 

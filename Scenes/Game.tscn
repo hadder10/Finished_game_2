@@ -1,13 +1,161 @@
-[gd_scene load_steps=4 format=3 uid="uid://bk0abbg3a2dgg"]
+[gd_scene load_steps=7 format=3 uid="uid://bk0abbg3a2dgg"]
 
 [ext_resource type="Script" path="res://Scenes/GameController.gd" id="1_r4o65"]
 [ext_resource type="PackedScene" uid="uid://tq8njbtwlsux" path="res://Scenes/lvls/Level_1.tscn" id="2_ibhjd"]
 [ext_resource type="AudioStream" uid="uid://i21npytt7xed" path="res://Music/ambience/Rumbling Sound Effect.mp3" id="3_gyl2r"]
+[ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="4_guh3b"]
+[ext_resource type="Theme" uid="uid://c8srnko7udoeh" path="res://Scenes/ui/main.tres" id="5_tapu6"]
+[ext_resource type="Script" path="res://Scenes/ui/scripts/scene_changer.gd" id="6_1hbeb"]
 
 [node name="Game" type="Node3D" node_paths=PackedStringArray("rumble")]
 script = ExtResource("1_r4o65")
 current_level = ExtResource("2_ibhjd")
 rumble = NodePath("Rumbling")
 
+[node name="EndGameWidget" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="background_inversion" type="ColorRect" parent="EndGameWidget"]
+material = ExtResource("4_guh3b")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -251.0
+offset_top = -258.0
+offset_right = 256.0
+offset_bottom = 277.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="EndGameWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -133.0
+offset_right = 218.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_tapu6")
+theme_override_colors/font_color = Color(0.0627451, 0.0666667, 0.0784314, 1)
+theme_override_font_sizes/font_size = 36
+text = "XXX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="button_restart" type="Button" parent="EndGameWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = 74.0
+offset_right = 252.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_tapu6")
+text = "REPLAY"
+script = ExtResource("6_1hbeb")
+
+[node name="button_menu" type="Button" parent="EndGameWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -247.0
+offset_top = 168.0
+offset_right = 253.0
+offset_bottom = 273.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_tapu6")
+text = "MAIN 
+MENU"
+script = ExtResource("6_1hbeb")
+
+[node name="decor" type="Control" parent="EndGameWidget"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -28.0
+offset_right = 20.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="decor_tl" type="ColorRect" parent="EndGameWidget/decor"]
+layout_mode = 1
+offset_left = -257.0
+offset_top = -256.0
+offset_right = -231.0
+offset_bottom = -230.0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
+[node name="decor_bl" type="ColorRect" parent="EndGameWidget/decor"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -257.0
+offset_top = 265.0
+offset_right = -231.0
+offset_bottom = 291.0
+grow_vertical = 0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
+[node name="decor_br" type="ColorRect" parent="EndGameWidget/decor"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 237.0
+offset_top = 265.0
+offset_right = 263.0
+offset_bottom = 291.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
+[node name="decor_tr" type="ColorRect" parent="EndGameWidget/decor"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 236.0
+offset_top = -256.0
+offset_right = 262.0
+offset_bottom = -230.0
+grow_horizontal = 0
+color = Color(0.764706, 0.827451, 0.819608, 1)
+
 [node name="Rumbling" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_gyl2r")
+
+[connection signal="pressed" from="EndGameWidget/button_restart" to="EndGameWidget/button_restart" method="_on_activate" flags=18]
+[connection signal="pressed" from="EndGameWidget/button_menu" to="EndGameWidget/button_menu" method="_on_activate" flags=18]
