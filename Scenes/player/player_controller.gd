@@ -124,11 +124,12 @@ func _input(event):
 				print(target)
 				shot.emit(target)
 				_npc_shot.append(target) #add it to the array.
-				check_win_lose(_npc_shot)
 				ray.add_exception(target) #add to ray's exception. That way it could detect something being behind it.
 				ray.force_raycast_update() #update the ray's collision query.
 			for target in _npc_shot:
 				ray.remove_exception(target)
+			print(_npc_shot)
+			check_win_lose(_npc_shot)
 			_npc_shot.clear()
 
 
@@ -273,7 +274,15 @@ func stop_all_sounds():
 
 
 func check_win_lose(npc_list: Array):
+	var has_enemies = false
+	var has_teammates = false 
 	for npc in npc_list:
-		if not npc.IS_ENEMY:
-			lose.emit()
-			return
+		if npc.IS_ENEMY:
+			has_enemies = true
+		else:
+			has_teammates = true
+	
+	if (not has_enemies) and (has_teammates):
+		lose.emit()
+	else:
+		pass

@@ -229,7 +229,6 @@ func _on_test_player_fast_forward_end():
 
 func _on_test_player_shot(npc):
 	if npc == self and !_is_dead:
-		emit_signal("died")
 		print("DEAD ", self)
 		
 		_event_array.append([_frame_counter, "hp", HEALTH])
