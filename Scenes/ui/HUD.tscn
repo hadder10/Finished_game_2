@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://Scenes/ui/HUD.gd" id="1_3uj2k"]
 [ext_resource type="Texture2D" uid="uid://cqrbeomwwjjbm" path="res://Assets/ui/progressbar_frame.png" id="1_b2b54"]
-[ext_resource type="Material" uid="uid://cecm6pa0eu7xs" path="res://Scenes/ui/gui_aberration.tres" id="1_gkbvs"]
+[ext_resource type="Material" path="res://Scenes/ui/gui_aberration.tres" id="1_gkbvs"]
 [ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="1_qglaf"]
 [ext_resource type="Texture2D" uid="uid://jeprio8833ve" path="res://Assets/ui/progressbar.png" id="2_qmn1f"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/toggle_ui_group.gd" id="2_vydmp"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/toggleTexture.gd" id="3_2nybb"]
 [ext_resource type="FontFile" uid="uid://rbc0rsf5pq4f" path="res://Assets/ui/fonts/EurostileExtended.ttf" id="3_o84d0"]
 [ext_resource type="FontFile" uid="uid://cq6vl6nmc00ba" path="res://Assets/ui/fonts/EurostileExtendedBold.ttf" id="3_y8ceq"]
-[ext_resource type="Texture2D" uid="uid://fv877ca00nqq" path="res://Assets/ui/rewind_button_inactive.png" id="4_56vui"]
+[ext_resource type="Texture2D" path="res://Assets/ui/rewind_button_inactive.png" id="4_56vui"]
 [ext_resource type="Texture2D" uid="uid://dh8fyumrntpp6" path="res://Assets/ui/rewind_button.png" id="5_ymgi7"]
 [ext_resource type="Shader" path="res://Scenes/ui/rewind.gdshader" id="6_4s08u"]
 [ext_resource type="Shader" path="res://Scenes/ui/pixilise.gdshader" id="7_iqqt7"]
@@ -80,7 +80,7 @@ enable_animation = false
 [node name="ToggleCrosshair" type="Node" parent="Display" node_paths=PackedStringArray("target")]
 script = ExtResource("2_vydmp")
 can_disable = true
-target = NodePath("../Crosshair")
+target = NodePath("../../Crosshair")
 enable_animation = false
 
 [node name="ToggleIndicator>>" type="Node" parent="Display" node_paths=PackedStringArray("target")]
@@ -393,8 +393,17 @@ grow_vertical = 0
 scale = Vector2(0.08, 0.32)
 texture = ExtResource("11_j4rak")
 
-[node name="Crosshair" type="Control" parent="Display"]
-layout_mode = 3
+[node name="AberrationFilter" type="ColorRect" parent="Display"]
+material = ExtResource("1_gkbvs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="Control" parent="."]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -408,7 +417,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="vertical" type="ColorRect" parent="Display/Crosshair"]
+[node name="vertical" type="ColorRect" parent="Crosshair"]
 material = ExtResource("1_qglaf")
 layout_mode = 1
 anchors_preset = 8
@@ -424,7 +433,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="vertical2" type="ColorRect" parent="Display/Crosshair"]
+[node name="vertical2" type="ColorRect" parent="Crosshair"]
 material = ExtResource("1_qglaf")
 layout_mode = 1
 anchors_preset = 8
@@ -440,7 +449,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="horizontal" type="ColorRect" parent="Display/Crosshair"]
+[node name="horizontal" type="ColorRect" parent="Crosshair"]
 material = ExtResource("1_qglaf")
 layout_mode = 1
 anchors_preset = 8
@@ -456,7 +465,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="horizontal2" type="ColorRect" parent="Display/Crosshair"]
+[node name="horizontal2" type="ColorRect" parent="Crosshair"]
 material = ExtResource("1_qglaf")
 layout_mode = 1
 anchors_preset = 8
@@ -468,15 +477,6 @@ offset_left = 4.0
 offset_top = -1.0
 offset_right = 30.0
 offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="AberrationFilter" type="ColorRect" parent="Display"]
-material = ExtResource("1_gkbvs")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
