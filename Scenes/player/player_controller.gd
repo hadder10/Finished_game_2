@@ -25,6 +25,7 @@ signal shot(npc)
 @onready var pause_click: AudioStreamPlayer = $PauseClick
 @onready var footstep_timer: Timer = $FootstepPlayer/FootstepTimer
 @onready var rewind_sound: AudioStreamPlayer = $RewindSound
+@onready var gunshot_sound: AudioStreamPlayer3D = $GunshotSound
 
 @onready var rewind_start_sound = preload("res://Music/rewind/rewind_start.wav")
 @onready var rewind_loop_sound = preload("res://Music/rewind/rewind_loop_2.wav")
@@ -78,9 +79,11 @@ func _input(event):
 				accel_end.emit()
 			_paused = false
 			pause_end.emit()
+			rewind_sound.stop()
 			pause_click.play()
 		else:
 			_paused = true
+			stop_all_sounds()
 			pause_start.emit()
 			pause_click.play()
 	if event.is_action_pressed("rewind") and _paused and !_rewinding:
@@ -114,6 +117,7 @@ func _input(event):
 		_rewind_speed = 1
 		accel_end.emit()
 	if event.is_action_pressed("shoot") and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !_paused:
+		gunshot_sound.play()
 		if ray.is_colliding():
 			while ray.get_collider() != null and ray.get_collider().is_in_group("NPC"):
 				var target = ray.get_collider()
@@ -197,7 +201,7 @@ func _physics_process(delta):
 				_frame_counter = _pause_frame
 			position = _player_positions_array[_frame_counter]
 		else:
-			pass
+			rewind_sound.stop()
 		_update_camera(delta)
 	else:
 		if _pause_frame != -1:
@@ -257,3 +261,9 @@ func play_rewind_sound():
 		is_rewind_sound_playing = true
 		await Signal(rewind_sound, 'finished')
 		is_rewind_sound_playing = false
+
+
+# Stops all non-rewind sounds like gunshots and step sounds
+func stop_all_sounds():
+	gunshot_sound.stop()
+	step_sound.stop()

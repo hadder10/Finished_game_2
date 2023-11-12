@@ -1,8 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://bf8f45a25urks"]
+[gd_scene load_steps=19 format=3 uid="uid://bf8f45a25urks"]
 
 [ext_resource type="Script" path="res://Scenes/npc/npc.gd" id="1_twaug"]
 [ext_resource type="PackedScene" uid="uid://claaykfklsvm7" path="res://Assets/enemies/MAN_skeletal.glb" id="2_vj5q2"]
 [ext_resource type="Animation" uid="uid://d33q341i806wf" path="res://Assets/enemies/anims/deatd.res" id="3_e0o1n"]
+[ext_resource type="AudioStream" uid="uid://cuw28vxfsvvb7" path="res://Music/pain/MaleDeath.wav" id="4_qvs1l"]
+[ext_resource type="AudioStream" uid="uid://cvlg02xveej6d" path="res://Music/pain/PainLarge.wav" id="5_ju4rr"]
+[ext_resource type="AudioStream" uid="uid://svnxl8jjmsid" path="res://Music/pain/PainMedium.wav" id="6_kkvv1"]
+[ext_resource type="AudioStream" uid="uid://ckbp174qs2xum" path="res://Music/pain/PainSmall.wav" id="7_mh1af"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sbflj"]
 radius = 0.4
@@ -1473,6 +1477,17 @@ _data = {
 "deatd": ExtResource("3_e0o1n")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_h8qqf"]
+streams_count = 4
+stream_0/stream = ExtResource("4_qvs1l")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_ju4rr")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("6_kkvv1")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("7_mh1af")
+stream_3/weight = 1.0
+
 [node name="npc" type="CharacterBody3D" groups=["NPC"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_twaug")
@@ -1523,6 +1538,12 @@ libraries = {
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0.576, 0)
 target_position = Vector3(0, 0, -1)
+
+[node name="PainSound" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_h8qqf")
+
+[node name="DieTimer" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="animation_changed" from="CollisionShape3D/MAN_skeletal/AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 

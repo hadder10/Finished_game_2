@@ -6,6 +6,8 @@ extends CharacterBody3D
 @export var HEALTH : int = 3
 @export var IS_ENEMY : bool = false
 
+@onready var pain_sound = $PainSound
+@onready var die_timer = $DieTimer
 @onready var _animplayer = $CollisionShape3D/MAN_skeletal/AnimationPlayer
 @onready var ray = $RayCast3D
 @onready var _collision = $CollisionShape3D
@@ -146,6 +148,7 @@ func _get_shot():
 func _on_test_player_pause_start():
 	_animplayer.pause()
 	_paused = true
+	stop_all_sounds()
 
 
 func _on_test_player_pause_end():
@@ -189,6 +192,11 @@ func _on_test_player_shot(npc):
 		_animplayer.play("death")
 		_animplayer.queue("dead/deatd")
 
+		#ALWAYS DO THIS AT THE END OF THE FUNC
+		die_timer.start()
+		await Signal(die_timer, 'timeout')
+		pain_sound.play()
+
 
 func _on_test_player_accel_start(speed):
 	_rewind_speed = speed
@@ -196,6 +204,11 @@ func _on_test_player_accel_start(speed):
 
 func _on_test_player_accel_end():
 	_rewind_speed = 1
+
+
+func stop_all_sounds():
+	die_timer.stop()
+	pain_sound.stop()
 
 
 func _on_animation_player_animation_changed(old_name, _new_name):
