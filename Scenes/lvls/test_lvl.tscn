@@ -63,10 +63,9 @@ next = NodePath("../npc_path_node3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.94007, 0, -7.99473)
 next = NodePath("../npc_path_node4")
 
-[node name="npc_path_node4" parent="." node_paths=PackedStringArray("target") instance=ExtResource("4_45mcj")]
+[node name="npc_path_node4" parent="." instance=ExtResource("4_45mcj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.94007, 0, -7.99473)
 action = "FIRE"
-target = NodePath("../test_player")
 
 [node name="npc2" parent="." instance=ExtResource("3_l2tsa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2302, 1, 6.28958)

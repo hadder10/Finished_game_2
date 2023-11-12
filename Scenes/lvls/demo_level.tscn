@@ -64,7 +64,7 @@ next = NodePath("../npc_path_node_3")
 
 [node name="npc_path_node_3" parent="." node_paths=PackedStringArray("next") instance=ExtResource("6_p6jbp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20738, 1.5, 19.21)
-action = "MOVE"
+action = "FIRE"
 next = NodePath("../npc_path_node_END")
 
 [node name="npc_path_node_END" parent="." instance=ExtResource("6_p6jbp")]

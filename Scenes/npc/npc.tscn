@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bf8f45a25urks"]
+[gd_scene load_steps=6 format=3 uid="uid://bf8f45a25urks"]
 
 [ext_resource type="Script" path="res://Scenes/npc/npc.gd" id="1_twaug"]
+[ext_resource type="PackedScene" uid="uid://claaykfklsvm7" path="res://Assets/enemies/MAN_skeletal.glb" id="2_vj5q2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sbflj"]
 
@@ -18,8 +19,14 @@ script = ExtResource("1_twaug")
 shape = SubResource("CapsuleShape3D_sbflj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+visible = false
 mesh = SubResource("CapsuleMesh_c552x")
+
+[node name="MAN_skeletal" parent="CollisionShape3D" instance=ExtResource("2_vj5q2")]
+transform = Transform3D(-6.25958e-09, 0, -0.143202, 0, 0.143202, 0, 0.143202, 0, -6.25958e-09, -0.00757724, 1.60041, -0.0153624)
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0.576, 0)
 target_position = Vector3(0, 0, -1)
+
+[editable path="CollisionShape3D/MAN_skeletal"]
