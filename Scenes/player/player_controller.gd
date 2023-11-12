@@ -66,10 +66,12 @@ func _input(event):
 			if _rewinding:
 				_rewinding = false
 				rewind_sound.stop()
+				rewind_sound_status = "start"
 				rewind_end.emit()
 			if _fast_forwarding:
 				_fast_forwarding = false
 				rewind_sound.stop()
+				rewind_sound_status = "start"
 				fast_forward_end.emit()
 			if _rewind_speed != 1:
 				_rewind_speed = 1
@@ -81,26 +83,26 @@ func _input(event):
 			_paused = true
 			pause_start.emit()
 			pause_click.play()
-	if event.is_action_pressed("rewind") and _paused:
+	if event.is_action_pressed("rewind") and _paused and !_rewinding:
 		if _fast_forwarding:
 			_fast_forwarding = false
 			fast_forward_end.emit()
 		_rewinding = true
 		play_rewind_sound()
 		rewind_start.emit()
-	if event.is_action_released("rewind") and _paused:
+	if event.is_action_released("rewind") and _paused and _rewinding:
 		_rewinding = false
 		rewind_sound.stop()
 		rewind_sound_status = "start"
 		rewind_end.emit()
-	if event.is_action_pressed("fast_forward") and _paused:
+	if event.is_action_pressed("fast_forward") and _paused and !_fast_forwarding:
 		if _rewinding:
 			_rewinding = false
 			rewind_end.emit()
 		_fast_forwarding = true
 		play_rewind_sound()
 		fast_forward_start.emit()
-	if event.is_action_released("fast_forward") and _paused:
+	if event.is_action_released("fast_forward") and _paused and _fast_forwarding:
 		_fast_forwarding = false
 		rewind_sound.stop()
 		rewind_sound_status = "start"
@@ -174,11 +176,21 @@ func _physics_process(delta):
 	if _paused:
 		if _pause_frame == -1:
 			_pause_frame = _frame_counter
-		if _rewinding and _frame_counter > 0:
+		if _rewinding and _frame_counter <= 0:
+			_rewinding = false
+			rewind_sound.stop()
+			rewind_sound_status = "start"
+			rewind_end.emit()
+		elif _rewinding:
 			_frame_counter -= _rewind_speed
 			if _frame_counter < 0:
 				_frame_counter = 0
 			position = _player_positions_array[_frame_counter]
+		elif _fast_forwarding and _frame_counter >= _pause_frame:
+			_fast_forwarding = false
+			rewind_sound.stop()
+			rewind_sound_status = "start"
+			fast_forward_end.emit()
 		elif _fast_forwarding and _frame_counter < _pause_frame:
 			_frame_counter += _rewind_speed
 			if _frame_counter > _pause_frame:
