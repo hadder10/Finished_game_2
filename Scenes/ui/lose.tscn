@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://ca7h06mnx3no"]
+[gd_scene load_steps=5 format=3 uid="uid://ca7h06mnx3no"]
 
 [ext_resource type="Texture2D" uid="uid://ctdtbgkm70mi7" path="res://Assets/textures/steel.PNG" id="1_tmuhq"]
 [ext_resource type="Theme" uid="uid://c8srnko7udoeh" path="res://Scenes/ui/main.tres" id="2_3eb6h"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/scene_changer.gd" id="3_vu5v2"]
+
+[sub_resource type="GDScript" id="GDScript_kb8cf"]
+resource_name = "quit"
+script/source = "extends Button
+
+
+func _on_activate():
+	get_tree().quit()
+"
 
 [node name="lose" type="Control"]
 layout_mode = 3
@@ -76,9 +85,8 @@ offset_bottom = 273.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_3eb6h")
-text = "MAIN 
-MENU"
-script = ExtResource("3_vu5v2")
+text = "QUIT"
+script = SubResource("GDScript_kb8cf")
 
 [connection signal="pressed" from="button_restart" to="button_restart" method="_on_activate" flags=18]
 [connection signal="pressed" from="button_menu" to="button_menu" method="_on_activate" flags=18]

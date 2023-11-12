@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://mc3l1tbw30o2"]
+[gd_scene load_steps=6 format=3 uid="uid://mc3l1tbw30o2"]
 
 [ext_resource type="Texture2D" uid="uid://ctdtbgkm70mi7" path="res://Assets/textures/steel.PNG" id="1_g5ug8"]
 [ext_resource type="Theme" uid="uid://c8srnko7udoeh" path="res://Scenes/ui/main.tres" id="2_hekpe"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/scene_changer.gd" id="3_uuqrw"]
+[ext_resource type="PackedScene" uid="uid://bk0abbg3a2dgg" path="res://Scenes/Game.tscn" id="4_hltqd"]
+[ext_resource type="Script" path="res://Scenes/ui/button_menu.gd" id="5_aknbt"]
 
 [node name="lose" type="Control"]
 layout_mode = 3
@@ -61,6 +63,7 @@ grow_vertical = 2
 theme = ExtResource("2_hekpe")
 text = "REPLAY"
 script = ExtResource("3_uuqrw")
+scene = ExtResource("4_hltqd")
 
 [node name="button_menu" type="Button" parent="."]
 layout_mode = 1
@@ -76,9 +79,8 @@ offset_bottom = 273.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_hekpe")
-text = "MAIN 
-MENU"
-script = ExtResource("3_uuqrw")
+text = "QUIT"
+script = ExtResource("5_aknbt")
 
 [connection signal="pressed" from="button_restart" to="button_restart" method="_on_activate" flags=18]
 [connection signal="pressed" from="button_menu" to="button_menu" method="_on_activate" flags=18]

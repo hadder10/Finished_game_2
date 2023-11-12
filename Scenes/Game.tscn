@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bk0abbg3a2dgg"]
+[gd_scene load_steps=9 format=3 uid="uid://bk0abbg3a2dgg"]
 
 [ext_resource type="Script" path="res://Scenes/GameController.gd" id="1_r4o65"]
 [ext_resource type="PackedScene" uid="uid://tq8njbtwlsux" path="res://Scenes/lvls/Level_1.tscn" id="2_ibhjd"]
 [ext_resource type="AudioStream" uid="uid://i21npytt7xed" path="res://Music/ambience/Rumbling Sound Effect.mp3" id="3_gyl2r"]
+[ext_resource type="PackedScene" uid="uid://mc3l1tbw30o2" path="res://Scenes/ui/win.tscn" id="3_xhm3a"]
 [ext_resource type="Material" uid="uid://dj726jedyospf" path="res://Scenes/ui/mask_invert.tres" id="4_guh3b"]
+[ext_resource type="PackedScene" uid="uid://ca7h06mnx3no" path="res://Scenes/ui/lose.tscn" id="4_r87mk"]
 [ext_resource type="Theme" uid="uid://c8srnko7udoeh" path="res://Scenes/ui/main.tres" id="5_tapu6"]
 [ext_resource type="Script" path="res://Scenes/ui/scripts/scene_changer.gd" id="6_1hbeb"]
 
@@ -11,6 +13,8 @@
 script = ExtResource("1_r4o65")
 current_level = ExtResource("2_ibhjd")
 rumble = NodePath("Rumbling")
+win_scene = ExtResource("3_xhm3a")
+lose_scene = ExtResource("4_r87mk")
 
 [node name="EndGameWidget" type="Control" parent="."]
 visible = false
@@ -156,6 +160,9 @@ color = Color(0.764706, 0.827451, 0.819608, 1)
 
 [node name="Rumbling" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_gyl2r")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
 
 [connection signal="pressed" from="EndGameWidget/button_restart" to="EndGameWidget/button_restart" method="_on_activate" flags=18]
 [connection signal="pressed" from="EndGameWidget/button_menu" to="EndGameWidget/button_menu" method="_on_activate" flags=18]

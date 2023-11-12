@@ -9,6 +9,11 @@ var player: CharacterBody3D
 @export var current_level: PackedScene
 @export var rumble: AudioStreamPlayer
 
+@export var win_scene: PackedScene
+@export var lose_scene: PackedScene
+
+@onready var LoseTimer = $Timer
+
 func _ready():
 	rumble.play()
 	add_child(current_level.instantiate())
@@ -21,14 +26,16 @@ func _on_death():
 
 
 func lose():
-	$EndGameWidget.visible = true
-	$EndGameWidget/Label.text = "MISSION FAILURE"
+	LoseTimer.start()
+	await Signal(LoseTimer, 'timeout')
+	get_tree().change_scene_to_packed(lose_scene)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	print("Game lost")
 
 
 func win():
-	$EndGameWidget.visible = true
-	$EndGameWidget/Label.text = "MISSION SUCCESS"
+	get_tree().change_scene_to_packed(win_scene)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	print("Game won")
 
 
