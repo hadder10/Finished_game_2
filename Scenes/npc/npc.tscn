@@ -25,6 +25,9 @@ mesh = SubResource("CapsuleMesh_c552x")
 [node name="MAN_skeletal" parent="CollisionShape3D" instance=ExtResource("2_vj5q2")]
 transform = Transform3D(-6.25958e-09, 0, -0.143202, 0, 0.143202, 0, 0.143202, 0, -6.25958e-09, -0.00757724, 1.60041, -0.0153624)
 
+[node name="Skeleton3D" parent="CollisionShape3D/MAN_skeletal/Armature" index="0"]
+bones/24/rotation = Quaternion(0.571441, -0.543658, 0.611622, -0.0617218)
+
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0.576, 0)
 target_position = Vector3(0, 0, -1)
