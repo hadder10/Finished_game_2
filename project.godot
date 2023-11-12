@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="Finished_game_2"
-run/main_scene="res://Scenes/lvls/demo_level.tscn"
+run/main_scene="res://Scenes/lvls/Level_1.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://Music/default_bus_layout.tres"
 
 [input]
 

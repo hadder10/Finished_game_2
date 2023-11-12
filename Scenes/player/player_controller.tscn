@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cm7wa4vj7af2q"]
+[gd_scene load_steps=17 format=3 uid="uid://cm7wa4vj7af2q"]
 
 [ext_resource type="Script" path="res://Scenes/player/player_controller.gd" id="1_but4q"]
 [ext_resource type="AudioStream" uid="uid://d2ruufrbp343f" path="res://Music/footsteps/StoneStep1.wav" id="2_2arvn"]
@@ -7,6 +7,11 @@
 [ext_resource type="AudioStream" uid="uid://h7r5agcwuahy" path="res://Music/footsteps/StoneStep4.wav" id="5_7wolo"]
 [ext_resource type="AudioStream" uid="uid://dcmahmn40ff8y" path="res://Music/rewind/rewind_start.wav" id="6_dk27t"]
 [ext_resource type="AudioStream" uid="uid://bukdmk3ptqr5s" path="res://Music/rewind/pause_click.wav" id="6_wf6jw"]
+[ext_resource type="AudioStream" uid="uid://bmg6j0bwahnqs" path="res://Music/shot_sound/gun_shot_0.wav" id="8_5608p"]
+[ext_resource type="AudioStream" uid="uid://b051m40xhqxgj" path="res://Music/shot_sound/gun_shot_2.wav" id="10_hnawx"]
+[ext_resource type="AudioStream" uid="uid://ct6hs3kfw2aeh" path="res://Music/shot_sound/gun_shot_4.mp3" id="12_smlfi"]
+[ext_resource type="AudioStream" uid="uid://b4vw15huwi67" path="res://Music/shot_sound/gun_shot_5.wav" id="13_iheki"]
+[ext_resource type="AudioStream" uid="uid://d05g7qgko5fmn" path="res://Music/shot_sound/gun_shot_6.wav" id="14_fifvu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w3wbe"]
 
@@ -22,6 +27,19 @@ stream_2/stream = ExtResource("4_lqr7u")
 stream_2/weight = 1.0
 stream_3/stream = ExtResource("5_7wolo")
 stream_3/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_udm3s"]
+streams_count = 5
+stream_0/stream = ExtResource("8_5608p")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("10_hnawx")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("12_smlfi")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("13_iheki")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("14_fifvu")
+stream_4/weight = 1.0
 
 [node name="test_player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45281, 0)
@@ -61,5 +79,11 @@ stream = ExtResource("6_wf6jw")
 [node name="RewindSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_dk27t")
 volume_db = 5.0
+
+[node name="GunshotSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.393736, -0.934471)
+stream = SubResource("AudioStreamRandomizer_udm3s")
+
+[node name="ShootCooldown" type="Timer" parent="."]
 
 [connection signal="timeout" from="FootstepPlayer/FootstepTimer" to="." method="_on_footstep_timer_timeout"]

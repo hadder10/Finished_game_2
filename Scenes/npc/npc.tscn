@@ -1476,6 +1476,9 @@ _data = {
 [node name="npc" type="CharacterBody3D" groups=["NPC"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_twaug")
+SPEED = null
+TURN_SPEED = null
+HEALTH = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.2, 0)
