@@ -66,46 +66,46 @@ func _process(delta):
 		countdownLabel.text = format_seconds(countdown)
 
 
-func _on_test_player_rewind_start():
+func _on_player_rewind_start():
 	$"Display/ToggleIdicator<<"._on_activate()
 	$CanvasLayer4.show()
 	rewind = true
 
 
-func _on_test_player_rewind_end():
+func _on_player_rewind_end():
 	$"Display/ToggleIdicator<<"._on_activate()
 	$CanvasLayer4.hide()
 	
 	rewind = false
 
 
-func _on_test_player_pause_start():
+func _on_player_pause_start():
 	$Crosshair.hide()
 	$Display/RewindOverlay.show()
 	pause = true
 
 
-func _on_test_player_pause_end():
+func _on_player_pause_end():
 	$Crosshair.show()
 	$Display/RewindOverlay.hide()
 	pause = false
 
 
-func _on_test_player_fast_forward_start():
+func _on_player_fast_forward_start():
 	$"Display/ToggleIndicator>>"._on_activate()
 	$CanvasLayer4.show()
 	fast_forward = true
 
 
-func _on_test_player_fast_forward_end():
+func _on_player_fast_forward_end():
 	$"Display/ToggleIndicator>>"._on_activate()
 	$CanvasLayer4.hide()
 	fast_forward = false
 
 
-func _on_test_player_accel_start(speed):
+func _on_player_accel_start(speed):
 	rewind_speed = speed
 
 
-func _on_test_player_accel_end():
+func _on_player_accel_end():
 	rewind_speed = 1

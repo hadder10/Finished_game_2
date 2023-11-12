@@ -119,6 +119,17 @@ func _accel_end():
 	accel_end.emit()
 
 
+func _connect_rewind_signals(node):
+	pause_start.connect(node._on_player_pause_start)
+	pause_end.connect(node._on_player_pause_end)
+	rewind_start.connect(node._on_player_rewind_start)
+	rewind_end.connect(node._on_player_rewind_end)
+	fast_forward_start.connect(node._on_player_fast_forward_start)
+	fast_forward_end.connect(node._on_player_fast_forward_end)
+	accel_start.connect(node._on_player_accel_start)
+	accel_end.connect(node._on_player_accel_end)
+
+
 func _input(event):
 	if event.is_action_pressed("exit"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -213,6 +224,12 @@ func _update_camera(delta):
 func _ready() -> void:
 	var root_node = get_tree().root.get_child(0)
 	lose.connect(root_node.lose)
+	var npc_arr = get_tree().get_nodes_in_group("NPC")
+	for npc in npc_arr:
+		_connect_rewind_signals(npc)
+		shot.connect(npc._on_player_shot)
+	var hud_node = get_tree().get_first_node_in_group("PlayerHUD")
+	_connect_rewind_signals(hud_node)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_player_positions_array.append(position)
 	_player_rotations_array.append(_mouse_rotation)

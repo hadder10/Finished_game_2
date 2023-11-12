@@ -194,30 +194,30 @@ func _get_shot():
 			_animplayer.queue("dead/deatd")
 
 
-func _on_test_player_pause_start():
+func _on_player_pause_start():
 	_animplayer.pause()
 	_paused = true
 	stop_all_sounds()
 
 
-func _on_test_player_pause_end():
+func _on_player_pause_end():
 	_animplayer.speed_scale = 1.0
 	_animplayer.play()
 	_paused = false
 
 
-func _on_test_player_rewind_start():
+func _on_player_rewind_start():
 	_animplayer.speed_scale = -1 * _rewind_speed
 	_animplayer.play()
 	_rewinding = true
 
 
-func _on_test_player_rewind_end():
+func _on_player_rewind_end():
 	_animplayer.pause()
 	_rewinding = false
 
 
-func _on_test_player_fast_forward_start():
+func _on_player_fast_forward_start():
 	_animplayer.speed_scale = _rewind_speed
 	_animplayer.play()
 	if _animplayer.current_animation == "death":
@@ -225,12 +225,12 @@ func _on_test_player_fast_forward_start():
 	_fast_forwarding = true
 
 
-func _on_test_player_fast_forward_end():
+func _on_player_fast_forward_end():
 	_animplayer.pause()
 	_fast_forwarding = false
 
 
-func _on_test_player_shot(npc):
+func _on_player_shot(npc):
 	if npc == self and !_is_dead:
 		print("DEAD ", self)
 		
@@ -250,11 +250,11 @@ func _on_test_player_shot(npc):
 		pain_sound.play()
 
 
-func _on_test_player_accel_start(speed):
+func _on_player_accel_start(speed):
 	_rewind_speed = speed
 
 
-func _on_test_player_accel_end():
+func _on_player_accel_end():
 	_rewind_speed = 1
 
 

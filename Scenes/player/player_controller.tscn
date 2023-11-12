@@ -104,7 +104,7 @@ stream_3/weight = 1.0
 stream_4/stream = ExtResource("14_fifvu")
 stream_4/weight = 1.0
 
-[node name="test_player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER") groups=["PLAYER"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45281, 0)
 script = ExtResource("1_but4q")
 CAMERA_CONTROLLER = NodePath("camera_controller")
@@ -115,7 +115,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.915389, 0.151196)
 [node name="Camera3D" type="Camera3D" parent="camera_controller"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.101394)
 
-[node name="RayCast3D" type="RayCast3D" parent="camera_controller" groups=["PLAYER"]]
+[node name="RayCast3D" type="RayCast3D" parent="camera_controller"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
 

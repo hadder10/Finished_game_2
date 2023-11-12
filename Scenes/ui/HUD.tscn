@@ -58,7 +58,7 @@ shader = ExtResource("8_ihqi6")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_346t6"]
 shader = ExtResource("9_uvebe")
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="Control" groups=["PlayerHUD"]]
 custom_minimum_size = Vector2(2, 2)
 layout_mode = 3
 anchors_preset = 15
